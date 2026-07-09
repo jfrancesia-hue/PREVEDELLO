@@ -157,8 +157,38 @@ function HeaderMarketplace({
   cartCount: number;
   onCartOpen: () => void;
 }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("inicio");
+
+  useEffect(() => {
+    const sectionIds = ["inicio", "rubros", "productos", "empresas", "calculadoras", "pedido"];
+
+    const updateHeader = () => {
+      setIsScrolled(window.scrollY > 28);
+
+      let current = "inicio";
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (element && element.getBoundingClientRect().top <= 150) current = id;
+      }
+
+      setActiveSection(current);
+    };
+
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
+
+  const navItems = [
+    ["rubros", "Rubros"],
+    ["productos", "Productos"],
+    ["empresas", "Empresas"],
+    ["calculadoras", "Calculadoras"],
+  ];
+
   return (
-    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-5">
+    <header className={`pv-site-header sticky top-0 z-50 px-3 pt-3 sm:px-5 ${isScrolled ? "is-scrolled" : ""}`}>
       <div className="ds-header mx-auto flex h-14 max-w-7xl items-center gap-2 px-2 py-1 lg:h-16 lg:gap-3 lg:px-3">
         <a href="#inicio" className="shrink-0" aria-label="Ir al inicio">
           <LogoMark compact />
@@ -167,20 +197,13 @@ function HeaderMarketplace({
           <SearchBar value={query} onChange={onQueryChange} compact />
         </div>
         <nav className="hidden items-center gap-4 text-sm font-semibold text-white/75 lg:flex xl:gap-6">
-          <a className="transition hover:text-prevedello-red" href="#rubros">
-            Rubros
-          </a>
-          <a className="transition hover:text-prevedello-red" href="#productos">
-            Productos
-          </a>
-          <a className="transition hover:text-prevedello-red" href="#empresas">
-            Empresas
-          </a>
-          <a className="transition hover:text-prevedello-red" href="#calculadoras">
-            Calculadoras
-          </a>
+          {navItems.map(([id, label]) => (
+            <a key={id} className={`nav-link ${activeSection === id ? "is-active" : ""}`} href={`#${id}`}>
+              {label}
+            </a>
+          ))}
           <Link
-            className="inline-flex items-center gap-1.5 rounded-full border border-prevedello-blue/15 px-3 py-1.5 text-prevedello-blue transition hover:border-prevedello-red/35 hover:text-prevedello-red"
+            className="nav-link nav-link-app inline-flex items-center gap-1.5 px-3 py-1.5"
             to="/app"
           >
             <LogIn size={15} />
@@ -218,9 +241,10 @@ function HeaderMarketplace({
           <LogIn size={20} />
         </Link>
       </div>
-      <div className="mx-auto mt-2 max-w-7xl lg:hidden">
+      <div className="mobile-search-row mx-auto mt-2 max-w-7xl lg:hidden">
         <SearchBar value={query} onChange={onQueryChange} compact />
       </div>
+      <div className="header-motion-line mx-auto mt-2 max-w-7xl" />
     </header>
   );
 }
@@ -346,14 +370,16 @@ function HeroSection({
           loop
           preload="metadata"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,13,31,0.96),rgba(9,59,145,0.72),rgba(5,13,31,0.9))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,13,31,0.96),rgba(9,59,145,0.66),rgba(5,13,31,0.9))]" />
         <div className="industrial-grid absolute inset-0 opacity-22 mix-blend-screen" />
+        <div className="hero-signature-orbit absolute right-[-18vw] top-[-18vw] hidden h-[54vw] w-[54vw] rounded-full border border-white/10 lg:block" />
+        <div className="hero-red-scan absolute left-0 top-24 h-px w-full opacity-70" />
         <div className="blueprint-ruler absolute inset-x-0 bottom-0 h-28 opacity-55" />
       </div>
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col justify-center px-4 pb-28 pt-8 sm:px-6 sm:pt-10 lg:min-h-[calc(100svh-24px)] lg:px-8 lg:pb-16 lg:pt-12 xl:pt-14">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.88fr] xl:gap-16">
-          <div>
+          <div className="hero-copy premium-reveal">
             <div className="mb-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
               <picture>
                 <source media="(max-width: 767px)" srcSet="/hero-mobile.png" />
@@ -366,7 +392,7 @@ function HeroSection({
                 />
               </picture>
             </div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-[var(--radius-badge)] border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
+            <div className="hero-kicker mb-5 inline-flex items-center gap-2 rounded-[var(--radius-badge)] border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
               <Sparkles size={16} />
               Corralón, ferretería y hogar en Catamarca
             </div>
@@ -379,13 +405,13 @@ function HeroSection({
             </p>
             <div className="mt-6 grid max-w-2xl grid-cols-3 gap-2 sm:gap-3">
               {heroMetrics.map(([value, label]) => (
-                <div key={value} className="rounded-[var(--radius-card)] border border-white/14 bg-white/10 p-3 backdrop-blur-md">
+                <div key={value} className="metric-tile rounded-[var(--radius-card)] border border-white/14 bg-white/10 p-3 backdrop-blur-md">
                   <p className="text-lg font-extrabold text-white sm:text-2xl">{value}</p>
                   <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-white/55">{label}</p>
                 </div>
               ))}
             </div>
-            <div className="relative z-30 mt-6 max-w-xl rounded-[var(--radius-card)] border border-white/16 bg-white/10 p-2 backdrop-blur-md">
+            <div className="hero-search-console relative z-30 mt-6 max-w-xl rounded-[var(--radius-card)] border border-white/16 bg-white/10 p-2 backdrop-blur-md">
               <SearchBar value={query} onChange={onQueryChange} />
               <div className="mt-3 flex flex-wrap gap-2 px-1 pb-1">
                 {quickNeeds.map((need) => (
@@ -417,9 +443,9 @@ function HeroSection({
               </a>
             </div>
           </div>
-          <div className="relative mx-auto hidden h-[min(42vw,560px)] w-full max-w-xl place-items-center lg:grid">
+          <div className="hero-visual-stage premium-reveal relative mx-auto hidden h-[min(42vw,560px)] w-full max-w-xl place-items-center lg:grid">
             <div className="absolute inset-4 bg-prevedello-red/24 blur-3xl" />
-            <div className="relative z-10 overflow-hidden rounded-[var(--radius-modal)] border border-white/18 bg-white/8 shadow-[0_34px_90px_rgba(0,0,0,0.52)]">
+            <div className="hero-visual-card relative z-10 overflow-hidden rounded-[var(--radius-modal)] border border-white/18 bg-white/8 shadow-[0_34px_90px_rgba(0,0,0,0.52)]">
               <picture>
                 <source media="(max-width: 767px)" srcSet="/hero-mobile.png" />
                 <img
@@ -432,9 +458,9 @@ function HeroSection({
                 />
               </picture>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,13,31,.28))]" />
-              <div className="absolute bottom-4 left-4 right-4 border-l-2 border-prevedello-red bg-black/38 p-4 backdrop-blur-md">
-                <p className="font-heading text-xl font-bold uppercase text-white">Hero 3D aprobado</p>
-                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">Mostrador técnico + obra + cotización.</p>
+              <div className="hero-technical-label absolute bottom-4 left-4 right-4 border-l-2 border-prevedello-red bg-black/38 p-4 backdrop-blur-md">
+                <p className="font-heading text-xl font-bold uppercase text-white">Mostrador técnico activo</p>
+                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">Obra, hogar y cotización en una sola ficha.</p>
               </div>
             </div>
           </div>
@@ -443,7 +469,7 @@ function HeroSection({
 
       <div
         ref={panelRef}
-        className="archive-panel relative z-20 scroll-mt-44 border-y border-white/10 bg-[var(--pv-surface-2)] px-4 py-14 pt-40 text-white shadow-[0_-18px_70px_rgba(9,59,145,0.28)] sm:px-6 sm:pt-36 lg:scroll-mt-32 lg:px-8 lg:py-10 lg:pt-10"
+        className="archive-panel premium-reveal relative z-20 scroll-mt-44 border-y border-white/10 bg-[var(--pv-surface-2)] px-4 py-14 pt-40 text-white shadow-[0_-18px_70px_rgba(9,59,145,0.28)] sm:px-6 sm:pt-36 lg:scroll-mt-32 lg:px-8 lg:py-10 lg:pt-10"
       >
         <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div className="flex flex-col justify-between gap-6">
@@ -464,7 +490,7 @@ function HeroSection({
               { src: "/assets/prevedello-envios.mp4", label: "Entregas cuidadas", position: "50% 50%" },
               { src: "/assets/prevedello-acopio.mp4", label: "Acopio para obra", position: "52% 28%" },
             ].map(({ src, label, position }) => (
-              <div key={src} className="bp-card overflow-hidden rounded-lg border border-white/10 bg-white/8">
+              <div key={src} className="operation-clip bp-card overflow-hidden rounded-lg border border-white/10 bg-white/8">
                 <video
                   src={src}
                   className="aspect-[9/16] max-h-[480px] w-full bg-[var(--pv-surface-0)] object-cover opacity-100"
@@ -525,7 +551,7 @@ function OperationsDeck() {
   ];
 
   return (
-    <section className="operations-band scroll-mt-44 px-4 py-20 pt-40 text-white sm:px-6 sm:pt-36 lg:scroll-mt-32 lg:px-8 lg:pt-20">
+    <section className="operations-band premium-reveal scroll-mt-44 px-4 py-20 pt-40 text-white sm:px-6 sm:pt-36 lg:scroll-mt-32 lg:px-8 lg:pt-20">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
         <div className="relative">
           <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-white/66">Sistema Prevedello</p>
@@ -636,10 +662,10 @@ function FilterSidebar({
   onOnlyAvailableChange: (value: boolean) => void;
 }) {
   return (
-    <aside className="premium-card rounded-lg p-5 lg:sticky lg:top-28">
+    <aside className="filter-panel rounded-lg p-5 lg:sticky lg:top-28">
       <div className="mb-5 flex items-center justify-between">
-        <h3 className="font-extrabold text-graphite">Filtros</h3>
-        <span className="grid h-9 w-9 place-items-center rounded-full bg-cement text-prevedello-blue">
+        <h3 className="font-extrabold text-white">Filtros</h3>
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-prevedello-red">
           <SlidersHorizontal size={17} />
         </span>
       </div>
@@ -652,7 +678,7 @@ function FilterSidebar({
             className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold transition ${
               activeCategory === category
                 ? "bg-prevedello-blue text-white shadow-[0_12px_28px_rgba(9,59,145,0.18)]"
-                : "bg-white text-zinc-700 ring-1 ring-zinc-200 hover:bg-cement/50"
+                : "bg-white/6 text-[var(--pv-text-secondary)] ring-1 ring-white/10 hover:bg-white/10 hover:text-white"
             }`}
           >
             {category}
@@ -660,7 +686,7 @@ function FilterSidebar({
           </button>
         ))}
       </div>
-      <label className="mt-5 flex cursor-pointer items-center gap-3 rounded-lg bg-cement/70 p-4 text-sm font-bold text-graphite">
+      <label className="mt-5 flex cursor-pointer items-center gap-3 rounded-lg bg-white/6 p-4 text-sm font-bold text-white/78">
         <input
           type="checkbox"
           checked={onlyAvailable}
@@ -740,7 +766,7 @@ function ProductCard({
               {product.stockNote && <span className="rounded-[var(--radius-badge)] bg-white/8 px-2 py-1 text-[var(--pv-text-secondary)]">{product.stockNote}</span>}
             </div>
           )}
-          <div className="mt-5 flex items-center justify-between gap-3 border-t border-zinc-100 pt-4">
+          <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
             <div>
               <p className="font-mono text-xl font-medium text-white">{formatPrice(product.price)}</p>
               <p className={`availability-badge mt-1 ${getAvailabilityClass(product.availability)}`}>
@@ -794,7 +820,7 @@ function ProductGrid({
 
 function BrandStrip() {
   return (
-    <section className="section-band overflow-hidden py-14">
+    <section className="premium-reveal supplier-strip overflow-hidden py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -809,7 +835,7 @@ function BrandStrip() {
           {brands.map((brand) => (
             <div
               key={brand}
-              className="premium-card grid min-w-[180px] place-items-center rounded-lg px-5 py-5 text-center text-sm font-extrabold text-graphite"
+              className="supplier-chip grid min-w-[180px] place-items-center rounded-lg px-5 py-5 text-center text-sm font-extrabold text-white"
             >
               {brand}
             </div>
@@ -826,29 +852,29 @@ function MaterialCalculatorCard({ calculator }: { calculator: (typeof calculator
   const result = Math.max(1, Math.ceil(meters / (calculator.id === "pintura" ? 10 : 3.6)));
 
   return (
-    <article className="premium-card premium-card-hover rounded-lg p-6">
+    <article className="calculator-card rounded-lg p-6">
       <div className="flex items-center gap-3">
-        <span className="grid h-12 w-12 place-items-center rounded-lg bg-prevedello-blue text-white shadow-[0_14px_30px_rgba(9,59,145,0.18)]">
+        <span className="grid h-12 w-12 place-items-center rounded-lg bg-prevedello-red text-white shadow-[0_14px_30px_rgba(220,31,38,0.18)]">
           <Icon size={20} />
         </span>
         <div>
-          <h3 className="text-lg font-extrabold text-graphite">{calculator.title}</h3>
-          <p className="text-sm text-zinc-600">{calculator.description}</p>
+          <h3 className="text-lg font-extrabold text-white">{calculator.title}</h3>
+          <p className="text-sm text-[var(--pv-text-secondary)]">{calculator.description}</p>
         </div>
       </div>
-      <label className="mt-5 block text-sm font-bold text-zinc-700">
+      <label className="mt-5 block text-sm font-bold text-white/78">
         Superficie estimada
         <input
           type="number"
           min={1}
           value={meters}
           onChange={(event) => setMeters(Number(event.target.value))}
-          className="mt-2 h-12 w-full rounded-lg border border-zinc-200 bg-white px-3 text-lg font-extrabold outline-none focus:border-prevedello-red"
+          className="mt-2 h-12 w-full rounded-[var(--radius-input)] border border-white/14 bg-white/8 px-3 text-lg font-extrabold text-white outline-none focus:border-prevedello-red"
         />
       </label>
-      <div className="mt-5 rounded-lg bg-cement p-4">
-        <p className="text-sm font-semibold text-zinc-600">Resultado orientativo</p>
-        <p className="mt-1 text-2xl font-extrabold text-graphite">
+      <div className="mt-5 rounded-lg border border-white/10 bg-white/8 p-4">
+        <p className="text-sm font-semibold text-[var(--pv-text-secondary)]">Resultado orientativo</p>
+        <p className="mt-1 text-2xl font-extrabold text-white">
           {result} {calculator.unit}
         </p>
       </div>
@@ -858,8 +884,8 @@ function MaterialCalculatorCard({ calculator }: { calculator: (typeof calculator
 
 function ProfessionalCTA() {
   return (
-    <section id="empresas" className="section-anchor bg-prevedello-blue px-4 py-20 text-white sm:px-6 lg:px-8">
-      <div className="blueprint-panel mx-auto grid max-w-7xl gap-10 rounded-lg border border-white/14 p-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:p-8">
+    <section id="empresas" className="premium-reveal section-anchor enterprise-band px-4 py-20 text-white sm:px-6 lg:px-8">
+      <div className="enterprise-panel blueprint-panel mx-auto grid max-w-7xl gap-10 rounded-lg border border-white/14 p-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:p-8">
         <div>
           <p className="text-sm font-bold uppercase tracking-wide text-prevedello-red">Empresas y obras</p>
           <h2 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
@@ -883,7 +909,7 @@ function ProfessionalCTA() {
           {serviceHighlights.map((item) => {
             const Icon = item.icon;
             return (
-              <div key={item.label} className="rounded-lg border border-white/12 bg-white/8 p-6 shadow-[0_18px_40px_rgba(9,59,145,0.18)]">
+              <div key={item.label} className="service-tile rounded-lg border border-white/12 bg-white/8 p-6 shadow-[0_18px_40px_rgba(9,59,145,0.18)]">
                 <Icon className="text-prevedello-red" size={24} />
                 <h3 className="mt-4 text-lg font-extrabold">{item.label}</h3>
                 <p className="mt-2 text-sm leading-6 text-white/62">{item.detail}</p>
@@ -1992,7 +2018,7 @@ function AdminCrmPanel({
 
 function PublicFooter() {
   return (
-    <footer className="pv-footer px-4 py-12 text-[var(--pv-text-secondary)] sm:px-6 lg:px-8">
+    <footer className="pv-footer premium-reveal px-4 py-12 text-[var(--pv-text-secondary)] sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <LogoMark compact />
@@ -2050,7 +2076,7 @@ function WhatsAppFab() {
 
 function MobileBottomNav({ cartCount, onCartOpen }: { cartCount: number; onCartOpen: () => void }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[100] h-14 border-t border-[rgba(160,190,255,0.1)] bg-[var(--pv-surface-0)] px-2 py-1 shadow-[0_-16px_45px_rgba(0,0,0,0.35)] lg:hidden">
+    <nav className="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-[100] h-14 border-t border-[rgba(160,190,255,0.1)] bg-[var(--pv-surface-0)] px-2 py-1 shadow-[0_-16px_45px_rgba(0,0,0,0.35)] lg:hidden">
       <div className="grid grid-cols-5 text-xs font-bold text-[var(--pv-text-muted)]">
         {[
           ["#inicio", "Inicio", HomeIcon],
@@ -2710,6 +2736,32 @@ function MarketplacePage() {
     void reloadCatalog();
   }, []);
 
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const context = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>(".premium-reveal, .product-card, .rubro-card, .ds-card").forEach((element) => {
+        gsap.fromTo(
+          element,
+          { y: 28, opacity: 0.001 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.72,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: element,
+              start: "top 88%",
+              once: true,
+            },
+          },
+        );
+      });
+    });
+
+    return () => context.revert();
+  }, []);
+
   const handleSendQuote = async () => {
     const result = await saveQuoteRequest(customer, cart);
     return result.message;
@@ -2766,7 +2818,7 @@ function MarketplacePage() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden pb-20 font-body text-graphite lg:pb-0">
+    <div className="min-h-screen pb-20 font-body text-graphite lg:pb-0">
       <HeaderMarketplace
         query={query}
         onQueryChange={setQuery}
@@ -2778,7 +2830,7 @@ function MarketplacePage() {
       <OperationsDeck />
 
       <main className="pb-24 lg:pb-0">
-        <section id="rubros" className="section-anchor blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
+        <section id="rubros" className="premium-reveal section-anchor blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -2797,7 +2849,7 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section id="pedido" className="section-anchor bg-[var(--pv-surface-1)] px-4 py-18 text-white sm:px-6 lg:px-8">
+        <section id="pedido" className="premium-reveal section-anchor premium-dark-band px-4 py-18 text-white sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-3">
             {[
               ["1", "Buscá o elegí un rubro", "Pisos, ferretería, pintura, obra gruesa, instalaciones o hogar."],
@@ -2815,7 +2867,7 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section id="productos" className="section-anchor bg-[var(--pv-surface-1)] px-4 py-20 text-white sm:px-6 lg:px-8">
+        <section id="productos" className="premium-reveal section-anchor catalog-premium-band px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <Breadcrumbs current="Productos destacados" />
             <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -2839,10 +2891,10 @@ function MarketplacePage() {
                 {filteredProducts.length > 0 ? (
                   <ProductGrid productsList={filteredProducts} onAdd={addToCart} onOpen={setSelectedProduct} />
                 ) : (
-                  <div className="premium-card rounded-lg border-dashed p-10 text-center">
+                  <div className="filter-panel rounded-lg border-dashed p-10 text-center">
                     <ClipboardList className="mx-auto text-prevedello-red" size={38} />
-                    <h3 className="mt-3 text-2xl font-extrabold text-graphite">No encontramos productos.</h3>
-                    <p className="mt-2 text-zinc-600">Proba con otro rubro o envia una consulta general.</p>
+                    <h3 className="mt-3 text-2xl font-extrabold text-white">No encontramos productos.</h3>
+                    <p className="mt-2 text-[var(--pv-text-secondary)]">Proba con otro rubro o envia una consulta general.</p>
                     <div className="mt-5">
                       <WhatsAppQuoteButton items={[]} customer={customer} label="Consultar disponibilidad" />
                     </div>
@@ -2857,7 +2909,7 @@ function MarketplacePage() {
 
         <ProfessionalCTA />
 
-        <section id="calculadoras" className="section-anchor blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
+        <section id="calculadoras" className="premium-reveal section-anchor blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -2876,7 +2928,7 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section className="blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
+        <section className="premium-reveal blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="blueprint-panel mx-auto grid max-w-7xl gap-7 rounded-[var(--radius-card)] border border-white/14 p-6 lg:grid-cols-[1fr_auto] lg:items-center lg:p-8">
             <div>
               <p className="text-sm font-bold uppercase text-white/65">Siguiente paso</p>
