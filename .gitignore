@@ -5,6 +5,7 @@ dist/
 !.env.example
 vite-dev.log
 vite-dev.err.log
+.artifacts/
 *.tsbuildinfo
 /*.mp4
 /*.png

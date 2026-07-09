@@ -61,7 +61,7 @@ export const categories: Category[] = [
     name: "Ferreteria",
     description: "Buloneria, fijaciones, seguridad, adhesivos y consumibles.",
     icon: Wrench,
-    accent: "bg-zinc-900",
+    accent: "bg-prevedello-blue",
   },
   {
     id: "pintureria",
@@ -143,7 +143,7 @@ export const products: Product[] = [
     description: "Equipo robusto para perforacion en mamposteria, madera y metal.",
     uses: ["Instaladores", "Obra", "Taller"],
     related: ["Mechas widia", "Discos de corte", "Extensiones"],
-    imageTone: "from-sky-300 via-blue-700 to-zinc-950",
+    imageTone: "from-sky-300 via-blue-700 to-prevedello-blue",
   },
   {
     id: "porcelanato-ilva",

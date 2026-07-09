@@ -127,14 +127,14 @@ function HeaderMarketplace({
 }) {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-5">
-      <div className="mx-auto flex max-w-7xl items-center gap-3 rounded-lg border border-white/50 bg-white/88 px-3 py-2 shadow-[0_12px_40px_rgba(24,24,24,0.10)] backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center gap-2 rounded-lg border border-white/50 bg-white/92 px-3 py-2 shadow-[0_12px_40px_rgba(9,59,145,0.12)] backdrop-blur-xl lg:gap-3">
         <a href="#inicio" className="shrink-0" aria-label="Ir al inicio">
           <LogoMark compact />
         </a>
-        <div className="hidden min-w-0 flex-1 lg:block">
+        <div className="hidden min-w-0 flex-1 lg:block lg:max-w-sm xl:max-w-md">
           <SearchBar value={query} onChange={onQueryChange} compact />
         </div>
-        <nav className="hidden items-center gap-6 text-sm font-semibold text-zinc-700 lg:flex">
+        <nav className="hidden items-center gap-4 text-sm font-semibold text-zinc-700 lg:flex xl:gap-6">
           <a className="transition hover:text-prevedello-red" href="#rubros">
             Rubros
           </a>
@@ -163,7 +163,7 @@ function HeaderMarketplace({
         <button
           type="button"
           onClick={onCartOpen}
-          className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-graphite text-white transition hover:scale-[1.03]"
+          className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-prevedello-blue text-white transition hover:scale-[1.03]"
           aria-label="Abrir pedido"
         >
           <ShoppingCart size={20} />
@@ -199,18 +199,18 @@ function SearchBar({
 }) {
   return (
     <label
-      className={`flex items-center gap-3 rounded-full border border-zinc-200 bg-white px-4 shadow-sm transition focus-within:border-prevedello-red focus-within:shadow-[0_0_0_4px_rgba(220,31,38,0.08)] ${
+      className={`relative flex min-w-0 items-center gap-2 overflow-hidden rounded-full border border-zinc-200 bg-white px-4 shadow-sm transition focus-within:border-prevedello-red focus-within:shadow-[0_0_0_4px_rgba(220,31,38,0.08)] ${
         compact ? "h-11" : "h-16"
       }`}
     >
-      <Search className="shrink-0 text-prevedello-red" size={compact ? 19 : 23} />
+      <Search className="relative z-10 shrink-0 text-prevedello-red" size={compact ? 19 : 23} />
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder="Que necesitas para tu obra?"
         className="min-w-0 flex-1 bg-transparent text-base font-semibold text-graphite outline-none placeholder:text-zinc-400 sm:text-lg"
       />
-      <span className="hidden rounded-full bg-cement px-3 py-1 text-xs font-bold uppercase text-zinc-600 sm:inline">
+      <span className="hidden shrink-0 rounded-full bg-cement px-3 py-1 text-xs font-bold uppercase text-zinc-600 sm:inline">
         Buscar
       </span>
     </label>
@@ -264,11 +264,11 @@ function HeroSection({
         panelRef.current,
         { yPercent: 100 },
         {
-          yPercent: 18,
+          yPercent: 40,
           ease: "none",
           scrollTrigger: {
             trigger: heroRef.current,
-            start: "top top",
+            start: "12% top",
             end: "bottom top",
             scrub: true,
           },
@@ -295,7 +295,7 @@ function HeroSection({
     <section
       id="inicio"
       ref={heroRef}
-      className="relative min-h-[112svh] overflow-hidden bg-graphite text-white"
+      className="relative min-h-[132svh] overflow-hidden bg-prevedello-blue text-white"
     >
       <div className="absolute inset-0">
         <video
@@ -307,25 +307,25 @@ function HeroSection({
           loop
           preload="metadata"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,16,27,0.92),rgba(9,16,27,0.46),rgba(9,16,27,0.72))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,59,145,0.92),rgba(9,59,145,0.48),rgba(9,59,145,0.78))]" />
         <div className="industrial-grid absolute inset-0 opacity-18 mix-blend-screen" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pb-32 pt-32 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pb-60 pt-32 sm:px-6 lg:px-8 xl:pb-72">
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.88fr] xl:gap-16">
           <div>
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
               <Sparkles size={16} />
               Corralon, ferreteria y hogar en Catamarca
             </div>
-            <h1 className="max-w-4xl text-5xl font-extrabold leading-[0.95] text-white sm:text-7xl lg:text-8xl">
+            <h1 className="hero-heading max-w-4xl font-extrabold text-white">
               Todo para construir, refaccionar y equipar tu hogar.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-white/76 sm:text-xl">
+            <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/76 sm:text-xl">
               Arma tu pedido en minutos, pedi asesoramiento y cotiza materiales con la confianza
               de una empresa familiar que conoce la obra desde adentro.
             </p>
-            <div className="mt-8 max-w-2xl">
+            <div className="relative z-30 mt-6 max-w-xl">
               <SearchBar value={query} onChange={onQueryChange} />
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -345,13 +345,13 @@ function HeroSection({
               </a>
             </div>
           </div>
-          <div className="relative mx-auto hidden h-[min(42vw,560px)] w-full max-w-xl place-items-center lg:grid">
+          <div className="relative mx-auto hidden h-[min(39vw,520px)] w-full max-w-lg place-items-center lg:grid">
             <div className="absolute inset-10 rounded-full bg-prevedello-red/26 blur-3xl" />
             <img
               ref={logoRef}
               src="/assets/prevedello-pap-3d.png"
               alt="Logo 3D Prevedello"
-              className="relative z-10 w-full max-w-[500px] rounded-full drop-shadow-[0_34px_70px_rgba(0,0,0,0.5)]"
+              className="relative z-10 w-full max-w-[440px] rounded-full drop-shadow-[0_34px_70px_rgba(9,59,145,0.52)]"
             />
           </div>
         </div>
@@ -359,9 +359,9 @@ function HeroSection({
 
       <div
         ref={panelRef}
-        className="archive-panel absolute bottom-0 left-0 right-0 z-20 rounded-t-lg bg-[#080808] px-4 py-6 text-white shadow-[0_-30px_90px_rgba(0,0,0,0.35)] sm:px-6 lg:px-8"
+        className="archive-panel absolute bottom-0 left-0 right-0 z-20 rounded-t-lg bg-prevedello-blue px-4 py-8 text-white shadow-[0_-30px_90px_rgba(9,59,145,0.35)] sm:px-6 lg:px-8"
       >
-        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.7fr_1.3fr]">
+        <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div className="flex flex-col justify-between gap-6">
             <div>
               <p className="text-sm font-bold uppercase text-prevedello-red">Prevedello en movimiento</p>
@@ -374,13 +374,13 @@ function HeroSection({
               mundo comercial, donde cada rubro esta pensado para cotizar rapido.
             </p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-3 lg:gap-5">
             {[
               ["/assets/prevedello-todo.mp4", "Todo en un lugar"],
               ["/assets/prevedello-envios.mp4", "Envios cuidados"],
               ["/assets/prevedello-acopio.mp4", "Acopio para obra"],
             ].map(([src, label]) => (
-              <div key={src} className="bp-card overflow-hidden rounded-lg bg-zinc-900">
+              <div key={src} className="bp-card overflow-hidden rounded-lg bg-white/10">
                 <video
                   src={src}
                   className="aspect-[4/5] w-full object-cover opacity-85"
@@ -402,20 +402,20 @@ function HeroSection({
 
 function PromoBanner() {
   return (
-    <section className="bg-graphite px-4 py-5 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 rounded-lg border border-white/10 bg-white/6 p-4 sm:flex-row sm:items-center sm:justify-between">
+    <section className="bg-prevedello-blue px-4 py-8 text-white sm:px-6 lg:px-8">
+      <div className="blueprint-panel mx-auto flex max-w-7xl flex-col gap-6 rounded-lg border border-white/16 p-6 shadow-[0_24px_70px_rgba(9,59,145,0.28)] sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-prevedello-red">
+          <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-prevedello-red shadow-[0_16px_35px_rgba(220,31,38,0.26)]">
             <BadgeCheck size={22} />
           </div>
           <div>
-            <p className="text-sm font-bold uppercase text-white/60">Compra inteligente</p>
-            <h2 className="text-xl font-extrabold">Arma tu pedido, agrega observaciones y envialo por WhatsApp.</h2>
+            <p className="text-sm font-bold uppercase tracking-wide text-white/60">Compra inteligente</p>
+            <h2 className="text-2xl font-extrabold leading-tight">Arma tu pedido, agrega observaciones y envialo por WhatsApp.</h2>
           </div>
         </div>
         <a
           href="#productos"
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-extrabold text-graphite transition hover:scale-[1.03]"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-extrabold text-graphite shadow-[0_16px_35px_rgba(255,255,255,0.16)] transition hover:scale-[1.03]"
         >
           Empezar pedido
           <ChevronRight size={17} />
@@ -432,14 +432,15 @@ function CategoryCard({ category, onSelect }: { category: Category; onSelect: (n
     <button
       type="button"
       onClick={() => onSelect(category.name)}
-      className="group min-w-[240px] rounded-lg border border-zinc-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:border-zinc-300 hover:shadow-xl"
+      className="premium-card premium-card-hover group relative min-w-[250px] overflow-hidden rounded-lg p-6 text-left"
     >
-      <span className={`grid h-11 w-11 place-items-center rounded-lg text-white ${category.accent}`}>
+      <span className="absolute inset-x-0 top-0 h-1 bg-prevedello-red" />
+      <span className={`grid h-12 w-12 place-items-center rounded-lg text-white shadow-[0_14px_30px_rgba(9,59,145,0.16)] ${category.accent}`}>
         <Icon size={21} />
       </span>
-      <h3 className="mt-5 text-xl font-extrabold text-graphite">{category.name}</h3>
+      <h3 className="mt-6 text-xl font-extrabold text-graphite">{category.name}</h3>
       <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{category.description}</p>
-      <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-prevedello-red">
+      <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-prevedello-red">
         Ver rubro
         <ArrowRight size={16} className="transition group-hover:translate-x-1" />
       </span>
@@ -471,10 +472,12 @@ function FilterSidebar({
   onOnlyAvailableChange: (value: boolean) => void;
 }) {
   return (
-    <aside className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm lg:sticky lg:top-28">
-      <div className="mb-4 flex items-center justify-between">
+    <aside className="premium-card rounded-lg p-5 lg:sticky lg:top-28">
+      <div className="mb-5 flex items-center justify-between">
         <h3 className="font-extrabold text-graphite">Filtros</h3>
-        <SlidersHorizontal size={18} className="text-zinc-500" />
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-cement text-prevedello-blue">
+          <SlidersHorizontal size={17} />
+        </span>
       </div>
       <div className="space-y-2">
         {["Todos", ...categories.map((category) => category.name)].map((category) => (
@@ -484,8 +487,8 @@ function FilterSidebar({
             onClick={() => onCategoryChange(category)}
             className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold transition ${
               activeCategory === category
-                ? "bg-graphite text-white"
-                : "bg-zinc-50 text-zinc-700 hover:bg-zinc-100"
+                ? "bg-prevedello-blue text-white shadow-[0_12px_28px_rgba(9,59,145,0.18)]"
+                : "bg-white text-zinc-700 ring-1 ring-zinc-200 hover:bg-cement/50"
             }`}
           >
             {category}
@@ -493,7 +496,7 @@ function FilterSidebar({
           </button>
         ))}
       </div>
-      <label className="mt-5 flex cursor-pointer items-center gap-3 rounded-lg bg-cement/70 p-3 text-sm font-bold text-graphite">
+      <label className="mt-5 flex cursor-pointer items-center gap-3 rounded-lg bg-cement/70 p-4 text-sm font-bold text-graphite">
         <input
           type="checkbox"
           checked={onlyAvailable}
@@ -511,7 +514,7 @@ function ProductVisual({ product }: { product: Product }) {
     return (
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-zinc-100">
         <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-prevedello-blue/80 to-transparent p-4">
           <p className="text-xs font-bold uppercase text-white/70">{product.brand}</p>
           <p className="text-lg font-extrabold leading-5 text-white">{product.category}</p>
         </div>
@@ -521,9 +524,9 @@ function ProductVisual({ product }: { product: Product }) {
 
   return (
     <div className={`relative aspect-[4/3] overflow-hidden rounded-lg bg-gradient-to-br ${product.imageTone}`}>
-      <div className="absolute inset-x-6 bottom-5 top-8 rounded-lg bg-white/42 shadow-[0_24px_50px_rgba(0,0,0,0.18)] backdrop-blur-sm" />
+      <div className="absolute inset-x-6 bottom-5 top-8 rounded-lg bg-white/42 shadow-[0_24px_50px_rgba(9,59,145,0.18)] backdrop-blur-sm" />
       <div className="absolute left-8 top-7 h-16 w-24 rounded-lg bg-white/80 shadow-lg" />
-      <div className="absolute bottom-8 right-7 h-28 w-24 rounded-lg bg-graphite/88 shadow-xl" />
+      <div className="absolute bottom-8 right-7 h-28 w-24 rounded-lg bg-prevedello-blue/88 shadow-xl" />
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="rounded-lg bg-white/86 px-4 py-3 text-center shadow-xl">
           <p className="text-xs font-bold uppercase text-zinc-500">{product.brand}</p>
@@ -544,39 +547,41 @@ function ProductCard({
   onOpen: (product: Product) => void;
 }) {
   return (
-    <article className="rounded-lg border border-zinc-200 bg-white p-3 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+    <article className="premium-card premium-card-hover flex h-full flex-col rounded-lg p-4">
       <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
         <ProductVisual product={product} />
-        <div className="px-1 pb-2 pt-4">
+        <div className="px-1 pb-2 pt-5">
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-xs font-bold uppercase text-prevedello-red">{product.brand}</p>
-              <h3 className="mt-1 text-lg font-extrabold leading-6 text-graphite">{product.name}</h3>
+              <h3 className="mt-1 text-xl font-extrabold leading-6 text-graphite">{product.name}</h3>
             </div>
             <span className="shrink-0 rounded-full bg-cement px-3 py-1 text-xs font-bold text-zinc-700">
               {product.unit}
             </span>
           </div>
-          <p className="mt-3 text-sm leading-6 text-zinc-600">{product.description}</p>
+          <p className="mt-3 min-h-12 text-sm leading-6 text-zinc-600">{product.description}</p>
           {(product.sku || product.stockNote) && (
             <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold text-zinc-500">
               {product.sku && <span className="rounded-full bg-zinc-100 px-2 py-1">SKU {product.sku}</span>}
               {product.stockNote && <span className="rounded-full bg-zinc-100 px-2 py-1">{product.stockNote}</span>}
             </div>
           )}
-          <div className="mt-4 flex items-center justify-between gap-3">
+          <div className="mt-5 flex items-center justify-between gap-3 border-t border-zinc-100 pt-4">
             <div>
               <p className="text-xl font-extrabold text-graphite">{formatPrice(product.price)}</p>
-              <p className="text-xs font-bold text-emerald-700">{product.availability}</p>
+              <p className="mt-1 inline-flex rounded-full bg-emerald-50 px-2 py-1 text-xs font-bold text-emerald-700">
+                {product.availability}
+              </p>
             </div>
           </div>
         </div>
       </button>
-      <div className="grid grid-cols-[1fr_auto] gap-2 pt-2">
+      <div className="mt-auto grid grid-cols-[1fr_auto] gap-3 pt-3">
         <button
           type="button"
           onClick={() => onAdd(product)}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-graphite px-4 py-3 text-sm font-bold text-white transition hover:bg-black"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-4 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(9,59,145,0.2)] transition hover:bg-blue-800"
         >
           <Plus size={17} />
           Agregar
@@ -585,7 +590,7 @@ function ProductCard({
           href={makeWhatsAppHref([{ product, quantity: 1 }], defaultQuoteForm)}
           target="_blank"
           rel="noreferrer"
-          className="grid h-12 w-12 place-items-center rounded-full border border-zinc-200 text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-50"
+          className="grid h-12 w-12 place-items-center rounded-full border border-emerald-200 bg-emerald-50 text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-100"
           aria-label={`Consultar ${product.name} por WhatsApp`}
         >
           <MessageCircle size={19} />
@@ -605,7 +610,7 @@ function ProductGrid({
   onOpen: (product: Product) => void;
 }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="grid items-stretch gap-6 sm:grid-cols-2 xl:grid-cols-3">
       {productsList.map((product) => (
         <ProductCard key={product.id} product={product} onAdd={onAdd} onOpen={onOpen} />
       ))}
@@ -615,14 +620,22 @@ function ProductGrid({
 
 function BrandStrip() {
   return (
-    <section className="overflow-hidden bg-white py-8">
+    <section className="section-band overflow-hidden py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="mb-4 text-sm font-bold uppercase text-zinc-500">Marcas y proveedores</p>
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="section-kicker">Marcas y proveedores</p>
+            <h2 className="mt-2 text-3xl font-extrabold text-graphite sm:text-4xl">Respaldo para cada rubro.</h2>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-zinc-600">
+            Una base comercial pensada para cargar proveedores reales y ordenar la oferta.
+          </p>
+        </div>
+        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none">
           {brands.map((brand) => (
             <div
               key={brand}
-              className="grid min-w-[170px] place-items-center rounded-lg border border-zinc-200 bg-zinc-50 px-5 py-4 text-center text-sm font-extrabold text-graphite"
+              className="premium-card grid min-w-[180px] place-items-center rounded-lg px-5 py-5 text-center text-sm font-extrabold text-graphite"
             >
               {brand}
             </div>
@@ -639,9 +652,9 @@ function MaterialCalculatorCard({ calculator }: { calculator: (typeof calculator
   const result = Math.max(1, Math.ceil(meters / (calculator.id === "pintura" ? 10 : 3.6)));
 
   return (
-    <article className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
+    <article className="premium-card premium-card-hover rounded-lg p-6">
       <div className="flex items-center gap-3">
-        <span className="grid h-11 w-11 place-items-center rounded-lg bg-graphite text-white">
+        <span className="grid h-12 w-12 place-items-center rounded-lg bg-prevedello-blue text-white shadow-[0_14px_30px_rgba(9,59,145,0.18)]">
           <Icon size={20} />
         </span>
         <div>
@@ -656,10 +669,10 @@ function MaterialCalculatorCard({ calculator }: { calculator: (typeof calculator
           min={1}
           value={meters}
           onChange={(event) => setMeters(Number(event.target.value))}
-          className="mt-2 h-12 w-full rounded-lg border border-zinc-200 px-3 text-lg font-extrabold outline-none focus:border-prevedello-red"
+          className="mt-2 h-12 w-full rounded-lg border border-zinc-200 bg-white px-3 text-lg font-extrabold outline-none focus:border-prevedello-red"
         />
       </label>
-      <div className="mt-4 rounded-lg bg-cement p-4">
+      <div className="mt-5 rounded-lg bg-cement p-4">
         <p className="text-sm font-semibold text-zinc-600">Resultado orientativo</p>
         <p className="mt-1 text-2xl font-extrabold text-graphite">
           {result} {calculator.unit}
@@ -671,10 +684,10 @@ function MaterialCalculatorCard({ calculator }: { calculator: (typeof calculator
 
 function ProfessionalCTA() {
   return (
-    <section id="empresas" className="bg-[#101010] px-4 py-16 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+    <section id="empresas" className="section-anchor bg-prevedello-blue px-4 py-20 text-white sm:px-6 lg:px-8">
+      <div className="blueprint-panel mx-auto grid max-w-7xl gap-10 rounded-lg border border-white/14 p-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:p-8">
         <div>
-          <p className="text-sm font-bold uppercase text-prevedello-red">Empresas y obras</p>
+          <p className="text-sm font-bold uppercase tracking-wide text-prevedello-red">Empresas y obras</p>
           <h2 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
             Compras por volumen con seguimiento, entrega y asesoramiento tecnico.
           </h2>
@@ -692,11 +705,11 @@ function ProfessionalCTA() {
             </a>
           </div>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2">
           {serviceHighlights.map((item) => {
             const Icon = item.icon;
             return (
-              <div key={item.label} className="rounded-lg border border-white/10 bg-white/7 p-5">
+              <div key={item.label} className="rounded-lg border border-white/12 bg-white/8 p-6 shadow-[0_18px_40px_rgba(9,59,145,0.18)]">
                 <Icon className="text-prevedello-red" size={24} />
                 <h3 className="mt-4 text-lg font-extrabold">{item.label}</h3>
                 <p className="mt-2 text-sm leading-6 text-white/62">{item.detail}</p>
@@ -745,7 +758,7 @@ function QuoteCart({
     <div className={`fixed inset-0 z-[80] ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
       <button
         type="button"
-        className={`absolute inset-0 bg-black/45 transition ${open ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 bg-prevedello-blue/35 transition ${open ? "opacity-100" : "opacity-0"}`}
         onClick={onClose}
         aria-label="Cerrar pedido"
       />
@@ -805,7 +818,7 @@ function QuoteCart({
                     >
                       <Minus size={16} />
                     </button>
-                    <span className="grid h-9 min-w-12 place-items-center rounded-full bg-graphite px-3 text-sm font-bold text-white">
+                    <span className="grid h-9 min-w-12 place-items-center rounded-full bg-prevedello-blue px-3 text-sm font-bold text-white">
                       {item.quantity}
                     </span>
                     <button
@@ -891,7 +904,7 @@ function ProductDetailModal({
   if (!product) return null;
 
   return (
-    <div className="fixed inset-0 z-[90] grid place-items-end bg-black/50 p-0 sm:place-items-center sm:p-4">
+    <div className="fixed inset-0 z-[90] grid place-items-end bg-prevedello-blue/35 p-0 sm:place-items-center sm:p-4">
       <article className="max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-t-lg bg-white p-4 shadow-2xl sm:rounded-lg sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-4">
           <Breadcrumbs current={product.name} />
@@ -960,7 +973,7 @@ function ProductDetailModal({
               <button
                 type="button"
                 onClick={() => onAdd(product)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-graphite px-5 py-3 text-sm font-bold text-white transition hover:bg-black"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
               >
                 <Plus size={17} />
                 Agregar al pedido
@@ -1092,11 +1105,11 @@ function AdminCatalogPanel({
   };
 
   return (
-    <section id="admin" className="bg-white px-4 py-16 sm:px-6 lg:px-8">
+    <section id="admin" className="section-anchor section-band px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-7 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div className="mb-9 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
-            <p className="text-sm font-bold uppercase text-prevedello-red">Admin local</p>
+            <p className="section-kicker">Admin local</p>
             <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">
               Carga productos sin esperar al backend.
             </h2>
@@ -1105,16 +1118,16 @@ function AdminCatalogPanel({
               validar catalogo, fotos, filtros y cotizacion antes de conectar Supabase.
             </p>
           </div>
-          <div className="rounded-lg bg-cement px-5 py-4">
+          <div className="premium-card rounded-lg px-6 py-5">
             <p className="text-sm font-bold text-zinc-600">Productos activos</p>
             <p className="text-3xl font-extrabold text-graphite">{productsList.length}</p>
           </div>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[1fr_0.9fr]">
-          <form onSubmit={handleManualSubmit} className="rounded-lg border border-zinc-200 bg-zinc-50 p-5">
+        <div className="grid gap-7 lg:grid-cols-[1fr_0.9fr]">
+          <form onSubmit={handleManualSubmit} className="premium-card rounded-lg p-6">
             <div className="mb-5 flex items-center gap-3">
-              <span className="grid h-11 w-11 place-items-center rounded-lg bg-graphite text-white">
+              <span className="grid h-11 w-11 place-items-center rounded-lg bg-prevedello-blue text-white">
                 <Save size={20} />
               </span>
               <div>
@@ -1196,17 +1209,17 @@ function AdminCatalogPanel({
             </div>
             <button
               type="submit"
-              className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-graphite px-5 py-3 text-sm font-bold text-white transition hover:bg-black"
+              className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
             >
               <Save size={17} />
               Guardar producto
             </button>
           </form>
 
-          <div className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
-            <div className="mb-5 rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+          <div className="premium-card rounded-lg p-6">
+            <div className="mb-5 rounded-lg border border-prevedello-blue/10 bg-cement/50 p-4">
               <div className="flex items-start gap-3">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-graphite text-white">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-prevedello-blue text-white">
                   <Database size={20} />
                 </span>
                 <div>
@@ -1228,7 +1241,7 @@ function AdminCatalogPanel({
                 <button
                   type="button"
                   onClick={async () => setMessage(await onPublishCatalog())}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-graphite px-4 py-2 text-sm font-bold text-white transition hover:bg-black"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-800"
                 >
                   <CloudUpload size={16} />
                   Publicar en Supabase
@@ -1275,7 +1288,7 @@ function AdminCatalogPanel({
               </button>
             </div>
             <p className="mt-4 rounded-lg bg-cement p-3 text-sm font-semibold text-zinc-700">{message}</p>
-            <div className="mt-5 rounded-lg bg-zinc-50 p-4">
+            <div className="mt-5 rounded-lg bg-cement/50 p-4">
               <p className="text-sm font-extrabold text-graphite">Columnas sugeridas</p>
               <p className="mt-2 text-sm leading-6 text-zinc-600">
                 nombre, marca, categoria, unidad, precio, disponibilidad, descripcion, usos,
@@ -1318,11 +1331,11 @@ function AdminCrmPanel({
   };
 
   return (
-    <section className="bg-[#f7f3eb] px-4 py-16 sm:px-6 lg:px-8">
+    <section className="section-band px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-7 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm font-bold uppercase text-prevedello-red">CRM comercial</p>
+            <p className="section-kicker">CRM comercial</p>
             <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">
               Seguimiento de consultas y cotizaciones.
             </h2>
@@ -1334,30 +1347,30 @@ function AdminCrmPanel({
           <button
             type="button"
             onClick={() => void onReload()}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-graphite px-5 py-3 text-sm font-bold text-white transition hover:bg-black"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
           >
             <RotateCcw size={17} />
             Recargar CRM
           </button>
         </div>
 
-        <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {[
             ["Nuevas", stats.newQuotes],
             ["Pendientes", stats.pending],
             ["Ganadas", stats.won],
             ["Perdidas", stats.lost],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
+            <div key={label} className="premium-card rounded-lg p-6">
               <p className="text-sm font-bold uppercase text-zinc-500">{label}</p>
               <p className="mt-2 text-4xl font-extrabold text-graphite">{value}</p>
             </div>
           ))}
         </div>
 
-        <p className="mb-4 rounded-lg bg-white p-3 text-sm font-semibold text-zinc-700 shadow-sm">{statusMessage}</p>
+        <p className="mb-5 rounded-lg bg-white p-4 text-sm font-semibold text-zinc-700 shadow-sm">{statusMessage}</p>
 
-        <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
+        <div className="premium-card overflow-hidden rounded-lg">
           {quotes.length === 0 ? (
             <div className="p-8 text-center">
               <ClipboardList className="mx-auto text-prevedello-red" size={38} />
@@ -1428,7 +1441,7 @@ function AdminCrmPanel({
 
 function MobileBottomNav({ cartCount, onCartOpen }: { cartCount: number; onCartOpen: () => void }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-zinc-200 bg-white px-2 py-2 shadow-[0_-10px_30px_rgba(0,0,0,0.10)] lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-prevedello-blue/10 bg-white/95 px-2 py-2 shadow-[0_-14px_40px_rgba(9,59,145,0.16)] backdrop-blur-xl lg:hidden">
       <div className="grid grid-cols-5 text-xs font-bold text-zinc-600">
         {[
           ["#inicio", "Inicio", HomeIcon],
@@ -1444,7 +1457,7 @@ function MobileBottomNav({ cartCount, onCartOpen }: { cartCount: number; onCartO
                 key={label as string}
                 type="button"
                 onClick={onCartOpen}
-                className="relative flex flex-col items-center gap-1 rounded-lg px-2 py-1 text-graphite"
+                className="relative flex flex-col items-center gap-1 rounded-lg px-2 py-1 text-graphite transition hover:bg-cement/60"
               >
                 <IconComponent size={19} />
                 <span>{label as string}</span>
@@ -1463,7 +1476,7 @@ function MobileBottomNav({ cartCount, onCartOpen }: { cartCount: number; onCartO
               href={href as string}
               target={(label as string) === "WhatsApp" ? "_blank" : undefined}
               rel={(label as string) === "WhatsApp" ? "noreferrer" : undefined}
-              className="flex flex-col items-center gap-1 rounded-lg px-2 py-1"
+              className="flex flex-col items-center gap-1 rounded-lg px-2 py-1 transition hover:bg-cement/60 hover:text-graphite"
             >
               <IconComponent size={19} />
               <span>{label as string}</span>
@@ -1493,12 +1506,12 @@ const slugify = (value: string) =>
 
 function RouteHeader({ title, eyebrow, children }: { title: string; eyebrow: string; children?: ReactNode }) {
   return (
-    <div className="bg-graphite px-4 pb-12 pt-28 text-white sm:px-6 lg:px-8">
+    <div className="bg-prevedello-blue px-4 pb-14 pt-28 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <Link to="/" className="mb-8 inline-block rounded-lg bg-white px-4 py-3">
           <LogoMark compact />
         </Link>
-        <p className="text-sm font-bold uppercase text-prevedello-red">{eyebrow}</p>
+        <p className="text-sm font-bold uppercase tracking-wide text-prevedello-red">{eyebrow}</p>
         <h1 className="mt-2 max-w-4xl text-5xl font-extrabold leading-tight sm:text-6xl">{title}</h1>
         {children && <div className="mt-5 max-w-2xl text-lg leading-8 text-white/72">{children}</div>}
       </div>
@@ -1533,8 +1546,9 @@ function ProductsRoutePage() {
       <RouteHeader title="Catalogo de productos" eyebrow="Productos">
         Busca por producto, marca o rubro. Esta ruta queda lista para convertirse en catalogo completo.
       </RouteHeader>
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mb-5 rounded-lg bg-white p-4 shadow-sm">
+      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+        <div className="premium-card mb-7 rounded-lg p-5">
           <SearchBar value={query} onChange={setQuery} />
           <p className="mt-3 text-sm font-semibold text-zinc-600">{status}</p>
         </div>
@@ -1543,6 +1557,7 @@ function ProductsRoutePage() {
           onAdd={(product) => setSelectedProduct(product)}
           onOpen={setSelectedProduct}
         />
+        </div>
       </main>
       <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} onAdd={() => undefined} />
     </div>
@@ -1561,7 +1576,7 @@ function ProductRoutePage() {
           Volve al catalogo para buscar otra alternativa.
         </RouteHeader>
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <Link to="/productos" className="rounded-full bg-graphite px-5 py-3 text-sm font-bold text-white">
+          <Link to="/productos" className="rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
             Ver productos
           </Link>
         </div>
@@ -1574,9 +1589,10 @@ function ProductRoutePage() {
       <RouteHeader title={product.name} eyebrow={product.category}>
         {product.description}
       </RouteHeader>
-      <main className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8">
+      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[1fr_0.9fr]">
         <ProductVisual product={product} />
-        <div className="rounded-lg bg-white p-6 shadow-sm">
+        <div className="premium-card rounded-lg p-7">
           <p className="text-sm font-bold uppercase text-prevedello-red">{product.brand}</p>
           <p className="mt-3 text-4xl font-extrabold text-graphite">{formatPrice(product.price)}</p>
           <p className="mt-2 text-sm font-bold text-emerald-700">{product.availability}</p>
@@ -1594,6 +1610,7 @@ function ProductRoutePage() {
             </Link>
           </div>
         </div>
+      </div>
       </main>
     </div>
   );
@@ -1605,14 +1622,15 @@ function CategoriesRoutePage() {
       <RouteHeader title="Rubros de Prevedello" eyebrow="Rubros">
         Accesos directos para comprar por necesidad de obra, refaccion o equipamiento.
       </RouteHeader>
-      <main className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
+      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-4">
         {categories.map((category) => {
           const Icon = category.icon;
           return (
           <Link
             key={category.id}
             to={`/rubros/${slugify(category.name)}`}
-            className="group rounded-lg border border-zinc-200 bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:border-zinc-300 hover:shadow-xl"
+            className="premium-card premium-card-hover group rounded-lg p-6 text-left"
           >
             <span className={`grid h-11 w-11 place-items-center rounded-lg text-white ${category.accent}`}>
               <Icon size={21} />
@@ -1626,6 +1644,7 @@ function CategoriesRoutePage() {
           </Link>
           );
         })}
+      </div>
       </main>
     </div>
   );
@@ -1644,8 +1663,10 @@ function CategoryRoutePage() {
       <RouteHeader title={category.name} eyebrow="Rubro">
         {category.description}
       </RouteHeader>
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
         <ProductGrid productsList={categoryProducts} onAdd={() => undefined} onOpen={() => undefined} />
+      </div>
       </main>
     </div>
   );
@@ -1657,11 +1678,11 @@ function QuoteRoutePage() {
       <RouteHeader title="Cotizacion online" eyebrow="Pedido">
         El flujo principal sigue integrado en la home. Desde cualquier producto podes armar tu pedido y enviarlo por WhatsApp.
       </RouteHeader>
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="rounded-lg bg-white p-6 shadow-sm">
+      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
+        <div className="premium-card mx-auto max-w-7xl rounded-lg p-7">
           <h2 className="text-2xl font-extrabold text-graphite">Paso siguiente</h2>
           <p className="mt-2 text-zinc-600">Volver a la home para agregar productos al carrito de cotizacion.</p>
-          <Link to="/#productos" className="mt-5 inline-flex rounded-full bg-graphite px-5 py-3 text-sm font-bold text-white">
+          <Link to="/#productos" className="mt-5 inline-flex rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
             Ir a productos
           </Link>
         </div>
@@ -1842,18 +1863,18 @@ function MarketplacePage() {
       <PromoBanner />
 
       <main>
-        <section id="rubros" className="px-4 py-14 sm:px-6 lg:px-8">
+        <section id="rubros" className="section-anchor section-band px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-sm font-bold uppercase text-prevedello-red">Rubros principales</p>
+                <p className="section-kicker">Rubros principales</p>
                 <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">Compra por necesidad de obra.</h2>
               </div>
               <p className="max-w-md text-sm leading-6 text-zinc-600">
                 Accesos pensados para que una persona comun encuentre rapido lo que necesita y pueda pedir ayuda sin friccion.
               </p>
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-none lg:grid lg:grid-cols-4 lg:overflow-visible">
+            <div className="flex gap-5 overflow-x-auto pb-3 scrollbar-none lg:grid lg:grid-cols-4 lg:overflow-visible">
               {categories.map((category) => (
                 <CategoryCard key={category.id} category={category} onSelect={handleCategorySelect} />
               ))}
@@ -1861,15 +1882,15 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section id="pedido" className="bg-white px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
+        <section id="pedido" className="section-anchor bg-white px-4 py-18 sm:px-6 lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-3">
             {[
               ["1", "Busca o elegi un rubro", "Pisos, ferreteria, pintura, obra gruesa, instalaciones o hogar."],
               ["2", "Agrega productos al pedido", "No hay checkout: es una cotizacion rapida con cantidades y notas."],
               ["3", "Envia por WhatsApp", "El mensaje sale armado para que Prevedello responda con precio y entrega."],
             ].map(([step, title, detail]) => (
-              <div key={step} className="rounded-lg border border-zinc-200 bg-zinc-50 p-5">
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-prevedello-red text-lg font-extrabold text-white">
+              <div key={step} className="premium-card premium-card-hover rounded-lg p-6">
+                <span className="grid h-11 w-11 place-items-center rounded-full bg-prevedello-red text-lg font-extrabold text-white shadow-[0_14px_30px_rgba(220,31,38,0.18)]">
                   {step}
                 </span>
                 <h3 className="mt-4 text-xl font-extrabold text-graphite">{title}</h3>
@@ -1879,12 +1900,12 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section id="productos" className="px-4 py-16 sm:px-6 lg:px-8">
+        <section id="productos" className="section-anchor bg-white px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <Breadcrumbs current="Productos destacados" />
-            <div className="mb-7 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-sm font-bold uppercase text-prevedello-red">Catalogo inicial</p>
+                <p className="section-kicker">Catalogo inicial</p>
                 <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">Productos para cotizar hoy.</h2>
               </div>
               <p className="max-w-xl text-sm leading-6 text-zinc-600">
@@ -1892,7 +1913,7 @@ function MarketplacePage() {
                 lista para conectar categorias, productos, marcas y pedidos a Supabase cuando lo definamos.
               </p>
             </div>
-            <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
+            <div className="grid gap-7 lg:grid-cols-[300px_1fr]">
               <FilterSidebar
                 activeCategory={activeCategory}
                 onCategoryChange={setActiveCategory}
@@ -1903,7 +1924,7 @@ function MarketplacePage() {
                 {filteredProducts.length > 0 ? (
                   <ProductGrid productsList={filteredProducts} onAdd={addToCart} onOpen={setSelectedProduct} />
                 ) : (
-                  <div className="rounded-lg border border-dashed border-zinc-300 bg-white p-8 text-center">
+                  <div className="premium-card rounded-lg border-dashed p-10 text-center">
                     <ClipboardList className="mx-auto text-prevedello-red" size={38} />
                     <h3 className="mt-3 text-2xl font-extrabold text-graphite">No encontramos productos.</h3>
                     <p className="mt-2 text-zinc-600">Proba con otro rubro o envia una consulta general.</p>
@@ -1921,18 +1942,18 @@ function MarketplacePage() {
 
         <ProfessionalCTA />
 
-        <section id="calculadoras" className="px-4 py-16 sm:px-6 lg:px-8">
+        <section id="calculadoras" className="section-anchor section-band px-4 py-20 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-sm font-bold uppercase text-prevedello-red">Calculadoras</p>
+                <p className="section-kicker">Calculadoras</p>
                 <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">Estimaciones para comprar mejor.</h2>
               </div>
               <p className="max-w-md text-sm leading-6 text-zinc-600">
                 Resultados orientativos para iniciar la cotizacion. El equipo puede ajustar cantidades segun medidas y uso real.
               </p>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               {calculators.map((calculator) => (
                 <MaterialCalculatorCard key={calculator.id} calculator={calculator} />
               ))}
@@ -1940,8 +1961,8 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section className="bg-prevedello-blue px-4 py-16 text-white sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+        <section className="bg-prevedello-blue px-4 py-20 text-white sm:px-6 lg:px-8">
+          <div className="blueprint-panel mx-auto grid max-w-7xl gap-7 rounded-lg border border-white/14 p-6 lg:grid-cols-[1fr_auto] lg:items-center lg:p-8">
             <div>
               <p className="text-sm font-bold uppercase text-white/65">Siguiente paso</p>
               <h2 className="mt-2 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
