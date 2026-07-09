@@ -123,12 +123,30 @@ const defaultQuoteForm: QuoteFormState = {
 };
 
 const heroMetrics = [
+  ["1970", "compromiso"],
   ["+8", "rubros"],
-  ["24/7", "pedido listo"],
-  ["1970", "Catamarca"],
+  ["SFVC", "Catamarca"],
 ] as const;
 
 const quickNeeds = ["Cemento", "Pintura", "Ferretería", "Sanitarios", "Pisos"] as const;
+
+const officialBrandLogos = [
+  { name: "FV", src: "https://static.wixstatic.com/media/a238c4_4d8c1fe4abf44cf4b93b841bf4bc853c~mv2.png/v1/fill/w_151,h_32,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo_fv.png" },
+  { name: "Makita", src: "https://static.wixstatic.com/media/a238c4_ca8465ac97044c22a3fe3718a1a941e6~mv2.png/v1/fill/w_136,h_45,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo-makita.png" },
+  { name: "Sika", src: "https://static.wixstatic.com/media/a238c4_c61de20db35f48cca1de94ba3b66226e~mv2.webp/v1/fill/w_104,h_95,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sika_NoClaim_pos_rgb_mobile.webp" },
+  { name: "Ternium", src: "https://static.wixstatic.com/media/a238c4_b5476b3251334ed39e467ab00496a1d1~mv2.png/v1/fill/w_136,h_41,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ternium-logo-png_seeklogo-137631.png" },
+  { name: "Weber", src: "https://static.wixstatic.com/media/a238c4_9b124d9275624a738a146aad4b9ca749~mv2.png/v1/fill/w_165,h_48,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/weber2.png" },
+  { name: "Roca", src: "https://static.wixstatic.com/media/a238c4_ce348338593f4564895f7dc83a507b9a~mv2.png/v1/fill/w_136,h_57,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Roca-negro-png.png" },
+  { name: "Durlock", src: "https://static.wixstatic.com/media/a238c4_2cfb67cd05884a338bd1e6339f4024d8~mv2.png/v1/fill/w_160,h_38,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Durlock%20-negro%20-png.png" },
+  { name: "Cemento Avellaneda", src: "https://static.wixstatic.com/media/a238c4_e4918ce3f2754084abec1fbb6eb78839~mv2.png/v1/fill/w_111,h_109,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/CementoAvellaneda_png.png" },
+] as const;
+
+const officialServicePillars = [
+  { title: "Servicio de calidad", detail: "Atención comercial cuidada para obra, casa y profesionales.", icon: BadgeCheck },
+  { title: "Atención personalizada", detail: "Asesoramiento humano para elegir mejor y comprar sin vueltas.", icon: Users },
+  { title: "Soluciones rápidas", detail: "Pedido armado, cotización por WhatsApp y respuesta local.", icon: MessageCircle },
+  { title: "Entrega a domicilio", detail: "Materiales, ferretería y hogar con logística para Catamarca.", icon: PackageCheck },
+] as const;
 
 function LogoMark({ compact = false }: { compact?: boolean }) {
   return (
@@ -380,29 +398,28 @@ function HeroSection({
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col justify-center px-4 pb-28 pt-8 sm:px-6 sm:pt-10 lg:min-h-[calc(100svh-24px)] lg:px-8 lg:pb-16 lg:pt-12 xl:pt-14">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.88fr] xl:gap-16">
           <div className="hero-copy premium-reveal">
-            <div className="mb-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
+            <div className="hero-kicker mb-5 inline-flex items-center gap-2 rounded-[var(--radius-badge)] border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
+              <Sparkles size={16} />
+              Comprometidos desde 1970 · Catamarca
+            </div>
+            <h1 className="hero-heading max-w-4xl font-extrabold text-white">
+              Construyendo un futuro sólido.
+            </h1>
+            <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
+              Materiales, ferretería y hogar con atención personalizada. Ahora también con un mostrador digital para buscar, armar tu pedido y cotizar en minutos.
+            </p>
+            <div className="mobile-hero-photo mt-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
               <picture>
-                <source media="(max-width: 767px)" srcSet="/hero-mobile.png" />
+                <source media="(max-width: 767px)" srcSet="/assets/official-portada.png" />
                 <img
-                  src="/hero-desktop.png"
-                  alt="Prevedello Market — mostrador digital de construcción"
-                  className="aspect-[4/3] w-full object-cover object-center"
+                  src="/assets/official-portada.png"
+                  alt="Prevedello — construyendo un futuro sólido"
+                  className="aspect-[16/10] w-full object-cover object-center"
                   loading="eager"
                   fetchPriority="high"
                 />
               </picture>
             </div>
-            <div className="hero-kicker mb-5 inline-flex items-center gap-2 rounded-[var(--radius-badge)] border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
-              <Sparkles size={16} />
-              Corralón, ferretería y hogar en Catamarca
-            </div>
-            <h1 className="hero-heading max-w-4xl font-extrabold text-white">
-              Tu mostrador digital para resolver la obra.
-            </h1>
-            <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
-              Buscá materiales, armá tu pedido y cotizá en minutos.
-              Atención local en Catamarca, respuesta humana garantizada.
-            </p>
             <div className="mt-6 grid max-w-2xl grid-cols-3 gap-2 sm:gap-3">
               {heroMetrics.map(([value, label]) => (
                 <div key={value} className="metric-tile rounded-[var(--radius-card)] border border-white/14 bg-white/10 p-3 backdrop-blur-md">
@@ -447,11 +464,11 @@ function HeroSection({
             <div className="absolute inset-4 bg-prevedello-red/24 blur-3xl" />
             <div className="hero-visual-card relative z-10 overflow-hidden rounded-[var(--radius-modal)] border border-white/18 bg-white/8 shadow-[0_34px_90px_rgba(0,0,0,0.52)]">
               <picture>
-                <source media="(max-width: 767px)" srcSet="/hero-mobile.png" />
+                <source media="(max-width: 767px)" srcSet="/assets/official-portada.png" />
                 <img
                   ref={logoRef}
-                  src="/hero-desktop.png"
-                  alt="Prevedello Market — mostrador digital de construcción"
+                  src="/assets/official-portada.png"
+                  alt="Prevedello — construyendo un futuro sólido"
                   className="h-full min-h-[480px] w-full object-cover object-center"
                   loading="eager"
                   fetchPriority="high"
@@ -459,8 +476,8 @@ function HeroSection({
               </picture>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,13,31,.28))]" />
               <div className="hero-technical-label absolute bottom-4 left-4 right-4 border-l-2 border-prevedello-red bg-black/38 p-4 backdrop-blur-md">
-                <p className="font-heading text-xl font-bold uppercase text-white">Mostrador técnico activo</p>
-                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">Obra, hogar y cotización en una sola ficha.</p>
+                <p className="font-heading text-xl font-bold uppercase text-white">Prevedello Market</p>
+                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">La atención de siempre, ahora más simple para cotizar.</p>
               </div>
             </div>
           </div>
@@ -474,14 +491,14 @@ function HeroSection({
         <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div className="flex flex-col justify-between gap-6">
             <div>
-              <p className="text-sm font-bold uppercase text-prevedello-red">Mostrador vivo</p>
+              <p className="text-sm font-bold uppercase text-prevedello-red">Todo para tu proyecto</p>
               <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">
-                Productos, acopio y entregas en una experiencia de compra.
+                Asesoramiento, productos y entrega con respuesta local.
               </h2>
             </div>
             <p className="max-w-md text-sm leading-6 text-white/62">
-              El hero abre la marca y el panel baja al mundo comercial: cada rubro está pensado
-              para buscar, sumar al pedido y cotizar sin perder tiempo.
+              La experiencia digital no reemplaza el trato de mostrador: lo ordena. Buscás por rubro,
+              sumás productos y enviás una consulta clara para recibir asesoramiento.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3 lg:gap-5">
@@ -521,8 +538,8 @@ function PromoBanner() {
             <BadgeCheck size={22} />
           </div>
           <div>
-            <p className="text-sm font-bold uppercase tracking-wide text-white/60">Compra inteligente</p>
-            <h2 className="text-2xl font-extrabold leading-tight">Armá el pedido como una lista de obra y mandalo listo por WhatsApp.</h2>
+            <p className="text-sm font-bold uppercase tracking-wide text-white/60">Consultas online</p>
+            <h2 className="text-2xl font-extrabold leading-tight">Armá tu lista de materiales y mandala lista para que Prevedello te asesore.</h2>
           </div>
         </div>
         <a
@@ -532,6 +549,46 @@ function PromoBanner() {
           Empezar pedido
           <ChevronRight size={17} />
         </a>
+      </div>
+    </section>
+  );
+}
+
+function OfficialHeritage() {
+  return (
+    <section className="heritage-band premium-reveal px-4 py-20 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+        <div className="heritage-gallery grid gap-4 sm:grid-cols-[0.8fr_1.2fr]">
+          <div className="overflow-hidden rounded-[var(--radius-modal)] border border-white/12 bg-white/6 shadow-[0_24px_70px_rgba(0,0,0,0.32)]">
+            <img src="/assets/official-service.png" alt="Atención Prevedello" className="h-full min-h-[280px] w-full object-cover" />
+          </div>
+          <div className="grid gap-4">
+            <img src="/assets/official-rubros.png" alt="Rubros Prevedello" className="h-52 w-full rounded-[var(--radius-modal)] border border-white/12 object-cover shadow-[0_20px_60px_rgba(0,0,0,0.28)]" />
+            <div className="heritage-year rounded-[var(--radius-modal)] border border-white/14 bg-white/8 p-5">
+              <p className="font-heading text-6xl font-black leading-none text-white">1970</p>
+              <p className="mt-2 text-sm font-bold uppercase tracking-[0.18em] text-prevedello-red">Compromiso local</p>
+              <p className="mt-3 text-sm leading-6 text-[var(--pv-text-secondary)]">Una empresa familiar que creció con esfuerzo, valores y cercanía con la comunidad.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p className="section-kicker text-prevedello-red">Quiénes somos</p>
+          <h2 className="mt-3 max-w-3xl font-heading text-5xl font-black uppercase leading-[0.95] text-white sm:text-6xl">
+            Orgullosos del servicio que brindamos.
+          </h2>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-white/72">
+            Desde la llegada de un joven italiano en 1912 hasta convertirse en referente del sector, la familia Prevedello construyó mucho más que un negocio: una historia de esfuerzo, valores y compromiso con Catamarca.
+          </p>
+          <div className="mt-7 grid gap-3 sm:grid-cols-2">
+            {officialServicePillars.map(({ title, detail, icon: Icon }) => (
+              <article key={title} className="heritage-service-card rounded-[var(--radius-card)] border border-white/12 bg-white/7 p-4">
+                <Icon className="text-prevedello-red" size={22} />
+                <h3 className="mt-3 font-heading text-xl font-bold uppercase text-white">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--pv-text-secondary)]">{detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -824,20 +881,21 @@ function BrandStrip() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="section-kicker">Marcas y proveedores</p>
-            <h2 className="mt-2 text-3xl font-extrabold text-graphite sm:text-4xl">Respaldo para cada rubro.</h2>
+            <p className="section-kicker text-prevedello-red">Empresas con las que trabajamos</p>
+            <h2 className="mt-2 text-3xl font-extrabold text-white sm:text-4xl">Marcas reconocidas para proyectos reales.</h2>
           </div>
-          <p className="max-w-md text-sm leading-6 text-zinc-600">
-            Una base comercial pensada para cargar proveedores reales y ordenar la oferta.
+          <p className="max-w-md text-sm leading-6 text-[var(--pv-text-secondary)]">
+            Tomamos el respaldo de la web institucional y lo conectamos con una experiencia rápida de catálogo y cotización.
           </p>
         </div>
         <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none">
-          {brands.map((brand) => (
+          {officialBrandLogos.map((brand) => (
             <div
-              key={brand}
+              key={brand.name}
               className="supplier-chip grid min-w-[180px] place-items-center rounded-lg px-5 py-5 text-center text-sm font-extrabold text-white"
+              title={brand.name}
             >
-              {brand}
+              <img src={brand.src} alt={brand.name} className="max-h-12 max-w-[140px] object-contain brightness-0 invert" loading="lazy" />
             </div>
           ))}
         </div>
@@ -889,7 +947,7 @@ function ProfessionalCTA() {
         <div>
           <p className="text-sm font-bold uppercase tracking-wide text-prevedello-red">Empresas y obras</p>
           <h2 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
-            Compras por volumen con seguimiento, entrega y asesoramiento tecnico.
+            Materiales, continuidad y asesoramiento especializado para proyectos exigentes.
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-white/65">
             Para constructoras, profesionales, municipios, comercios y proyectos que necesitan
@@ -2827,6 +2885,7 @@ function MarketplacePage() {
       />
       <HeroSection query={query} onQueryChange={setQuery} />
       <PromoBanner />
+      <OfficialHeritage />
       <OperationsDeck />
 
       <main className="pb-24 lg:pb-0">
@@ -2867,7 +2926,7 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section id="productos" className="premium-reveal section-anchor catalog-premium-band px-4 py-20 text-white sm:px-6 lg:px-8">
+        <section id="productos" className="catalog-section premium-reveal section-anchor catalog-premium-band px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <Breadcrumbs current="Productos destacados" />
             <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -2876,8 +2935,7 @@ function MarketplacePage() {
                 <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Productos para cotizar hoy.</h2>
               </div>
               <p className="max-w-xl text-sm leading-6 text-[var(--pv-text-secondary)]">
-                Esta etapa ya permite editar catálogo local e importar CSV. La estructura queda
-                lista para conectar categorías, productos, marcas y pedidos a Supabase cuando lo definamos.
+                Productos iniciales para consultar rápido. La carga real puede crecer por rubro, marca y stock sin cambiar la experiencia.
               </p>
             </div>
             <div className="grid gap-7 lg:grid-cols-[300px_1fr]">

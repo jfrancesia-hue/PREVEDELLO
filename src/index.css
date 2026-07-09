@@ -297,6 +297,34 @@ a {
   }
 }
 
+.catalog-section.section-anchor {
+  padding-top: 6rem !important;
+}
+
+@media (min-width: 1024px) {
+  .catalog-section.section-anchor {
+    padding-top: 6.75rem !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .section-anchor {
+    scroll-margin-top: 1rem;
+    padding-top: 4.5rem !important;
+  }
+
+  .catalog-section.section-anchor {
+    padding-top: 3.75rem !important;
+  }
+
+  .heritage-band,
+  .catalog-section,
+  .premium-dark-band,
+  .catalog-premium-band {
+    padding-bottom: calc(9rem + env(safe-area-inset-bottom)) !important;
+  }
+}
+
 .section-band {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(247, 243, 235, 0.88)),
@@ -752,6 +780,69 @@ a {
 .supplier-chip:hover {
   transform: translateY(-3px);
   border-color: rgba(220,31,38,0.48);
+}
+
+.heritage-band {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(228, 237, 253, 0.12), transparent 24rem),
+    radial-gradient(circle at 88% 16%, rgba(220, 31, 38, 0.14), transparent 24rem),
+    linear-gradient(135deg, #061228 0%, #0b2d70 52%, #050d1f 100%);
+}
+
+.heritage-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.heritage-band > * {
+  position: relative;
+  z-index: 1;
+}
+
+.heritage-gallery img {
+  filter: saturate(1.05) contrast(1.03);
+}
+
+.heritage-year,
+.heritage-service-card {
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 22px 65px rgba(0,0,0,0.26);
+}
+
+.heritage-year::after,
+.heritage-service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.08), transparent);
+  transform: translateX(-130%);
+  transition: transform 650ms ease;
+  pointer-events: none;
+}
+
+.heritage-service-card:hover::after,
+.heritage-year:hover::after {
+  transform: translateX(130%);
+}
+
+.heritage-service-card {
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.heritage-service-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(220,31,38,0.42);
+  background: rgba(255,255,255,0.1);
 }
 
 .enterprise-band {
