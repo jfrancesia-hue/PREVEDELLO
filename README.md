@@ -42,7 +42,12 @@ El backoffice vive separado del sitio publico:
 - `/app`: login y CRM interno.
 - `/admin`: redirige a `/app`.
 
-Requiere Supabase Auth configurado con `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`.
+Si Supabase Auth todavia no esta configurado, `/app` muestra un login demo local:
+
+- email sugerido: `demo@prevedello.com`
+- codigo demo: `prevedello-demo`
+
+Con Supabase configurado mediante `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`, el login usa usuarios reales de Supabase Auth.
 
 `VITE_CRM_ALLOWED_EMAILS` es opcional y acepta emails separados por coma para limitar el acceso del frontend. Esto no reemplaza RLS: antes de usar datos reales, proteger tablas con politicas en Supabase.
 

@@ -54,6 +54,12 @@ type QuoteItem = {
   quantity: number;
 };
 
+type InternalAuthMode = "supabase" | "demo";
+
+const DEMO_CRM_ACCESS_CODE = "prevedello-demo";
+const DEMO_CRM_EMAIL = "demo@prevedello.com";
+const DEMO_CRM_STORAGE_KEY = "prevedello-crm-demo-session";
+
 const formatPrice = (price?: number) =>
   price
     ? new Intl.NumberFormat("es-AR", {
@@ -1846,43 +1852,30 @@ function useInternalSession() {
   return { session, loading };
 }
 
-function InternalSetupRequiredPage() {
-  return (
-    <div className="min-h-screen bg-[#f7f3eb]">
-      <RouteHeader title="Configura Supabase Auth" eyebrow="App interna">
-        El CRM necesita Supabase Auth para iniciar sesion de forma segura. No hay acceso local ni
-        credenciales hardcodeadas.
-      </RouteHeader>
-      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
-        <div className="premium-card mx-auto max-w-4xl rounded-lg p-7">
-          <h2 className="text-2xl font-extrabold text-graphite">Variables necesarias</h2>
-          <div className="mt-5 grid gap-3 text-sm font-bold text-zinc-700 sm:grid-cols-2">
-            <code className="rounded-lg bg-cement p-3">VITE_SUPABASE_URL</code>
-            <code className="rounded-lg bg-cement p-3">VITE_SUPABASE_ANON_KEY</code>
-            <code className="rounded-lg bg-cement p-3 sm:col-span-2">VITE_CRM_ALLOWED_EMAILS opcional</code>
-          </div>
-          <p className="mt-5 leading-7 text-zinc-600">
-            Crea los usuarios internos desde Supabase Auth y protege las tablas con RLS antes de
-            usar el CRM con datos reales.
-          </p>
-          <Link to="/" className="mt-6 inline-flex rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
-            Volver al sitio publico
-          </Link>
-        </div>
-      </main>
-    </div>
-  );
-}
-
-function InternalLoginPage() {
-  const [email, setEmail] = useState("");
+function InternalLoginPage({
+  authMode,
+  onDemoLogin,
+}: {
+  authMode: InternalAuthMode;
+  onDemoLogin: (email: string) => void;
+}) {
+  const [email, setEmail] = useState(authMode === "demo" ? DEMO_CRM_EMAIL : "");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
 
   const signInWithPassword = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!supabase) return;
+
+    if (authMode === "demo" || !supabase) {
+      if (password.trim() !== DEMO_CRM_ACCESS_CODE) {
+        setMessage(`Codigo demo incorrecto. Usa ${DEMO_CRM_ACCESS_CODE}.`);
+        return;
+      }
+
+      onDemoLogin(email.trim() || DEMO_CRM_EMAIL);
+      return;
+    }
 
     setSending(true);
     setMessage("");
@@ -1895,6 +1888,11 @@ function InternalLoginPage() {
   };
 
   const sendMagicLink = async () => {
+    if (authMode === "demo") {
+      setMessage("El magic link se activa cuando configures Supabase Auth.");
+      return;
+    }
+
     if (!supabase || !email.trim()) {
       setMessage("Escribi tu email para enviarte el enlace de acceso.");
       return;
@@ -1923,13 +1921,21 @@ function InternalLoginPage() {
             CRM Prevedello para ventas, catalogo y seguimiento.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-8 text-white/70">
-            Acceso privado para el equipo. El sitio publico queda separado y el backoffice exige
-            sesion de Supabase Auth.
+            Acceso privado para el equipo. El sitio publico queda separado y el backoffice queda
+            listo para operar cotizaciones, catalogo e importacion CSV.
           </p>
+          {authMode === "demo" && (
+            <div className="mt-6 max-w-xl rounded-lg border border-white/15 bg-white/10 p-4 text-sm font-semibold leading-6 text-white/75">
+              Modo demo local activo. Codigo de acceso:{" "}
+              <span className="font-extrabold text-white">{DEMO_CRM_ACCESS_CODE}</span>
+            </div>
+          )}
         </section>
 
         <form onSubmit={signInWithPassword} className="rounded-lg bg-white p-6 text-graphite shadow-[0_30px_90px_rgba(0,35,95,0.25)]">
-          <p className="text-sm font-bold uppercase text-prevedello-red">Ingreso seguro</p>
+          <p className="text-sm font-bold uppercase text-prevedello-red">
+            {authMode === "demo" ? "Ingreso demo" : "Ingreso seguro"}
+          </p>
           <h2 className="mt-2 text-3xl font-extrabold">Entrar al CRM</h2>
           <label className="mt-6 block text-sm font-bold text-zinc-700">
             Email
@@ -1943,14 +1949,14 @@ function InternalLoginPage() {
             />
           </label>
           <label className="mt-4 block text-sm font-bold text-zinc-700">
-            Password
+            {authMode === "demo" ? "Codigo demo" : "Password"}
             <input
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               type="password"
               autoComplete="current-password"
               className="mt-2 h-12 w-full rounded-lg border border-zinc-200 px-3 font-semibold outline-none focus:border-prevedello-red"
-              placeholder="Tu password"
+              placeholder={authMode === "demo" ? DEMO_CRM_ACCESS_CODE : "Tu password"}
             />
           </label>
           {message && <p className="mt-4 rounded-lg bg-cement p-3 text-sm font-bold text-zinc-700">{message}</p>}
@@ -1961,17 +1967,20 @@ function InternalLoginPage() {
           >
             {sending ? "Validando..." : "Entrar"}
           </button>
-          <button
-            type="button"
-            onClick={() => void sendMagicLink()}
-            disabled={sending}
-            className="mt-3 w-full rounded-full border border-zinc-200 px-5 py-3 text-sm font-bold text-graphite transition hover:bg-cement/50 disabled:cursor-wait disabled:opacity-70"
-          >
-            Enviar magic link
-          </button>
+          {authMode === "supabase" ? (
+            <button
+              type="button"
+              onClick={() => void sendMagicLink()}
+              disabled={sending}
+              className="mt-3 w-full rounded-full border border-zinc-200 px-5 py-3 text-sm font-bold text-graphite transition hover:bg-cement/50 disabled:cursor-wait disabled:opacity-70"
+            >
+              Enviar magic link
+            </button>
+          ) : null}
           <p className="mt-5 text-sm leading-6 text-zinc-500">
-            Los usuarios se crean y administran desde Supabase Auth. Para restringir emails, usa
-            VITE_CRM_ALLOWED_EMAILS.
+            {authMode === "demo"
+              ? "Este acceso es solo para demo local. Para produccion, configura Supabase Auth y usuarios internos."
+              : "Los usuarios se crean y administran desde Supabase Auth. Para restringir emails, usa VITE_CRM_ALLOWED_EMAILS."}
           </p>
         </form>
       </main>
@@ -1979,7 +1988,7 @@ function InternalLoginPage() {
   );
 }
 
-function InternalAccessDeniedPage({ session }: { session: Session }) {
+function InternalAccessDeniedPage({ email }: { email: string }) {
   const signOut = async () => {
     await supabase?.auth.signOut();
   };
@@ -1992,7 +2001,7 @@ function InternalAccessDeniedPage({ session }: { session: Session }) {
       <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
         <div className="premium-card mx-auto max-w-3xl rounded-lg p-7">
           <p className="text-sm font-bold uppercase text-prevedello-red">Usuario</p>
-          <h2 className="mt-2 text-2xl font-extrabold text-graphite">{session.user.email}</h2>
+          <h2 className="mt-2 text-2xl font-extrabold text-graphite">{email}</h2>
           <p className="mt-3 leading-7 text-zinc-600">
             Agrega este email en VITE_CRM_ALLOWED_EMAILS o usa una cuenta autorizada.
           </p>
@@ -2005,7 +2014,15 @@ function InternalAccessDeniedPage({ session }: { session: Session }) {
   );
 }
 
-function InternalWorkspacePage({ session }: { session: Session }) {
+function InternalWorkspacePage({
+  authMode,
+  userEmail,
+  onSignOut,
+}: {
+  authMode: InternalAuthMode;
+  userEmail: string;
+  onSignOut: () => void;
+}) {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
   const [catalogStatus, setCatalogStatus] = useState("Catalogo local activo.");
   const [catalogSource, setCatalogSource] = useState<"local" | "supabase">("local");
@@ -2042,10 +2059,6 @@ function InternalWorkspacePage({ session }: { session: Session }) {
     await reloadQuotes();
   };
 
-  const signOut = async () => {
-    await supabase?.auth.signOut();
-  };
-
   return (
     <div className="min-h-screen bg-[#f7f3eb]">
       <header className="sticky top-0 z-50 border-b border-prevedello-blue/10 bg-white/92 px-4 py-3 shadow-[0_12px_35px_rgba(9,59,145,0.08)] backdrop-blur-xl sm:px-6 lg:px-8">
@@ -2054,12 +2067,14 @@ function InternalWorkspacePage({ session }: { session: Session }) {
             <LogoMark compact />
           </Link>
           <div className="hidden min-w-0 text-right sm:block">
-            <p className="truncate text-sm font-extrabold text-graphite">{session.user.email}</p>
-            <p className="text-xs font-bold uppercase text-zinc-500">CRM interno</p>
+            <p className="truncate text-sm font-extrabold text-graphite">{userEmail}</p>
+            <p className="text-xs font-bold uppercase text-zinc-500">
+              {authMode === "demo" ? "CRM interno demo" : "CRM interno"}
+            </p>
           </div>
           <button
             type="button"
-            onClick={() => void signOut()}
+            onClick={onSignOut}
             className="rounded-full bg-prevedello-blue px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-800"
           >
             Salir
@@ -2089,10 +2104,23 @@ function InternalWorkspacePage({ session }: { session: Session }) {
 
 function InternalAppPage() {
   const { session, loading } = useInternalSession();
+  const [demoEmail, setDemoEmail] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem(DEMO_CRM_STORAGE_KEY);
+  });
 
-  if (!isSupabaseConfigured) return <InternalSetupRequiredPage />;
+  const startDemoSession = (email: string) => {
+    const normalizedEmail = email.trim() || DEMO_CRM_EMAIL;
+    window.localStorage.setItem(DEMO_CRM_STORAGE_KEY, normalizedEmail);
+    setDemoEmail(normalizedEmail);
+  };
 
-  if (loading) {
+  const endDemoSession = () => {
+    window.localStorage.removeItem(DEMO_CRM_STORAGE_KEY);
+    setDemoEmail(null);
+  };
+
+  if (isSupabaseConfigured && loading) {
     return (
       <div className="grid min-h-screen place-items-center bg-prevedello-blue px-4 text-white">
         <div className="text-center">
@@ -2105,10 +2133,24 @@ function InternalAppPage() {
     );
   }
 
-  if (!session) return <InternalLoginPage />;
-  if (!isAllowedInternalUser(session)) return <InternalAccessDeniedPage session={session} />;
+  if (isSupabaseConfigured) {
+    if (!session) return <InternalLoginPage authMode="supabase" onDemoLogin={startDemoSession} />;
+    if (!isAllowedInternalUser(session)) return <InternalAccessDeniedPage email={session.user.email || "Usuario sin email"} />;
 
-  return <InternalWorkspacePage session={session} />;
+    return (
+      <InternalWorkspacePage
+        authMode="supabase"
+        userEmail={session.user.email || "Usuario interno"}
+        onSignOut={() => {
+          void supabase?.auth.signOut();
+        }}
+      />
+    );
+  }
+
+  if (!demoEmail) return <InternalLoginPage authMode="demo" onDemoLogin={startDemoSession} />;
+
+  return <InternalWorkspacePage authMode="demo" userEmail={demoEmail} onSignOut={endDemoSession} />;
 }
 
 function PublicFooter() {
