@@ -72,6 +72,7 @@
   --radius-modal: 8px;
   --border-technical: 1px solid rgba(160, 190, 255, 0.15);
   --border-red-accent: 3px solid #dc1f26;
+  --site-header-offset: 116px;
 
   color: var(--pv-text-primary);
   background: var(--pv-surface-1);
@@ -86,7 +87,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 7.5rem;
+  scroll-padding-top: var(--site-header-offset);
 }
 
 body {
@@ -214,7 +215,7 @@ a {
 }
 
 .section-anchor {
-  scroll-margin-top: 7.5rem;
+  scroll-margin-top: var(--site-header-offset);
 }
 
 .section-band {

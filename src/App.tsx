@@ -158,7 +158,7 @@ function HeaderMarketplace({
   onCartOpen: () => void;
 }) {
   return (
-    <header className="relative z-50 px-3 pt-3 sm:px-5">
+    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-5">
       <div className="ds-header mx-auto flex h-14 max-w-7xl items-center gap-2 px-2 py-1 lg:h-16 lg:gap-3 lg:px-3">
         <a href="#inicio" className="shrink-0" aria-label="Ir al inicio">
           <LogoMark compact />
@@ -351,7 +351,7 @@ function HeroSection({
         <div className="blueprint-ruler absolute inset-x-0 bottom-0 h-28 opacity-55" />
       </div>
 
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col justify-center px-4 pb-28 pt-8 sm:px-6 sm:pt-10 lg:min-h-[calc(100svh-24px)] lg:px-8 lg:pb-16 lg:pt-14 xl:pt-16">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col justify-center px-4 pb-28 pt-8 sm:px-6 sm:pt-10 lg:min-h-[calc(100svh-24px)] lg:px-8 lg:pb-16 lg:pt-12 xl:pt-14">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.88fr] xl:gap-16">
           <div>
             <div className="mb-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
@@ -460,14 +460,15 @@ function HeroSection({
           </div>
           <div className="grid gap-4 sm:grid-cols-3 lg:gap-5">
             {[
-              ["/assets/prevedello-todo.mp4", "Stock ordenado"],
-              ["/assets/prevedello-envios.mp4", "Entregas cuidadas"],
-              ["/assets/prevedello-acopio.mp4", "Acopio para obra"],
-            ].map(([src, label]) => (
-              <div key={src} className="bp-card overflow-hidden rounded-lg border border-white/10 bg-black/24">
+              { src: "/assets/prevedello-todo.mp4", label: "Stock ordenado", position: "55% 32%" },
+              { src: "/assets/prevedello-envios.mp4", label: "Entregas cuidadas", position: "50% 50%" },
+              { src: "/assets/prevedello-acopio.mp4", label: "Acopio para obra", position: "52% 28%" },
+            ].map(({ src, label, position }) => (
+              <div key={src} className="bp-card overflow-hidden rounded-lg border border-white/10 bg-white/8">
                 <video
                   src={src}
-                  className="aspect-video w-full bg-black object-contain opacity-100 sm:aspect-[4/3]"
+                  className="aspect-[9/16] max-h-[480px] w-full bg-[var(--pv-surface-0)] object-cover opacity-100"
+                  style={{ objectPosition: position }}
                   muted
                   playsInline
                   autoPlay
@@ -518,20 +519,20 @@ function OperationsDeck() {
   ];
 
   const media = [
-    ["/assets/prevedello-todo.mp4", "Salon y mostrador"],
-    ["/assets/prevedello-envios.mp4", "Logistica de entrega"],
-    ["/assets/prevedello-acopio.mp4", "Acopio de obra"],
+    { src: "/assets/prevedello-todo.mp4", label: "Salon y mostrador", position: "55% 32%" },
+    { src: "/assets/prevedello-envios.mp4", label: "Logistica de entrega", position: "50% 50%" },
+    { src: "/assets/prevedello-acopio.mp4", label: "Acopio de obra", position: "52% 28%" },
   ];
 
   return (
     <section className="operations-band scroll-mt-44 px-4 py-20 pt-40 text-white sm:px-6 sm:pt-36 lg:scroll-mt-32 lg:px-8 lg:pt-20">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
         <div className="relative">
-          <p className="text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">Sistema Prevedello</p>
-          <h2 className="mt-4 max-w-3xl font-heading text-5xl font-extrabold uppercase leading-[0.92] sm:text-6xl">
+          <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-white/66">Sistema Prevedello</p>
+          <h2 className="mt-4 max-w-3xl text-4xl font-extrabold leading-tight text-white sm:text-5xl">
             El movimiento real del negocio también se ve.
           </h2>
-          <p className="mt-6 max-w-xl text-lg leading-8 text-white/72">
+          <p className="mt-6 max-w-xl text-lg leading-8 text-white/82">
             Videos de mostrador, logística y acopio visibles: la web tiene que mostrar que Prevedello
             no es solo catálogo, es operación real detrás de cada cotización.
           </p>
@@ -545,20 +546,19 @@ function OperationsDeck() {
           </div>
         </div>
 
-        <div className="relative grid gap-5">
+        <div className="relative grid gap-5 sm:grid-cols-3 lg:items-start">
           <div className="hidden text-xs font-extrabold uppercase tracking-[0.32em] text-white/45 lg:absolute lg:-left-8 lg:top-0 lg:block lg:h-full">
             <span className="rail-label">obra / hogar / industria</span>
           </div>
-          {media.map(([src, label], index) => (
+          {media.map(({ src, label, position }) => (
             <div
               key={src}
-              className={`overflow-hidden rounded-[var(--radius-card)] border border-white/18 bg-black/28 shadow-[0_28px_80px_rgba(0,0,0,0.38)] ${
-                index === 1 ? "lg:ml-8" : index === 2 ? "lg:ml-16" : ""
-              }`}
+              className="overflow-hidden rounded-[var(--radius-card)] border border-white/18 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.38)]"
             >
               <video
                 src={src}
-                className="h-56 w-full bg-black object-contain opacity-100 sm:h-64 lg:h-52 xl:h-60"
+                className="aspect-[9/16] max-h-[520px] w-full bg-[var(--pv-surface-0)] object-cover opacity-100"
+                style={{ objectPosition: position }}
                 muted
                 playsInline
                 autoPlay
