@@ -98,6 +98,14 @@ const defaultQuoteForm: QuoteFormState = {
   notes: "",
 };
 
+const heroMetrics = [
+  ["+8", "rubros ordenados"],
+  ["24/7", "pedido armado"],
+  ["Catamarca", "atención local"],
+] as const;
+
+const quickNeeds = ["Cemento", "Pintura", "Herramientas", "Sanitarios"] as const;
+
 function LogoMark({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
@@ -129,7 +137,7 @@ function HeaderMarketplace({
 }) {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-5">
-      <div className="mx-auto flex max-w-7xl items-center gap-2 rounded-lg border border-white/50 bg-white/92 px-3 py-2 shadow-[0_12px_40px_rgba(9,59,145,0.12)] backdrop-blur-xl lg:gap-3">
+      <div className="mx-auto flex max-w-7xl items-center gap-2 rounded-[1.35rem] border border-white/60 bg-white/88 px-3 py-2 shadow-[0_18px_55px_rgba(9,59,145,0.16)] backdrop-blur-2xl lg:gap-3">
         <a href="#inicio" className="shrink-0" aria-label="Ir al inicio">
           <LogoMark compact />
         </a>
@@ -159,7 +167,7 @@ function HeaderMarketplace({
           href={makeWhatsAppHref([], defaultQuoteForm)}
           target="_blank"
           rel="noreferrer"
-          className="hidden items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700 md:flex"
+          className="hidden items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-[0_14px_30px_rgba(22,163,74,0.2)] transition hover:bg-emerald-700 md:flex"
         >
           <MessageCircle size={17} />
           WhatsApp
@@ -167,7 +175,7 @@ function HeaderMarketplace({
         <button
           type="button"
           onClick={onCartOpen}
-          className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-prevedello-blue text-white transition hover:scale-[1.03]"
+          className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-prevedello-blue text-white shadow-[0_14px_30px_rgba(9,59,145,0.24)] transition hover:scale-[1.03]"
           aria-label="Abrir pedido"
         >
           <ShoppingCart size={20} />
@@ -203,7 +211,7 @@ function SearchBar({
 }) {
   return (
     <label
-      className={`relative flex min-w-0 items-center gap-2 overflow-hidden rounded-full border border-zinc-200 bg-white px-4 shadow-sm transition focus-within:border-prevedello-red focus-within:shadow-[0_0_0_4px_rgba(220,31,38,0.08)] ${
+      className={`relative flex min-w-0 items-center gap-2 overflow-hidden rounded-full border border-blue-100/80 bg-white px-4 shadow-[0_12px_30px_rgba(9,59,145,0.08)] transition focus-within:border-prevedello-red focus-within:shadow-[0_0_0_5px_rgba(220,31,38,0.1)] ${
         compact ? "h-11" : "h-16"
       }`}
     >
@@ -211,8 +219,8 @@ function SearchBar({
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Que necesitas para tu obra?"
-        className="min-w-0 flex-1 bg-transparent text-base font-semibold text-graphite outline-none placeholder:text-zinc-400 sm:text-lg"
+        placeholder="¿Qué necesitás para tu obra?"
+        className="min-w-0 flex-1 bg-transparent text-base font-bold text-graphite outline-none placeholder:text-zinc-400 sm:text-lg"
       />
       <span className="hidden shrink-0 rounded-full bg-cement px-3 py-1 text-xs font-bold uppercase text-zinc-600 sm:inline">
         Buscar
@@ -311,31 +319,52 @@ function HeroSection({
           loop
           preload="metadata"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,59,145,0.92),rgba(9,59,145,0.48),rgba(9,59,145,0.78))]" />
-        <div className="industrial-grid absolute inset-0 opacity-18 mix-blend-screen" />
+        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(7,37,92,0.96),rgba(9,59,145,0.58),rgba(7,37,92,0.84))]" />
+        <div className="industrial-grid absolute inset-0 opacity-22 mix-blend-screen" />
+        <div className="blueprint-ruler absolute inset-x-0 bottom-0 h-28 opacity-55" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pb-60 pt-32 sm:px-6 lg:px-8 xl:pb-72">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pb-64 pt-36 sm:px-6 lg:px-8 xl:pb-72">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.88fr] xl:gap-16">
           <div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
               <Sparkles size={16} />
-              Corralon, ferreteria y hogar en Catamarca
+              Corralón, ferretería y hogar en Catamarca
             </div>
             <h1 className="hero-heading max-w-4xl font-extrabold text-white">
-              Todo para construir, refaccionar y equipar tu hogar.
+              Tu mostrador digital para resolver la obra.
             </h1>
-            <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/76 sm:text-xl">
-              Arma tu pedido en minutos, pedi asesoramiento y cotiza materiales con la confianza
-              de una empresa familiar que conoce la obra desde adentro.
+            <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
+              Buscá materiales, armá una cotización y pedí asesoramiento humano por WhatsApp.
+              Prevedello ordena el catálogo como una ficha de obra: rápido, claro y local.
             </p>
-            <div className="relative z-30 mt-6 max-w-xl">
+            <div className="mt-6 grid max-w-2xl grid-cols-3 gap-2 sm:gap-3">
+              {heroMetrics.map(([value, label]) => (
+                <div key={value} className="rounded-2xl border border-white/14 bg-white/10 p-3 backdrop-blur-md">
+                  <p className="text-lg font-extrabold text-white sm:text-2xl">{value}</p>
+                  <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-white/55">{label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="relative z-30 mt-6 max-w-xl rounded-[1.6rem] border border-white/16 bg-white/10 p-2 backdrop-blur-md">
               <SearchBar value={query} onChange={onQueryChange} />
+              <div className="mt-3 flex flex-wrap gap-2 px-1 pb-1">
+                {quickNeeds.map((need) => (
+                  <button
+                    key={need}
+                    type="button"
+                    onClick={() => onQueryChange(need)}
+                    className="rounded-full border border-white/14 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/78 transition hover:border-white/35 hover:bg-white/16"
+                  >
+                    {need}
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href="#productos"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-extrabold text-graphite transition hover:scale-[1.03]"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-extrabold text-graphite shadow-[0_18px_45px_rgba(255,255,255,0.18)] transition hover:scale-[1.03]"
               >
                 Ver productos
                 <ArrowRight size={17} />
@@ -363,25 +392,25 @@ function HeroSection({
 
       <div
         ref={panelRef}
-        className="archive-panel absolute bottom-0 left-0 right-0 z-20 rounded-t-lg bg-prevedello-blue px-4 py-8 text-white shadow-[0_-30px_90px_rgba(9,59,145,0.35)] sm:px-6 lg:px-8"
+        className="archive-panel absolute bottom-0 left-0 right-0 z-20 rounded-t-[2rem] bg-prevedello-blue px-4 py-8 text-white shadow-[0_-30px_90px_rgba(9,59,145,0.35)] sm:px-6 lg:px-8"
       >
         <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div className="flex flex-col justify-between gap-6">
             <div>
-              <p className="text-sm font-bold uppercase text-prevedello-red">Prevedello en movimiento</p>
+              <p className="text-sm font-bold uppercase text-prevedello-red">Mostrador vivo</p>
               <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">
-                Un archivo vivo de productos, obra y entregas.
+                Productos, acopio y entregas en una experiencia de compra.
               </h2>
             </div>
             <p className="max-w-md text-sm leading-6 text-white/62">
-              Inspirado en una experiencia scroll-driven: el hero abre la marca y el panel baja al
-              mundo comercial, donde cada rubro esta pensado para cotizar rapido.
+              El hero abre la marca y el panel baja al mundo comercial: cada rubro está pensado
+              para buscar, sumar al pedido y cotizar sin perder tiempo.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3 lg:gap-5">
             {[
-              ["/assets/prevedello-todo.mp4", "Todo en un lugar"],
-              ["/assets/prevedello-envios.mp4", "Envios cuidados"],
+              ["/assets/prevedello-todo.mp4", "Stock ordenado"],
+              ["/assets/prevedello-envios.mp4", "Entregas cuidadas"],
               ["/assets/prevedello-acopio.mp4", "Acopio para obra"],
             ].map(([src, label]) => (
               <div key={src} className="bp-card overflow-hidden rounded-lg bg-white/10">
@@ -407,14 +436,14 @@ function HeroSection({
 function PromoBanner() {
   return (
     <section className="bg-prevedello-blue px-4 py-8 text-white sm:px-6 lg:px-8">
-      <div className="blueprint-panel mx-auto flex max-w-7xl flex-col gap-6 rounded-lg border border-white/16 p-6 shadow-[0_24px_70px_rgba(9,59,145,0.28)] sm:flex-row sm:items-center sm:justify-between">
+      <div className="blueprint-panel mx-auto flex max-w-7xl flex-col gap-6 rounded-[1.5rem] border border-white/16 p-6 shadow-[0_24px_70px_rgba(9,59,145,0.28)] sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-prevedello-red shadow-[0_16px_35px_rgba(220,31,38,0.26)]">
             <BadgeCheck size={22} />
           </div>
           <div>
             <p className="text-sm font-bold uppercase tracking-wide text-white/60">Compra inteligente</p>
-            <h2 className="text-2xl font-extrabold leading-tight">Arma tu pedido, agrega observaciones y envialo por WhatsApp.</h2>
+            <h2 className="text-2xl font-extrabold leading-tight">Armá el pedido como una lista de obra y mandalo listo por WhatsApp.</h2>
           </div>
         </div>
         <a
@@ -511,7 +540,7 @@ function CategoryCard({
     <button
       type="button"
       onClick={() => onSelect(category.name)}
-      className="premium-card premium-card-hover group relative min-w-[250px] overflow-hidden rounded-lg p-6 text-left"
+      className="premium-card premium-card-hover blueprint-card group relative min-w-[250px] overflow-hidden rounded-[1.35rem] p-6 text-left"
     >
       <span className="absolute inset-x-0 top-0 h-1 bg-prevedello-red" />
       <span className="absolute right-5 top-5 text-5xl font-extrabold leading-none text-prevedello-blue/8">
@@ -520,9 +549,9 @@ function CategoryCard({
       <span className={`grid h-12 w-12 place-items-center rounded-lg text-white shadow-[0_14px_30px_rgba(9,59,145,0.16)] ${category.accent}`}>
         <Icon size={21} />
       </span>
-      <h3 className="mt-6 text-xl font-extrabold text-graphite">{category.name}</h3>
+      <h3 className="relative mt-6 text-xl font-extrabold text-graphite">{category.name}</h3>
       <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{category.description}</p>
-      <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-prevedello-red">
+      <span className="relative mt-5 inline-flex items-center gap-2 text-sm font-bold text-prevedello-red">
         Ver rubro
         <ArrowRight size={16} className="transition group-hover:translate-x-1" />
       </span>
@@ -629,7 +658,7 @@ function ProductCard({
   onOpen: (product: Product) => void;
 }) {
   return (
-    <article className="premium-card premium-card-hover flex h-full flex-col rounded-lg p-4">
+    <article className="premium-card premium-card-hover blueprint-card flex h-full flex-col rounded-[1.35rem] p-4">
       <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
         <ProductVisual product={product} />
         <div className="px-1 pb-2 pt-5">
@@ -638,15 +667,15 @@ function ProductCard({
               <p className="text-xs font-bold uppercase text-prevedello-red">{product.brand}</p>
               <h3 className="mt-1 text-xl font-extrabold leading-6 text-graphite">{product.name}</h3>
             </div>
-            <span className="shrink-0 rounded-full bg-cement px-3 py-1 text-xs font-bold text-zinc-700">
+            <span className="shrink-0 rounded-full border border-prevedello-blue/10 bg-cement px-3 py-1 text-xs font-bold text-zinc-700">
               {product.unit}
             </span>
           </div>
           <p className="mt-3 min-h-12 text-sm leading-6 text-zinc-600">{product.description}</p>
           {(product.sku || product.stockNote) && (
             <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold text-zinc-500">
-              {product.sku && <span className="rounded-full bg-zinc-100 px-2 py-1">SKU {product.sku}</span>}
-              {product.stockNote && <span className="rounded-full bg-zinc-100 px-2 py-1">{product.stockNote}</span>}
+              {product.sku && <span className="rounded-full bg-blue-50 px-2 py-1 text-prevedello-blue">SKU {product.sku}</span>}
+              {product.stockNote && <span className="rounded-full bg-blue-50 px-2 py-1 text-prevedello-blue">{product.stockNote}</span>}
             </div>
           )}
           <div className="mt-5 flex items-center justify-between gap-3 border-t border-zinc-100 pt-4">
@@ -663,7 +692,7 @@ function ProductCard({
         <button
           type="button"
           onClick={() => onAdd(product)}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-4 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(9,59,145,0.2)] transition hover:bg-blue-800"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-4 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(9,59,145,0.2)] transition hover:-translate-y-0.5 hover:bg-blue-800"
         >
           <Plus size={17} />
           Agregar
