@@ -11,3 +11,4 @@ reports/
 /*.mp4
 /*.png
 /prompt1.txt
+.vercel
