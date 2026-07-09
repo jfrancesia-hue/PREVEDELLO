@@ -158,7 +158,7 @@ function HeaderMarketplace({
   onCartOpen: () => void;
 }) {
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-5">
+    <header className="relative z-50 px-3 pt-3 sm:px-5">
       <div className="ds-header mx-auto flex h-14 max-w-7xl items-center gap-2 px-2 py-1 lg:h-16 lg:gap-3 lg:px-3">
         <a href="#inicio" className="shrink-0" aria-label="Ir al inicio">
           <LogoMark compact />
@@ -300,22 +300,23 @@ function HeroSection({
 
       gsap.fromTo(
         panelRef.current,
-        { yPercent: 100 },
+        { y: 36, opacity: 0.86 },
         {
-          yPercent: 40,
+          y: 0,
+          opacity: 1,
           ease: "none",
           scrollTrigger: {
-            trigger: heroRef.current,
-            start: "12% top",
-            end: "bottom top",
+            trigger: panelRef.current,
+            start: "top 92%",
+            end: "top 55%",
             scrub: true,
           },
         },
       );
 
       gsap.to(logoRef.current, {
-        y: -80,
-        scale: 0.82,
+        y: -18,
+        scale: 0.97,
         ease: "none",
         scrollTrigger: {
           trigger: heroRef.current,
@@ -333,7 +334,7 @@ function HeroSection({
     <section
       id="inicio"
       ref={heroRef}
-      className="blueprint-dense blueprint-parallax relative min-h-[132svh] overflow-hidden text-white"
+      className="blueprint-dense blueprint-parallax relative overflow-hidden text-white"
     >
       <div className="absolute inset-0">
         <video
@@ -350,7 +351,7 @@ function HeroSection({
         <div className="blueprint-ruler absolute inset-x-0 bottom-0 h-28 opacity-55" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pb-64 pt-36 sm:px-6 lg:px-8 xl:pb-72">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col justify-center px-4 pb-28 pt-8 sm:px-6 sm:pt-10 lg:min-h-[calc(100svh-24px)] lg:px-8 lg:pb-16 lg:pt-14 xl:pt-16">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.88fr] xl:gap-16">
           <div>
             <div className="mb-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
@@ -442,7 +443,7 @@ function HeroSection({
 
       <div
         ref={panelRef}
-        className="archive-panel absolute bottom-0 left-0 right-0 z-20 rounded-t-[var(--radius-modal)] bg-[var(--pv-surface-2)] px-4 py-8 text-white shadow-[0_-30px_90px_rgba(9,59,145,0.35)] sm:px-6 lg:px-8"
+        className="archive-panel relative z-20 scroll-mt-44 border-y border-white/10 bg-[var(--pv-surface-2)] px-4 py-14 pt-40 text-white shadow-[0_-18px_70px_rgba(9,59,145,0.28)] sm:px-6 sm:pt-36 lg:scroll-mt-32 lg:px-8 lg:py-10 lg:pt-10"
       >
         <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div className="flex flex-col justify-between gap-6">
@@ -463,15 +464,16 @@ function HeroSection({
               ["/assets/prevedello-envios.mp4", "Entregas cuidadas"],
               ["/assets/prevedello-acopio.mp4", "Acopio para obra"],
             ].map(([src, label]) => (
-              <div key={src} className="bp-card overflow-hidden rounded-lg bg-white/10">
+              <div key={src} className="bp-card overflow-hidden rounded-lg border border-white/10 bg-black/24">
                 <video
                   src={src}
-                  className="aspect-[4/5] w-full object-cover opacity-85"
+                  className="aspect-video w-full bg-black object-contain opacity-100 sm:aspect-[4/3]"
                   muted
                   playsInline
                   autoPlay
                   loop
-                  preload="metadata"
+                  preload="auto"
+                  poster="/hero-mobile.png"
                 />
                 <p className="px-4 py-3 text-sm font-bold">{label}</p>
               </div>
@@ -522,7 +524,7 @@ function OperationsDeck() {
   ];
 
   return (
-    <section className="operations-band px-4 py-20 text-white sm:px-6 lg:px-8">
+    <section className="operations-band scroll-mt-44 px-4 py-20 pt-40 text-white sm:px-6 sm:pt-36 lg:scroll-mt-32 lg:px-8 lg:pt-20">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
         <div className="relative">
           <p className="text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">Sistema Prevedello</p>
@@ -550,18 +552,19 @@ function OperationsDeck() {
           {media.map(([src, label], index) => (
             <div
               key={src}
-              className={`angled-media overflow-hidden border border-white/18 bg-white/10 shadow-[0_28px_80px_rgba(0,0,0,0.38)] ${
+              className={`overflow-hidden rounded-[var(--radius-card)] border border-white/18 bg-black/28 shadow-[0_28px_80px_rgba(0,0,0,0.38)] ${
                 index === 1 ? "lg:ml-8" : index === 2 ? "lg:ml-16" : ""
               }`}
             >
               <video
                 src={src}
-                className="h-56 w-full object-cover opacity-100 sm:h-64 lg:h-52 xl:h-60"
+                className="h-56 w-full bg-black object-contain opacity-100 sm:h-64 lg:h-52 xl:h-60"
                 muted
                 playsInline
                 autoPlay
                 loop
-                preload="metadata"
+                preload="auto"
+                poster="/hero-mobile.png"
               />
               <div className="flex items-center justify-between border-t border-white/10 bg-[var(--pv-surface-2)] px-5 py-3">
                 <p className="text-sm font-extrabold">{label}</p>
@@ -2765,7 +2768,7 @@ function MarketplacePage() {
       <PromoBanner />
       <OperationsDeck />
 
-      <main>
+      <main className="pb-24 lg:pb-0">
         <section id="rubros" className="section-anchor blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -2892,9 +2895,6 @@ function MarketplacePage() {
 
         <PublicFooter />
       </main>
-
-      <PublicFooter />
-      <WhatsAppFab />
 
       <QuoteCart
         open={cartOpen}
