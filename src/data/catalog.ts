@@ -119,6 +119,7 @@ export const products: Product[] = [
     uses: ["Hormigon", "Mamposteria", "Contrapisos"],
     related: ["Cal hidratada", "Arena gruesa", "Hierro nervado"],
     imageTone: "from-zinc-200 via-neutral-100 to-stone-300",
+    imageUrl: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "pintura-sherwin",
@@ -131,6 +132,7 @@ export const products: Product[] = [
     uses: ["Interiores", "Refacciones", "Obras nuevas"],
     related: ["Rodillo lana", "Enduido interior", "Cinta de pintor"],
     imageTone: "from-blue-200 via-white to-red-100",
+    imageUrl: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "taladro-bosch",
@@ -144,6 +146,7 @@ export const products: Product[] = [
     uses: ["Instaladores", "Obra", "Taller"],
     related: ["Mechas widia", "Discos de corte", "Extensiones"],
     imageTone: "from-sky-300 via-blue-700 to-prevedello-blue",
+    imageUrl: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "porcelanato-ilva",
@@ -156,6 +159,7 @@ export const products: Product[] = [
     uses: ["Living", "Locales", "Galerias"],
     related: ["Pegamento flexible", "Pastina gris", "Crucetas niveladoras"],
     imageTone: "from-neutral-300 via-stone-200 to-zinc-500",
+    imageUrl: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "griferia-fv",
@@ -169,6 +173,7 @@ export const products: Product[] = [
     uses: ["Cocinas", "Departamentos", "Refacciones"],
     related: ["Bacha acero", "Flexible mallado", "Sifon cocina"],
     imageTone: "from-zinc-100 via-sky-100 to-zinc-400",
+    imageUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "membrana-emapi",
@@ -181,6 +186,7 @@ export const products: Product[] = [
     uses: ["Techos", "Terrazas", "Medianeras"],
     related: ["Venda geotextil", "Sellador", "Rodillo sintetico"],
     imageTone: "from-red-100 via-white to-rose-300",
+    imageUrl: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=80",
   },
 ];
 

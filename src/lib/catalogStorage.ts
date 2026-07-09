@@ -9,7 +9,17 @@ export const getStoredProducts = (): Product[] => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (!stored) return seedProducts;
     const parsed = JSON.parse(stored) as Product[];
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : seedProducts;
+    if (!Array.isArray(parsed) || parsed.length === 0) return seedProducts;
+
+    return parsed.map((product) => {
+      const seed = seedProducts.find((item) => item.id === product.id);
+      if (!seed) return product;
+      return {
+        ...product,
+        imageTone: product.imageTone || seed.imageTone,
+        imageUrl: product.imageUrl || seed.imageUrl,
+      };
+    });
   } catch {
     return seedProducts;
   }

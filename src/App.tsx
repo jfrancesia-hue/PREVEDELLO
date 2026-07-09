@@ -674,13 +674,22 @@ function FilterSidebar({
 }
 
 function ProductVisual({ product }: { product: Product }) {
+  const categoryMeta = categories.find((category) => category.name === product.category);
+  const CategoryIcon = categoryMeta?.icon;
+
   if (product.imageUrl) {
     return (
-      <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-zinc-100">
-        <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-prevedello-blue/80 to-transparent p-4">
-          <p className="text-xs font-bold uppercase text-white/70">{product.brand}</p>
-          <p className="text-lg font-extrabold leading-5 text-white">{product.category}</p>
+      <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--pv-surface-0)]">
+        <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover brightness-[1.04] saturate-[0.95] transition duration-500 group-hover:scale-[1.03]" loading="lazy" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,13,31,0.02),rgba(5,13,31,0.54))]" />
+        {CategoryIcon && (
+          <span className="absolute left-4 top-4 grid h-10 w-10 place-items-center rounded-[var(--radius-btn)] border border-white/35 bg-white/90 text-prevedello-red shadow-[0_14px_30px_rgba(0,0,0,0.24)] backdrop-blur-md">
+            <CategoryIcon size={20} />
+          </span>
+        )}
+        <div className="absolute inset-x-0 bottom-0 p-4">
+          <p className="text-lg font-extrabold leading-5 text-white drop-shadow">{product.category}</p>
+          <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-white/72">Foto referencial para cotización</p>
         </div>
       </div>
     );
@@ -712,23 +721,23 @@ function ProductCard({
 }) {
   return (
     <article className="product-card blueprint-card flex h-full flex-col p-4">
-      <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
+      <button type="button" onClick={() => onOpen(product)} className="group block w-full text-left">
         <ProductVisual product={product} />
         <div className="px-1 pb-2 pt-5">
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-xs font-bold uppercase text-prevedello-red">{product.brand}</p>
-              <h3 className="mt-1 text-xl font-extrabold leading-6 text-graphite">{product.name}</h3>
+              <h3 className="mt-1 text-xl font-extrabold leading-6 text-white">{product.name}</h3>
             </div>
             <span className="shrink-0 rounded-[var(--radius-badge)] border border-white/10 bg-white/8 px-3 py-1 text-xs font-bold text-[var(--pv-text-secondary)]">
               {product.unit}
             </span>
           </div>
-          <p className="mt-3 min-h-12 text-sm leading-6 text-zinc-600">{product.description}</p>
+          <p className="mt-3 min-h-12 text-sm leading-6 text-white/78">{product.description}</p>
           {(product.sku || product.stockNote) && (
             <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold text-zinc-500">
-              {product.sku && <span className="rounded-full bg-blue-50 px-2 py-1 text-prevedello-blue">SKU {product.sku}</span>}
-              {product.stockNote && <span className="rounded-full bg-blue-50 px-2 py-1 text-prevedello-blue">{product.stockNote}</span>}
+              {product.sku && <span className="rounded-[var(--radius-badge)] bg-white/8 px-2 py-1 text-[var(--pv-text-secondary)]">SKU {product.sku}</span>}
+              {product.stockNote && <span className="rounded-[var(--radius-badge)] bg-white/8 px-2 py-1 text-[var(--pv-text-secondary)]">{product.stockNote}</span>}
             </div>
           )}
           <div className="mt-5 flex items-center justify-between gap-3 border-t border-zinc-100 pt-4">
