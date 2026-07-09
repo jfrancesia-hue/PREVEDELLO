@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+vite-dev.log
+vite-dev.err.log
+*.tsbuildinfo
+/*.mp4
+/*.png
+/prompt1.txt
