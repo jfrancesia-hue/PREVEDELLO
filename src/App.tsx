@@ -336,17 +336,16 @@ function HeroSection({
       className="blueprint-dense blueprint-parallax relative min-h-[132svh] overflow-hidden text-white"
     >
       <div className="absolute inset-0">
-        <picture>
-          <source media="(max-width: 767px)" srcSet="/hero-mobile.png" />
-          <img
-            src="/hero-desktop.png"
-            alt="Prevedello Market — mostrador digital de construcción"
-            className="h-full w-full object-cover object-center opacity-72"
-            loading="eager"
-            fetchPriority="high"
-          />
-        </picture>
-        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(7,37,92,0.96),rgba(9,59,145,0.58),rgba(7,37,92,0.84))]" />
+        <video
+          src="/assets/prevedello-hero.mp4"
+          className="h-full w-full scale-[1.04] object-cover opacity-38"
+          muted
+          playsInline
+          autoPlay
+          loop
+          preload="metadata"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,13,31,0.96),rgba(9,59,145,0.72),rgba(5,13,31,0.9))]" />
         <div className="industrial-grid absolute inset-0 opacity-22 mix-blend-screen" />
         <div className="blueprint-ruler absolute inset-x-0 bottom-0 h-28 opacity-55" />
       </div>
@@ -354,6 +353,18 @@ function HeroSection({
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pb-64 pt-36 sm:px-6 lg:px-8 xl:pb-72">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.88fr] xl:gap-16">
           <div>
+            <div className="mb-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
+              <picture>
+                <source media="(max-width: 767px)" srcSet="/hero-mobile.png" />
+                <img
+                  src="/hero-desktop.png"
+                  alt="Prevedello Market — mostrador digital de construcción"
+                  className="aspect-[4/3] w-full object-cover object-center"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </picture>
+            </div>
             <div className="mb-5 inline-flex items-center gap-2 rounded-[var(--radius-badge)] border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
               <Sparkles size={16} />
               Corralón, ferretería y hogar en Catamarca
@@ -405,14 +416,26 @@ function HeroSection({
               </a>
             </div>
           </div>
-          <div className="relative mx-auto hidden h-[min(39vw,520px)] w-full max-w-lg place-items-center lg:grid">
-            <div className="absolute inset-10 rounded-full bg-prevedello-red/26 blur-3xl" />
-            <img
-              ref={logoRef}
-              src="/assets/prevedello-pap-3d.png"
-              alt="Logo 3D Prevedello"
-              className="relative z-10 w-full max-w-[440px] rounded-full drop-shadow-[0_34px_70px_rgba(9,59,145,0.52)]"
-            />
+          <div className="relative mx-auto hidden h-[min(42vw,560px)] w-full max-w-xl place-items-center lg:grid">
+            <div className="absolute inset-4 bg-prevedello-red/24 blur-3xl" />
+            <div className="relative z-10 overflow-hidden rounded-[var(--radius-modal)] border border-white/18 bg-white/8 shadow-[0_34px_90px_rgba(0,0,0,0.52)]">
+              <picture>
+                <source media="(max-width: 767px)" srcSet="/hero-mobile.png" />
+                <img
+                  ref={logoRef}
+                  src="/hero-desktop.png"
+                  alt="Prevedello Market — mostrador digital de construcción"
+                  className="h-full min-h-[480px] w-full object-cover object-center"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </picture>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,13,31,.28))]" />
+              <div className="absolute bottom-4 left-4 right-4 border-l-2 border-prevedello-red bg-black/38 p-4 backdrop-blur-md">
+                <p className="font-heading text-xl font-bold uppercase text-white">Hero 3D aprobado</p>
+                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">Mostrador técnico + obra + cotización.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -500,15 +523,15 @@ function OperationsDeck() {
 
   return (
     <section className="operations-band px-4 py-20 text-white sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
         <div className="relative">
           <p className="text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">Sistema Prevedello</p>
-          <h2 className="mt-4 max-w-3xl text-5xl font-extrabold leading-[0.92] sm:text-6xl">
-            Del mostrador a la obra, sin perder el hilo del pedido.
+          <h2 className="mt-4 max-w-3xl font-heading text-5xl font-extrabold uppercase leading-[0.92] sm:text-6xl">
+            El movimiento real del negocio también se ve.
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-8 text-white/72">
-            La experiencia digital tiene que sentirse como el negocio real: rapida, ordenada,
-            con asesoramiento y preparada para resolver compras grandes o chicas.
+            Videos de mostrador, logística y acopio visibles: la web tiene que mostrar que Prevedello
+            no es solo catálogo, es operación real detrás de cada cotización.
           </p>
           <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
             {metrics.map(([value, label]) => (
@@ -520,27 +543,27 @@ function OperationsDeck() {
           </div>
         </div>
 
-        <div className="relative grid gap-4">
+        <div className="relative grid gap-5">
           <div className="hidden text-xs font-extrabold uppercase tracking-[0.32em] text-white/45 lg:absolute lg:-left-8 lg:top-0 lg:block lg:h-full">
             <span className="rail-label">obra / hogar / industria</span>
           </div>
           {media.map(([src, label], index) => (
             <div
               key={src}
-              className={`angled-media overflow-hidden border border-white/14 bg-white/8 shadow-[0_22px_60px_rgba(0,35,95,0.28)] ${
-                index === 1 ? "lg:ml-14" : index === 2 ? "lg:ml-28" : ""
+              className={`angled-media overflow-hidden border border-white/18 bg-white/10 shadow-[0_28px_80px_rgba(0,0,0,0.38)] ${
+                index === 1 ? "lg:ml-8" : index === 2 ? "lg:ml-16" : ""
               }`}
             >
               <video
                 src={src}
-                className="h-36 w-full object-cover opacity-90 sm:h-44"
+                className="h-56 w-full object-cover opacity-100 sm:h-64 lg:h-52 xl:h-60"
                 muted
                 playsInline
                 autoPlay
                 loop
                 preload="metadata"
               />
-              <div className="flex items-center justify-between bg-prevedello-blue/88 px-5 py-3">
+              <div className="flex items-center justify-between border-t border-white/10 bg-[var(--pv-surface-2)] px-5 py-3">
                 <p className="text-sm font-extrabold">{label}</p>
                 <span className="text-xs font-bold uppercase text-white/50">PaP</span>
               </div>
