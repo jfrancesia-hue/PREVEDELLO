@@ -1,6 +1,6 @@
 # Prevedello Market
 
-Plataforma marketplace para Prevedello: catalogo, buscador, rubros, carrito de cotizacion, WhatsApp, admin local, importador CSV y CRM comercial inicial.
+Plataforma marketplace para Prevedello: catalogo, buscador, rubros, carrito de cotizacion, WhatsApp y app interna CRM con login.
 
 ## Stack
 
@@ -30,20 +30,21 @@ Copiar `.env.example` como `.env` y completar:
 VITE_PREVEDELLO_WHATSAPP=
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
-VITE_ENABLE_ADMIN=false
+VITE_CRM_ALLOWED_EMAILS=
 ```
 
 No usar `service_role` en el frontend.
 
-### Admin
+### App interna CRM
 
-El admin/CRM queda oculto por defecto en builds de produccion. Para una demo interna se puede activar con:
+El backoffice vive separado del sitio publico:
 
-```bash
-VITE_ENABLE_ADMIN=true
-```
+- `/app`: login y CRM interno.
+- `/admin`: redirige a `/app`.
 
-Esto no reemplaza autenticacion real. Antes de exponer backoffice en produccion, conectar Supabase Auth, permisos y RLS.
+Requiere Supabase Auth configurado con `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`.
+
+`VITE_CRM_ALLOWED_EMAILS` es opcional y acepta emails separados por coma para limitar el acceso del frontend. Esto no reemplaza RLS: antes de usar datos reales, proteger tablas con politicas en Supabase.
 
 ## Supabase
 
@@ -57,7 +58,8 @@ Checklist previo a produccion:
 
 - Completar `VITE_PREVEDELLO_WHATSAPP`.
 - Configurar solo `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` si se usa Supabase.
-- Mantener `VITE_ENABLE_ADMIN=false` en sitio publico.
+- Crear usuarios internos en Supabase Auth.
+- Completar `VITE_CRM_ALLOWED_EMAILS` si se quiere limitar emails autorizados.
 - Revisar `docs/supabase-schema.sql`, RLS y permisos antes de migrar.
 - Cargar productos, fotos y precios reales.
 - Definir dominio final para sitemap/SEO avanzado.

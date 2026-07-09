@@ -2,7 +2,10 @@ export const businessConfig = {
   name: "Prevedello",
   whatsappPhone: import.meta.env.VITE_PREVEDELLO_WHATSAPP ?? "",
   addressLabel: "Catamarca",
-  enableAdmin: import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === "true",
+  allowedAdminEmails: (import.meta.env.VITE_CRM_ALLOWED_EMAILS ?? "")
+    .split(",")
+    .map((email) => email.trim().toLowerCase())
+    .filter(Boolean),
 };
 
 export const getWhatsAppUrl = (message: string) => {

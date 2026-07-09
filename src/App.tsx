@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import type { Session } from "@supabase/supabase-js";
 import { Link, Navigate, Route, Routes, useParams } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -37,6 +38,7 @@ import {
 import { businessConfig, getWhatsAppUrl } from "./config/business";
 import { getStoredProducts, parseProductsCsv, resetStoredProducts, saveStoredProducts } from "./lib/catalogStorage";
 import { loadCatalogProducts, publishProductsToSupabase } from "./lib/catalogRepository";
+import { isSupabaseConfigured, supabase } from "./lib/supabaseClient";
 import {
   listQuoteRequests,
   saveQuoteRequest,
@@ -127,13 +129,11 @@ function HeaderMarketplace({
   onQueryChange,
   cartCount,
   onCartOpen,
-  showAdmin,
 }: {
   query: string;
   onQueryChange: (value: string) => void;
   cartCount: number;
   onCartOpen: () => void;
-  showAdmin: boolean;
 }) {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-5">
@@ -157,11 +157,6 @@ function HeaderMarketplace({
           <a className="transition hover:text-prevedello-red" href="#calculadoras">
             Calculadoras
           </a>
-          {showAdmin && (
-            <a className="transition hover:text-prevedello-red" href="#admin">
-              Admin
-            </a>
-          )}
         </nav>
         <a
           href={makeWhatsAppHref([], defaultQuoteForm)}
@@ -1802,7 +1797,207 @@ function QuoteRoutePage() {
   );
 }
 
-function AdminRoutePage() {
+const isAllowedInternalUser = (session: Session | null) => {
+  const allowlist = businessConfig.allowedAdminEmails;
+  if (allowlist.length === 0) return true;
+  const email = session?.user.email?.toLowerCase();
+  return Boolean(email && allowlist.includes(email));
+};
+
+function useInternalSession() {
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) {
+      setLoading(false);
+      return;
+    }
+
+    let mounted = true;
+
+    void supabase.auth.getSession().then(({ data }) => {
+      if (!mounted) return;
+      setSession(data.session);
+      setLoading(false);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession);
+      setLoading(false);
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  return { session, loading };
+}
+
+function InternalSetupRequiredPage() {
+  return (
+    <div className="min-h-screen bg-[#f7f3eb]">
+      <RouteHeader title="Configura Supabase Auth" eyebrow="App interna">
+        El CRM necesita Supabase Auth para iniciar sesion de forma segura. No hay acceso local ni
+        credenciales hardcodeadas.
+      </RouteHeader>
+      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
+        <div className="premium-card mx-auto max-w-4xl rounded-lg p-7">
+          <h2 className="text-2xl font-extrabold text-graphite">Variables necesarias</h2>
+          <div className="mt-5 grid gap-3 text-sm font-bold text-zinc-700 sm:grid-cols-2">
+            <code className="rounded-lg bg-cement p-3">VITE_SUPABASE_URL</code>
+            <code className="rounded-lg bg-cement p-3">VITE_SUPABASE_ANON_KEY</code>
+            <code className="rounded-lg bg-cement p-3 sm:col-span-2">VITE_CRM_ALLOWED_EMAILS opcional</code>
+          </div>
+          <p className="mt-5 leading-7 text-zinc-600">
+            Crea los usuarios internos desde Supabase Auth y protege las tablas con RLS antes de
+            usar el CRM con datos reales.
+          </p>
+          <Link to="/" className="mt-6 inline-flex rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
+            Volver al sitio publico
+          </Link>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function InternalLoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const signInWithPassword = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!supabase) return;
+
+    setSending(true);
+    setMessage("");
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+    setSending(false);
+    if (error) setMessage(`No pudimos iniciar sesion: ${error.message}`);
+  };
+
+  const sendMagicLink = async () => {
+    if (!supabase || !email.trim()) {
+      setMessage("Escribi tu email para enviarte el enlace de acceso.");
+      return;
+    }
+
+    setSending(true);
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email.trim(),
+      options: {
+        emailRedirectTo: window.location.origin + "/app",
+      },
+    });
+    setSending(false);
+    setMessage(error ? `No pudimos enviar el enlace: ${error.message}` : "Enlace enviado. Revisa tu email.");
+  };
+
+  return (
+    <div className="min-h-screen bg-prevedello-blue text-white">
+      <main className="mx-auto grid min-h-screen max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:px-8">
+        <section>
+          <Link to="/" className="mb-10 inline-block rounded-lg bg-white px-4 py-3">
+            <LogoMark compact />
+          </Link>
+          <p className="text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">App interna</p>
+          <h1 className="mt-4 max-w-3xl text-5xl font-extrabold leading-[0.95] sm:text-6xl">
+            CRM Prevedello para ventas, catalogo y seguimiento.
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-white/70">
+            Acceso privado para el equipo. El sitio publico queda separado y el backoffice exige
+            sesion de Supabase Auth.
+          </p>
+        </section>
+
+        <form onSubmit={signInWithPassword} className="rounded-lg bg-white p-6 text-graphite shadow-[0_30px_90px_rgba(0,35,95,0.25)]">
+          <p className="text-sm font-bold uppercase text-prevedello-red">Ingreso seguro</p>
+          <h2 className="mt-2 text-3xl font-extrabold">Entrar al CRM</h2>
+          <label className="mt-6 block text-sm font-bold text-zinc-700">
+            Email
+            <input
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              type="email"
+              autoComplete="email"
+              className="mt-2 h-12 w-full rounded-lg border border-zinc-200 px-3 font-semibold outline-none focus:border-prevedello-red"
+              placeholder="ventas@prevedello.com"
+            />
+          </label>
+          <label className="mt-4 block text-sm font-bold text-zinc-700">
+            Password
+            <input
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              type="password"
+              autoComplete="current-password"
+              className="mt-2 h-12 w-full rounded-lg border border-zinc-200 px-3 font-semibold outline-none focus:border-prevedello-red"
+              placeholder="Tu password"
+            />
+          </label>
+          {message && <p className="mt-4 rounded-lg bg-cement p-3 text-sm font-bold text-zinc-700">{message}</p>}
+          <button
+            type="submit"
+            disabled={sending}
+            className="mt-5 w-full rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800 disabled:cursor-wait disabled:opacity-70"
+          >
+            {sending ? "Validando..." : "Entrar"}
+          </button>
+          <button
+            type="button"
+            onClick={() => void sendMagicLink()}
+            disabled={sending}
+            className="mt-3 w-full rounded-full border border-zinc-200 px-5 py-3 text-sm font-bold text-graphite transition hover:bg-cement/50 disabled:cursor-wait disabled:opacity-70"
+          >
+            Enviar magic link
+          </button>
+          <p className="mt-5 text-sm leading-6 text-zinc-500">
+            Los usuarios se crean y administran desde Supabase Auth. Para restringir emails, usa
+            VITE_CRM_ALLOWED_EMAILS.
+          </p>
+        </form>
+      </main>
+    </div>
+  );
+}
+
+function InternalAccessDeniedPage({ session }: { session: Session }) {
+  const signOut = async () => {
+    await supabase?.auth.signOut();
+  };
+
+  return (
+    <div className="min-h-screen bg-[#f7f3eb]">
+      <RouteHeader title="Acceso no autorizado" eyebrow="App interna">
+        Tu usuario inicio sesion, pero no esta incluido en la lista permitida para este CRM.
+      </RouteHeader>
+      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
+        <div className="premium-card mx-auto max-w-3xl rounded-lg p-7">
+          <p className="text-sm font-bold uppercase text-prevedello-red">Usuario</p>
+          <h2 className="mt-2 text-2xl font-extrabold text-graphite">{session.user.email}</h2>
+          <p className="mt-3 leading-7 text-zinc-600">
+            Agrega este email en VITE_CRM_ALLOWED_EMAILS o usa una cuenta autorizada.
+          </p>
+          <button onClick={() => void signOut()} className="mt-6 rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
+            Salir
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function InternalWorkspacePage({ session }: { session: Session }) {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
   const [catalogStatus, setCatalogStatus] = useState("Catalogo local activo.");
   const [catalogSource, setCatalogSource] = useState<"local" | "supabase">("local");
@@ -1839,10 +2034,32 @@ function AdminRoutePage() {
     await reloadQuotes();
   };
 
+  const signOut = async () => {
+    await supabase?.auth.signOut();
+  };
+
   return (
     <div className="min-h-screen bg-[#f7f3eb]">
-      <RouteHeader title="Admin y CRM" eyebrow="Prevedello Market">
-        Catalogo, importador CSV y seguimiento comercial inicial.
+      <header className="sticky top-0 z-50 border-b border-prevedello-blue/10 bg-white/92 px-4 py-3 shadow-[0_12px_35px_rgba(9,59,145,0.08)] backdrop-blur-xl sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+          <Link to="/" className="shrink-0" aria-label="Volver al sitio publico">
+            <LogoMark compact />
+          </Link>
+          <div className="hidden min-w-0 text-right sm:block">
+            <p className="truncate text-sm font-extrabold text-graphite">{session.user.email}</p>
+            <p className="text-xs font-bold uppercase text-zinc-500">CRM interno</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => void signOut()}
+            className="rounded-full bg-prevedello-blue px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-800"
+          >
+            Salir
+          </button>
+        </div>
+      </header>
+      <RouteHeader title="CRM y catalogo interno" eyebrow="Prevedello App">
+        Gestion de productos, importador CSV y seguimiento comercial con acceso privado.
       </RouteHeader>
       <AdminCatalogPanel
         productsList={productsList}
@@ -1862,35 +2079,34 @@ function AdminRoutePage() {
   );
 }
 
-function AdminUnavailablePage() {
-  return (
-    <div className="min-h-screen bg-[#f7f3eb]">
-      <RouteHeader title="Admin no disponible" eyebrow="Prevedello Market">
-        El backoffice esta desactivado en produccion por seguridad. Activarlo requiere configurar
-        VITE_ENABLE_ADMIN=true y proteger el acceso con autenticacion real.
-      </RouteHeader>
-      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
-        <div className="premium-card mx-auto max-w-3xl rounded-lg p-7">
-          <h2 className="text-2xl font-extrabold text-graphite">Sitio publico protegido.</h2>
-          <p className="mt-3 leading-7 text-zinc-600">
-            El catalogo, buscador y cotizacion siguen activos para clientes. El panel interno queda
-            reservado para una instancia con login y permisos.
-          </p>
-          <Link to="/" className="mt-6 inline-flex rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
-            Volver al inicio
-          </Link>
+function InternalAppPage() {
+  const { session, loading } = useInternalSession();
+
+  if (!isSupabaseConfigured) return <InternalSetupRequiredPage />;
+
+  if (loading) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-prevedello-blue px-4 text-white">
+        <div className="text-center">
+          <div className="inline-flex rounded-lg bg-white px-4 py-3 shadow-[0_18px_55px_rgba(9,59,145,0.22)]">
+            <LogoMark />
+          </div>
+          <p className="mt-6 text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">Validando sesion</p>
         </div>
-      </main>
-    </div>
-  );
+      </div>
+    );
+  }
+
+  if (!session) return <InternalLoginPage />;
+  if (!isAllowedInternalUser(session)) return <InternalAccessDeniedPage session={session} />;
+
+  return <InternalWorkspacePage session={session} />;
 }
 
 function MarketplacePage() {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
   const [catalogStatus, setCatalogStatus] = useState("Catalogo local activo.");
   const [catalogSource, setCatalogSource] = useState<"local" | "supabase">("local");
-  const [quotes, setQuotes] = useState<QuoteRecord[]>([]);
-  const [crmStatus, setCrmStatus] = useState("CRM local activo.");
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("Todos");
   const [onlyAvailable, setOnlyAvailable] = useState(false);
@@ -1906,35 +2122,13 @@ function MarketplacePage() {
     setCatalogStatus(result.message);
   };
 
-  const reloadQuotes = async () => {
-    const result = await listQuoteRequests();
-    setQuotes(result.quotes);
-    setCrmStatus(result.message);
-  };
-
   useEffect(() => {
     void reloadCatalog();
-    if (businessConfig.enableAdmin) {
-      void reloadQuotes();
-    }
   }, []);
-
-  const publishCatalog = async () => {
-    const result = await publishProductsToSupabase(productsList);
-    setCatalogStatus(result.message);
-    return result.message;
-  };
 
   const handleSendQuote = async () => {
     const result = await saveQuoteRequest(customer, cart);
-    await reloadQuotes();
     return result.message;
-  };
-
-  const handleQuoteStatusChange = async (quoteId: string, status: QuoteStatus) => {
-    const message = await updateQuoteStatus(quoteId, status);
-    setCrmStatus(message);
-    await reloadQuotes();
   };
 
   const filteredProducts = useMemo(() => {
@@ -1994,7 +2188,6 @@ function MarketplacePage() {
         onQueryChange={setQuery}
         cartCount={cartCount}
         onCartOpen={() => setCartOpen(true)}
-        showAdmin={businessConfig.enableAdmin}
       />
       <HeroSection query={query} onQueryChange={setQuery} />
       <PromoBanner />
@@ -2125,24 +2318,6 @@ function MarketplacePage() {
           </div>
         </section>
 
-        {businessConfig.enableAdmin && (
-          <>
-            <AdminCatalogPanel
-              productsList={productsList}
-              onProductsChange={setProductsList}
-              catalogStatus={catalogStatus}
-              catalogSource={catalogSource}
-              onReloadCatalog={reloadCatalog}
-              onPublishCatalog={publishCatalog}
-            />
-            <AdminCrmPanel
-              quotes={quotes}
-              statusMessage={crmStatus}
-              onReload={reloadQuotes}
-              onStatusChange={handleQuoteStatusChange}
-            />
-          </>
-        )}
       </main>
 
       <QuoteCart
@@ -2171,8 +2346,10 @@ export default function App() {
       <Route path="/rubros" element={<CategoriesRoutePage />} />
       <Route path="/rubros/:slug" element={<CategoryRoutePage />} />
       <Route path="/cotizacion" element={<QuoteRoutePage />} />
-      <Route path="/admin" element={businessConfig.enableAdmin ? <AdminRoutePage /> : <AdminUnavailablePage />} />
-      <Route path="/admin/*" element={businessConfig.enableAdmin ? <AdminRoutePage /> : <AdminUnavailablePage />} />
+      <Route path="/app" element={<InternalAppPage />} />
+      <Route path="/app/*" element={<InternalAppPage />} />
+      <Route path="/admin" element={<Navigate to="/app" replace />} />
+      <Route path="/admin/*" element={<Navigate to="/app" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
