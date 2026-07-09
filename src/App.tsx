@@ -2221,39 +2221,6 @@ function InternalAppPage() {
   return <InternalWorkspacePage authMode="demo" userEmail={demoEmail} onSignOut={endDemoSession} />;
 }
 
-function PublicFooter() {
-  return (
-    <footer className="border-t border-prevedello-blue/10 bg-[#f7f3eb] px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto flex max-w-7xl flex-col gap-7 md:flex-row md:items-center md:justify-between">
-        <div>
-          <LogoMark compact />
-          <p className="mt-3 max-w-md text-sm leading-6 text-zinc-600">
-            Catalogo, asesoramiento y cotizacion para obra, hogar y empresas.
-          </p>
-        </div>
-        <nav className="flex flex-wrap items-center gap-3 text-sm font-bold text-zinc-600">
-          <a className="rounded-full px-3 py-2 transition hover:bg-white hover:text-prevedello-red" href="#rubros">
-            Rubros
-          </a>
-          <a className="rounded-full px-3 py-2 transition hover:bg-white hover:text-prevedello-red" href="#productos">
-            Productos
-          </a>
-          <a className="rounded-full px-3 py-2 transition hover:bg-white hover:text-prevedello-red" href="#calculadoras">
-            Calculadoras
-          </a>
-          <Link
-            to="/app"
-            className="inline-flex items-center gap-2 rounded-full border border-prevedello-blue/15 bg-white px-4 py-2 text-prevedello-blue shadow-[0_12px_30px_rgba(9,59,145,0.08)] transition hover:border-prevedello-red/35 hover:text-prevedello-red"
-          >
-            <LogIn size={15} />
-            App interna
-          </Link>
-        </nav>
-      </div>
-    </footer>
-  );
-}
-
 function MarketplacePage() {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
   const [catalogStatus, setCatalogStatus] = useState("Catalogo local activo.");
