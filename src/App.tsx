@@ -69,6 +69,13 @@ const formatPrice = (price?: number) =>
       }).format(price)
     : "Consultar precio";
 
+const getAvailabilityClass = (availability: string) => {
+  const normalized = availability.toLowerCase();
+  if (normalized.includes("disponible")) return "availability-badge--disponible";
+  if (normalized.includes("pedido")) return "availability-badge--pedido";
+  return "availability-badge--confirmar";
+};
+
 const makeWhatsAppHref = (items: QuoteItem[], customer: QuoteFormState) => {
   const productLines = items.length
     ? items
@@ -107,12 +114,12 @@ const defaultQuoteForm: QuoteFormState = {
 };
 
 const heroMetrics = [
-  ["+8", "rubros ordenados"],
-  ["24/7", "pedido armado"],
-  ["Catamarca", "atención local"],
+  ["+8", "rubros"],
+  ["24/7", "pedido listo"],
+  ["1970", "Catamarca"],
 ] as const;
 
-const quickNeeds = ["Cemento", "Pintura", "Herramientas", "Sanitarios"] as const;
+const quickNeeds = ["Cemento", "Pintura", "Ferretería", "Sanitarios", "Pisos"] as const;
 
 function LogoMark({ compact = false }: { compact?: boolean }) {
   return (
@@ -143,14 +150,14 @@ function HeaderMarketplace({
 }) {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-5">
-      <div className="mx-auto flex max-w-7xl items-center gap-2 rounded-[1.35rem] border border-white/60 bg-white/88 px-3 py-2 shadow-[0_18px_55px_rgba(9,59,145,0.16)] backdrop-blur-2xl lg:gap-3">
+      <div className="ds-header mx-auto flex h-14 max-w-7xl items-center gap-2 px-2 py-1 lg:h-16 lg:gap-3 lg:px-3">
         <a href="#inicio" className="shrink-0" aria-label="Ir al inicio">
           <LogoMark compact />
         </a>
         <div className="hidden min-w-0 flex-1 lg:block lg:max-w-sm xl:max-w-md">
           <SearchBar value={query} onChange={onQueryChange} compact />
         </div>
-        <nav className="hidden items-center gap-4 text-sm font-semibold text-zinc-700 lg:flex xl:gap-6">
+        <nav className="hidden items-center gap-4 text-sm font-semibold text-white/75 lg:flex xl:gap-6">
           <a className="transition hover:text-prevedello-red" href="#rubros">
             Rubros
           </a>
@@ -175,7 +182,7 @@ function HeaderMarketplace({
           href={makeWhatsAppHref([], defaultQuoteForm)}
           target="_blank"
           rel="noreferrer"
-          className="hidden items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-[0_14px_30px_rgba(22,163,74,0.2)] transition hover:bg-emerald-700 md:flex"
+          className="ds-button-whatsapp hidden items-center gap-2 px-4 py-2 text-sm md:flex"
         >
           <MessageCircle size={17} />
           WhatsApp
@@ -183,19 +190,19 @@ function HeaderMarketplace({
         <button
           type="button"
           onClick={onCartOpen}
-          className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-prevedello-blue text-white shadow-[0_14px_30px_rgba(9,59,145,0.24)] transition hover:scale-[1.03]"
+          className="relative grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-btn)] bg-prevedello-red text-white shadow-[0_14px_30px_rgba(220,31,38,0.24)] transition active:scale-[0.97]"
           aria-label="Abrir pedido"
         >
           <ShoppingCart size={20} />
           {cartCount > 0 && (
-            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-prevedello-red px-1 text-xs font-bold">
+            <span className="cart-badge absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-[var(--radius-badge)] bg-prevedello-red px-1 text-xs font-bold">
               {cartCount}
             </span>
           )}
         </button>
         <Link
           to="/app"
-          className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-zinc-200 text-prevedello-blue transition hover:border-prevedello-red/35 hover:text-prevedello-red lg:hidden"
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-btn)] border border-white/20 text-white transition hover:border-prevedello-red/60 hover:text-white lg:hidden"
           aria-label="Abrir app interna"
           title="App interna"
         >
@@ -220,7 +227,7 @@ function SearchBar({
 }) {
   return (
     <label
-      className={`relative flex min-w-0 items-center gap-2 overflow-hidden rounded-full border border-blue-100/80 bg-white px-4 shadow-[0_12px_30px_rgba(9,59,145,0.08)] transition focus-within:border-prevedello-red focus-within:shadow-[0_0_0_5px_rgba(220,31,38,0.1)] ${
+      className={`ds-input relative flex min-w-0 items-center gap-2 overflow-hidden px-4 transition ${
         compact ? "h-11" : "h-16"
       }`}
     >
@@ -231,7 +238,7 @@ function SearchBar({
         placeholder="¿Qué necesitás para tu obra?"
         className="min-w-0 flex-1 bg-transparent text-base font-bold text-graphite outline-none placeholder:text-zinc-400 sm:text-lg"
       />
-      <span className="hidden shrink-0 rounded-full bg-cement px-3 py-1 text-xs font-bold uppercase text-zinc-600 sm:inline">
+      <span className="hidden shrink-0 rounded-[var(--radius-badge)] bg-prevedello-red px-3 py-1 text-xs font-bold uppercase text-white sm:inline">
         Buscar
       </span>
     </label>
@@ -252,7 +259,7 @@ function WhatsAppQuoteButton({
       href={makeWhatsAppHref(items, customer)}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-[0_16px_30px_rgba(22,163,74,0.22)] transition hover:bg-emerald-700"
+      className="ds-button-whatsapp inline-flex items-center justify-center gap-2 px-5 py-3 text-sm"
     >
       <MessageCircle size={18} />
       {label}
@@ -273,6 +280,7 @@ function HeroSection({
 
   useEffect(() => {
     if (!heroRef.current || !panelRef.current || !logoRef.current) return;
+    if (window.innerWidth <= 768) return;
 
     const context = gsap.context(() => {
       gsap.fromTo(
@@ -316,18 +324,19 @@ function HeroSection({
     <section
       id="inicio"
       ref={heroRef}
-      className="relative min-h-[132svh] overflow-hidden bg-prevedello-blue text-white"
+      className="blueprint-dense blueprint-parallax relative min-h-[132svh] overflow-hidden text-white"
     >
       <div className="absolute inset-0">
-        <video
-          src="/assets/prevedello-hero.mp4"
-          className="h-full w-full scale-[1.04] object-cover opacity-72"
-          muted
-          playsInline
-          autoPlay
-          loop
-          preload="metadata"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/hero-mobile.png" />
+          <img
+            src="/hero-desktop.png"
+            alt="Prevedello Market — mostrador digital de construcción"
+            className="h-full w-full object-cover object-center opacity-72"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </picture>
         <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(7,37,92,0.96),rgba(9,59,145,0.58),rgba(7,37,92,0.84))]" />
         <div className="industrial-grid absolute inset-0 opacity-22 mix-blend-screen" />
         <div className="blueprint-ruler absolute inset-x-0 bottom-0 h-28 opacity-55" />
@@ -336,7 +345,7 @@ function HeroSection({
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pb-64 pt-36 sm:px-6 lg:px-8 xl:pb-72">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.88fr] xl:gap-16">
           <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-[var(--radius-badge)] border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
               <Sparkles size={16} />
               Corralón, ferretería y hogar en Catamarca
             </div>
@@ -344,18 +353,18 @@ function HeroSection({
               Tu mostrador digital para resolver la obra.
             </h1>
             <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
-              Buscá materiales, armá una cotización y pedí asesoramiento humano por WhatsApp.
-              Prevedello ordena el catálogo como una ficha de obra: rápido, claro y local.
+              Buscá materiales, armá tu pedido y cotizá en minutos.
+              Atención local en Catamarca, respuesta humana garantizada.
             </p>
             <div className="mt-6 grid max-w-2xl grid-cols-3 gap-2 sm:gap-3">
               {heroMetrics.map(([value, label]) => (
-                <div key={value} className="rounded-2xl border border-white/14 bg-white/10 p-3 backdrop-blur-md">
+                <div key={value} className="rounded-[var(--radius-card)] border border-white/14 bg-white/10 p-3 backdrop-blur-md">
                   <p className="text-lg font-extrabold text-white sm:text-2xl">{value}</p>
                   <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-white/55">{label}</p>
                 </div>
               ))}
             </div>
-            <div className="relative z-30 mt-6 max-w-xl rounded-[1.6rem] border border-white/16 bg-white/10 p-2 backdrop-blur-md">
+            <div className="relative z-30 mt-6 max-w-xl rounded-[var(--radius-card)] border border-white/16 bg-white/10 p-2 backdrop-blur-md">
               <SearchBar value={query} onChange={onQueryChange} />
               <div className="mt-3 flex flex-wrap gap-2 px-1 pb-1">
                 {quickNeeds.map((need) => (
@@ -363,7 +372,7 @@ function HeroSection({
                     key={need}
                     type="button"
                     onClick={() => onQueryChange(need)}
-                    className="rounded-full border border-white/14 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/78 transition hover:border-white/35 hover:bg-white/16"
+                    className="search-chip rounded-[var(--radius-badge)] border border-white/14 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/78 transition hover:border-white/35 hover:bg-white/16"
                   >
                     {need}
                   </button>
@@ -372,18 +381,18 @@ function HeroSection({
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
-                href="#productos"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-extrabold text-graphite shadow-[0_18px_45px_rgba(255,255,255,0.18)] transition hover:scale-[1.03]"
+                href="#pedido"
+                className="ds-button-red inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                Ver productos
+                Armar cotización
                 <ArrowRight size={17} />
               </a>
               <a
-                href="#calculadoras"
-                className="liquid-glass inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white transition hover:scale-[1.03]"
+                href="#productos"
+                className="ds-button-outline inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                Calcular materiales
-                <Calculator size={17} />
+                Ver catálogo
+                <ArrowRight size={17} />
               </a>
             </div>
           </div>
@@ -401,7 +410,7 @@ function HeroSection({
 
       <div
         ref={panelRef}
-        className="archive-panel absolute bottom-0 left-0 right-0 z-20 rounded-t-[2rem] bg-prevedello-blue px-4 py-8 text-white shadow-[0_-30px_90px_rgba(9,59,145,0.35)] sm:px-6 lg:px-8"
+        className="archive-panel absolute bottom-0 left-0 right-0 z-20 rounded-t-[var(--radius-modal)] bg-[var(--pv-surface-2)] px-4 py-8 text-white shadow-[0_-30px_90px_rgba(9,59,145,0.35)] sm:px-6 lg:px-8"
       >
         <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div className="flex flex-col justify-between gap-6">
@@ -549,18 +558,18 @@ function CategoryCard({
     <button
       type="button"
       onClick={() => onSelect(category.name)}
-      className="premium-card premium-card-hover blueprint-card group relative min-w-[250px] overflow-hidden rounded-[1.35rem] p-6 text-left"
+      className="rubro-card blueprint-card group relative min-w-[250px] overflow-hidden p-6 text-left"
     >
       <span className="absolute inset-x-0 top-0 h-1 bg-prevedello-red" />
       <span className="absolute right-5 top-5 text-5xl font-extrabold leading-none text-prevedello-blue/8">
         {String(index + 1).padStart(2, "0")}
       </span>
-      <span className={`grid h-12 w-12 place-items-center rounded-lg text-white shadow-[0_14px_30px_rgba(9,59,145,0.16)] ${category.accent}`}>
+      <span className={`grid h-12 w-12 place-items-center rounded-[var(--radius-btn)] text-white shadow-[0_14px_30px_rgba(9,59,145,0.16)] ${category.accent}`}>
         <Icon size={21} />
       </span>
-      <h3 className="relative mt-6 text-xl font-extrabold text-graphite">{category.name}</h3>
-      <p className="mt-2 min-h-12 text-sm leading-6 text-zinc-600">{category.description}</p>
-      <span className="relative mt-5 inline-flex items-center gap-2 text-sm font-bold text-prevedello-red">
+      <h3 className="relative mt-6 font-heading text-xl font-bold uppercase text-white">{category.name}</h3>
+      <p className="mt-2 min-h-12 text-sm leading-6 text-[var(--pv-text-secondary)]">{category.description}</p>
+      <span className="relative mt-5 inline-flex items-center gap-2 text-sm font-bold text-[var(--pv-text-secondary)] transition group-hover:text-white">
         Ver rubro
         <ArrowRight size={16} className="transition group-hover:translate-x-1" />
       </span>
@@ -667,7 +676,7 @@ function ProductCard({
   onOpen: (product: Product) => void;
 }) {
   return (
-    <article className="premium-card premium-card-hover blueprint-card flex h-full flex-col rounded-[1.35rem] p-4">
+    <article className="product-card blueprint-card flex h-full flex-col p-4">
       <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
         <ProductVisual product={product} />
         <div className="px-1 pb-2 pt-5">
@@ -676,7 +685,7 @@ function ProductCard({
               <p className="text-xs font-bold uppercase text-prevedello-red">{product.brand}</p>
               <h3 className="mt-1 text-xl font-extrabold leading-6 text-graphite">{product.name}</h3>
             </div>
-            <span className="shrink-0 rounded-full border border-prevedello-blue/10 bg-cement px-3 py-1 text-xs font-bold text-zinc-700">
+            <span className="shrink-0 rounded-[var(--radius-badge)] border border-white/10 bg-white/8 px-3 py-1 text-xs font-bold text-[var(--pv-text-secondary)]">
               {product.unit}
             </span>
           </div>
@@ -689,8 +698,9 @@ function ProductCard({
           )}
           <div className="mt-5 flex items-center justify-between gap-3 border-t border-zinc-100 pt-4">
             <div>
-              <p className="text-xl font-extrabold text-graphite">{formatPrice(product.price)}</p>
-              <p className="mt-1 inline-flex rounded-full bg-emerald-50 px-2 py-1 text-xs font-bold text-emerald-700">
+              <p className="font-mono text-xl font-medium text-white">{formatPrice(product.price)}</p>
+              <p className={`availability-badge mt-1 ${getAvailabilityClass(product.availability)}`}>
+                <span className="dot" />
                 {product.availability}
               </p>
             </div>
@@ -701,7 +711,7 @@ function ProductCard({
         <button
           type="button"
           onClick={() => onAdd(product)}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-4 py-3 text-sm font-bold text-white shadow-[0_14px_30px_rgba(9,59,145,0.2)] transition hover:-translate-y-0.5 hover:bg-blue-800"
+          className="ds-button btn-agregar inline-flex items-center justify-center gap-2 px-4 py-3 text-sm"
         >
           <Plus size={17} />
           Agregar
@@ -710,7 +720,7 @@ function ProductCard({
           href={makeWhatsAppHref([{ product, quantity: 1 }], defaultQuoteForm)}
           target="_blank"
           rel="noreferrer"
-          className="grid h-12 w-12 place-items-center rounded-full border border-emerald-200 bg-emerald-50 text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-100"
+          className="grid h-12 w-12 place-items-center rounded-[var(--radius-btn)] border border-[rgba(37,211,102,0.4)] bg-transparent text-[var(--pv-whatsapp)] transition hover:bg-[rgba(37,211,102,0.1)]"
           aria-label={`Consultar ${product.name} por WhatsApp`}
         >
           <MessageCircle size={19} />
@@ -1559,10 +1569,68 @@ function AdminCrmPanel({
   );
 }
 
+function PublicFooter() {
+  return (
+    <footer className="pv-footer px-4 py-12 text-[var(--pv-text-secondary)] sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <LogoMark compact />
+          <p className="mt-4 max-w-xs text-sm leading-6">
+            Corralón, ferretería y hogar. Catamarca desde 1970.
+          </p>
+        </div>
+        <div>
+          <h3 className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-white">Rubros</h3>
+          <div className="mt-4 grid gap-2 text-sm">
+            {categories.slice(0, 6).map((category) => (
+              <a key={category.id} href="#rubros" className="transition hover:text-white">
+                {category.name}
+              </a>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h3 className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-white">Contacto</h3>
+          <div className="mt-4 grid gap-2 text-sm">
+            <a href={makeWhatsAppHref([], defaultQuoteForm)} target="_blank" rel="noreferrer" className="transition hover:text-white">
+              WhatsApp de atención
+            </a>
+            <span>Catamarca, Argentina</span>
+            <span>Atención humana local</span>
+          </div>
+        </div>
+        <div>
+          <h3 className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-white">Horarios</h3>
+          <p className="mt-4 text-sm leading-6">
+            Consultas y cotizaciones por WhatsApp. El precio final lo confirma Prevedello.
+          </p>
+        </div>
+      </div>
+      <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-5 text-xs text-[var(--pv-text-muted)]">
+        © 2026 Prevedello Market. Plataforma de cotización comercial.
+      </div>
+    </footer>
+  );
+}
+
+function WhatsAppFab() {
+  return (
+    <a
+      href={makeWhatsAppHref([], defaultQuoteForm)}
+      target="_blank"
+      rel="noreferrer"
+      className="whatsapp-fab grid place-items-center text-white lg:hidden"
+      aria-label="Consultar por WhatsApp"
+    >
+      <MessageCircle size={26} />
+    </a>
+  );
+}
+
 function MobileBottomNav({ cartCount, onCartOpen }: { cartCount: number; onCartOpen: () => void }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-prevedello-blue/10 bg-white/95 px-2 py-2 shadow-[0_-14px_40px_rgba(9,59,145,0.16)] backdrop-blur-xl lg:hidden">
-      <div className="grid grid-cols-5 text-xs font-bold text-zinc-600">
+    <nav className="fixed bottom-0 left-0 right-0 z-[100] h-14 border-t border-[rgba(160,190,255,0.1)] bg-[var(--pv-surface-0)] px-2 py-1 shadow-[0_-16px_45px_rgba(0,0,0,0.35)] lg:hidden">
+      <div className="grid grid-cols-5 text-xs font-bold text-[var(--pv-text-muted)]">
         {[
           ["#inicio", "Inicio", HomeIcon],
           ["#rubros", "Rubros", PackageCheck],
@@ -1577,12 +1645,12 @@ function MobileBottomNav({ cartCount, onCartOpen }: { cartCount: number; onCartO
                 key={label as string}
                 type="button"
                 onClick={onCartOpen}
-                className="relative flex flex-col items-center gap-1 rounded-lg px-2 py-1 text-graphite transition hover:bg-cement/60"
+                className="relative flex flex-col items-center gap-1 rounded-[var(--radius-btn)] px-2 py-1 text-[var(--pv-text-secondary)] transition hover:text-white"
               >
                 <IconComponent size={19} />
                 <span>{label as string}</span>
                 {cartCount > 0 && (
-                  <span className="absolute right-4 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-prevedello-red px-1 text-[10px] text-white">
+                  <span className="cart-badge absolute right-4 top-0 grid h-4 min-w-4 place-items-center rounded-[var(--radius-badge)] bg-prevedello-red px-1 text-[10px] text-white">
                     {cartCount}
                   </span>
                 )}
@@ -1596,7 +1664,7 @@ function MobileBottomNav({ cartCount, onCartOpen }: { cartCount: number; onCartO
               href={href as string}
               target={(label as string) === "WhatsApp" ? "_blank" : undefined}
               rel={(label as string) === "WhatsApp" ? "noreferrer" : undefined}
-              className="flex flex-col items-center gap-1 rounded-lg px-2 py-1 transition hover:bg-cement/60 hover:text-graphite"
+              className={`flex flex-col items-center gap-1 rounded-[var(--radius-btn)] px-2 py-1 transition hover:text-white ${(label as string) === "WhatsApp" ? "text-[var(--pv-whatsapp)]" : ""}`}
             >
               <IconComponent size={19} />
               <span>{label as string}</span>
@@ -2277,15 +2345,15 @@ function MarketplacePage() {
       <OperationsDeck />
 
       <main>
-        <section id="rubros" className="section-anchor section-band px-4 py-20 sm:px-6 lg:px-8">
+        <section id="rubros" className="section-anchor blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="section-kicker">Rubros principales</p>
-                <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">Compra por necesidad de obra.</h2>
+                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Compra por necesidad de obra.</h2>
               </div>
-              <p className="max-w-md text-sm leading-6 text-zinc-600">
-                Accesos pensados para que una persona comun encuentre rapido lo que necesita y pueda pedir ayuda sin friccion.
+              <p className="max-w-md text-sm leading-6 text-[var(--pv-text-secondary)]">
+                Accesos pensados para que una persona común encuentre rápido lo que necesita y pueda pedir ayuda sin fricción.
               </p>
             </div>
             <div className="flex gap-5 overflow-x-auto pb-3 scrollbar-none lg:grid lg:grid-cols-4 lg:overflow-visible">
@@ -2296,35 +2364,35 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section id="pedido" className="section-anchor bg-white px-4 py-18 sm:px-6 lg:px-8">
+        <section id="pedido" className="section-anchor bg-[var(--pv-surface-1)] px-4 py-18 text-white sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-3">
             {[
-              ["1", "Busca o elegi un rubro", "Pisos, ferreteria, pintura, obra gruesa, instalaciones o hogar."],
-              ["2", "Agrega productos al pedido", "No hay checkout: es una cotizacion rapida con cantidades y notas."],
-              ["3", "Envia por WhatsApp", "El mensaje sale armado para que Prevedello responda con precio y entrega."],
+              ["1", "Buscá o elegí un rubro", "Pisos, ferretería, pintura, obra gruesa, instalaciones o hogar."],
+              ["2", "Agregá productos al pedido", "No hay checkout: es una cotización rápida con cantidades y notas."],
+              ["3", "Enviá por WhatsApp", "El mensaje sale armado para que Prevedello responda con precio y entrega."],
             ].map(([step, title, detail]) => (
-              <div key={step} className="premium-card premium-card-hover rounded-lg p-6">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-prevedello-red text-lg font-extrabold text-white shadow-[0_14px_30px_rgba(220,31,38,0.18)]">
+              <div key={step} className="ds-card p-6">
+                <span className="grid h-11 w-11 place-items-center rounded-[var(--radius-btn)] bg-prevedello-red text-lg font-extrabold text-white shadow-[0_14px_30px_rgba(220,31,38,0.18)]">
                   {step}
                 </span>
-                <h3 className="mt-4 text-xl font-extrabold text-graphite">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-zinc-600">{detail}</p>
+                <h3 className="mt-4 font-heading text-xl font-extrabold uppercase text-white">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--pv-text-secondary)]">{detail}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section id="productos" className="section-anchor bg-white px-4 py-20 sm:px-6 lg:px-8">
+        <section id="productos" className="section-anchor bg-[var(--pv-surface-1)] px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <Breadcrumbs current="Productos destacados" />
             <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="section-kicker">Catalogo inicial</p>
-                <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">Productos para cotizar hoy.</h2>
+                <p className="section-kicker">Catálogo inicial</p>
+                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Productos para cotizar hoy.</h2>
               </div>
-              <p className="max-w-xl text-sm leading-6 text-zinc-600">
-                Esta etapa ya permite editar catalogo local e importar CSV. La estructura queda
-                lista para conectar categorias, productos, marcas y pedidos a Supabase cuando lo definamos.
+              <p className="max-w-xl text-sm leading-6 text-[var(--pv-text-secondary)]">
+                Esta etapa ya permite editar catálogo local e importar CSV. La estructura queda
+                lista para conectar categorías, productos, marcas y pedidos a Supabase cuando lo definamos.
               </p>
             </div>
             <div className="grid gap-7 lg:grid-cols-[300px_1fr]">
@@ -2356,15 +2424,15 @@ function MarketplacePage() {
 
         <ProfessionalCTA />
 
-        <section id="calculadoras" className="section-anchor section-band px-4 py-20 sm:px-6 lg:px-8">
+        <section id="calculadoras" className="section-anchor blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="section-kicker">Calculadoras</p>
-                <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">Estimaciones para comprar mejor.</h2>
+                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Estimaciones para comprar mejor.</h2>
               </div>
-              <p className="max-w-md text-sm leading-6 text-zinc-600">
-                Resultados orientativos para iniciar la cotizacion. El equipo puede ajustar cantidades segun medidas y uso real.
+              <p className="max-w-md text-sm leading-6 text-[var(--pv-text-secondary)]">
+                Resultados orientativos para iniciar la cotización. El equipo puede ajustar cantidades según medidas y uso real.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -2375,8 +2443,8 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <section className="bg-prevedello-blue px-4 py-20 text-white sm:px-6 lg:px-8">
-          <div className="blueprint-panel mx-auto grid max-w-7xl gap-7 rounded-lg border border-white/14 p-6 lg:grid-cols-[1fr_auto] lg:items-center lg:p-8">
+        <section className="blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
+          <div className="blueprint-panel mx-auto grid max-w-7xl gap-7 rounded-[var(--radius-card)] border border-white/14 p-6 lg:grid-cols-[1fr_auto] lg:items-center lg:p-8">
             <div>
               <p className="text-sm font-bold uppercase text-white/65">Siguiente paso</p>
               <h2 className="mt-2 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
@@ -2391,7 +2459,7 @@ function MarketplacePage() {
               <button
                 type="button"
                 onClick={() => setCartOpen(true)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-extrabold text-prevedello-blue transition hover:scale-[1.03]"
+                className="ds-button-red inline-flex items-center justify-center gap-2 px-6 py-3 text-sm"
               >
                 Abrir pedido
                 <ShoppingCart size={17} />
@@ -2403,6 +2471,9 @@ function MarketplacePage() {
 
         <PublicFooter />
       </main>
+
+      <PublicFooter />
+      <WhatsAppFab />
 
       <QuoteCart
         open={cartOpen}
