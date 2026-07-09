@@ -5,15 +5,21 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowRight,
+  BarChart3,
   BadgeCheck,
+  Boxes,
   Calculator,
+  CalendarCheck,
   Check,
+  CheckCircle2,
   ChevronRight,
   CloudUpload,
   ClipboardList,
+  ContactRound,
   Database,
   FileSpreadsheet,
   LogIn,
+  ListTodo,
   MessageCircle,
   Minus,
   PackageCheck,
@@ -21,10 +27,13 @@ import {
   RotateCcw,
   Save,
   Search,
+  Settings,
   ShoppingCart,
   SlidersHorizontal,
   Sparkles,
+  Tags,
   Upload,
+  Users,
   X,
 } from "lucide-react";
 import {
@@ -1442,6 +1451,383 @@ const quoteStatusLabels: Record<QuoteStatus, string> = {
   sin_respuesta: "Sin respuesta",
 };
 
+type InternalModule =
+  | "dashboard"
+  | "productos"
+  | "cotizaciones"
+  | "clientes"
+  | "crm"
+  | "tareas"
+  | "rubros"
+  | "marcas"
+  | "configuracion";
+
+const internalModules: { id: InternalModule; label: string; icon: ReactNode }[] = [
+  { id: "dashboard", label: "Dashboard", icon: <BarChart3 size={18} /> },
+  { id: "productos", label: "Productos", icon: <Boxes size={18} /> },
+  { id: "cotizaciones", label: "Cotizaciones", icon: <ClipboardList size={18} /> },
+  { id: "clientes", label: "Clientes", icon: <Users size={18} /> },
+  { id: "crm", label: "CRM", icon: <ContactRound size={18} /> },
+  { id: "tareas", label: "Tareas", icon: <ListTodo size={18} /> },
+  { id: "rubros", label: "Rubros", icon: <Tags size={18} /> },
+  { id: "marcas", label: "Marcas", icon: <BadgeCheck size={18} /> },
+  { id: "configuracion", label: "Config", icon: <Settings size={18} /> },
+];
+
+const openQuoteStatuses: QuoteStatus[] = ["nuevo", "contactado", "cotizacion_enviada", "en_negociacion", "sin_respuesta"];
+
+const estimateQuoteValue = (quote: QuoteRecord, productsList: Product[]) =>
+  quote.items.reduce((total, item) => {
+    const product = productsList.find((candidate) => candidate.id === item.productId || candidate.name === item.productName);
+    return total + (product?.price ?? 0) * item.quantity;
+  }, 0);
+
+const getTopCategory = (quotes: QuoteRecord[], productsList: Product[]) => {
+  const counts = new Map<string, number>();
+  quotes.forEach((quote) => {
+    quote.items.forEach((item) => {
+      const category = productsList.find((product) => product.id === item.productId || product.name === item.productName)?.category;
+      if (category) counts.set(category, (counts.get(category) ?? 0) + item.quantity);
+    });
+  });
+
+  return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "Sin datos";
+};
+
+function InternalDashboard({
+  productsList,
+  quotes,
+  onModuleChange,
+}: {
+  productsList: Product[];
+  quotes: QuoteRecord[];
+  onModuleChange: (module: InternalModule) => void;
+}) {
+  const newQuotes = quotes.filter((quote) => quote.status === "nuevo").length;
+  const pendingQuotes = quotes.filter((quote) => openQuoteStatuses.includes(quote.status)).length;
+  const wonQuotes = quotes.filter((quote) => quote.status === "ganado").length;
+  const quotedValue = quotes.reduce((total, quote) => total + estimateQuoteValue(quote, productsList), 0);
+  const topCategory = getTopCategory(quotes, productsList);
+  const productsToReview = productsList.filter((product) => product.availability !== "Disponible").length;
+
+  const cards = [
+    { label: "Consultas nuevas", value: newQuotes, detail: "Ingresos sin primer contacto", icon: <MessageCircle size={20} /> },
+    { label: "Pendientes", value: pendingQuotes, detail: "Cotizaciones en proceso", icon: <CalendarCheck size={20} /> },
+    { label: "Ganadas", value: wonQuotes, detail: "Ventas marcadas como cierre", icon: <CheckCircle2 size={20} /> },
+    { label: "Valor estimado", value: quotedValue ? formatPrice(quotedValue) : "A cotizar", detail: "Solo productos con precio", icon: <BarChart3 size={20} /> },
+  ];
+
+  return (
+    <section className="px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {cards.map((card) => (
+            <article key={card.label} className="premium-card rounded-lg p-5">
+              <div className="flex items-start justify-between gap-4">
+                <span className="grid h-11 w-11 place-items-center rounded-lg bg-prevedello-blue text-white">{card.icon}</span>
+                <span className="rounded-full bg-cement px-3 py-1 text-xs font-extrabold uppercase text-zinc-600">Hoy</span>
+              </div>
+              <p className="mt-5 text-sm font-bold uppercase text-zinc-500">{card.label}</p>
+              <p className="mt-2 text-3xl font-extrabold text-graphite">{card.value}</p>
+              <p className="mt-2 text-sm leading-6 text-zinc-600">{card.detail}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-7 grid gap-7 xl:grid-cols-[1.1fr_0.9fr]">
+          <article className="premium-card rounded-lg p-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="section-kicker">Operacion comercial</p>
+                <h2 className="mt-2 text-3xl font-extrabold text-graphite">Pipeline de cotizaciones</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => onModuleChange("cotizaciones")}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-4 py-2 text-sm font-bold text-white"
+              >
+                Ver cotizaciones
+                <ArrowRight size={16} />
+              </button>
+            </div>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {Object.entries(quoteStatusLabels).map(([status, label]) => {
+                const count = quotes.filter((quote) => quote.status === status).length;
+                return (
+                  <div key={status} className="rounded-lg border border-prevedello-blue/10 bg-cement/35 p-4">
+                    <p className="text-sm font-extrabold text-graphite">{label}</p>
+                    <div className="mt-3 h-2 rounded-full bg-white">
+                      <div
+                        className="h-2 rounded-full bg-prevedello-red"
+                        style={{ width: `${quotes.length ? Math.max(12, (count / quotes.length) * 100) : 0}%` }}
+                      />
+                    </div>
+                    <p className="mt-2 text-2xl font-extrabold text-prevedello-blue">{count}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </article>
+
+          <article className="premium-card rounded-lg p-6">
+            <p className="section-kicker">Prioridades</p>
+            <h2 className="mt-2 text-3xl font-extrabold text-graphite">Para resolver esta semana</h2>
+            <div className="mt-6 space-y-3">
+              {[
+                { title: "Responder consultas nuevas", detail: `${newQuotes} leads esperan primer contacto`, module: "crm" as InternalModule },
+                { title: "Confirmar stock", detail: `${productsToReview} productos estan a confirmar o bajo pedido`, module: "productos" as InternalModule },
+                { title: "Rubro mas consultado", detail: topCategory, module: "rubros" as InternalModule },
+              ].map((item) => (
+                <button
+                  key={item.title}
+                  type="button"
+                  onClick={() => onModuleChange(item.module)}
+                  className="flex w-full items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white p-4 text-left transition hover:border-prevedello-red/35"
+                >
+                  <span>
+                    <span className="block text-sm font-extrabold text-graphite">{item.title}</span>
+                    <span className="mt-1 block text-sm text-zinc-600">{item.detail}</span>
+                  </span>
+                  <ChevronRight className="text-prevedello-red" size={18} />
+                </button>
+              ))}
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InternalClientsPanel({ quotes }: { quotes: QuoteRecord[] }) {
+  const customers = quotes.length
+    ? quotes.map((quote) => ({
+        id: quote.id,
+        name: quote.customerName,
+        phone: quote.customerPhone,
+        location: quote.customerLocation,
+        status: quoteStatusLabels[quote.status],
+        lastContact: quote.createdAt,
+        quotes: 1,
+      }))
+    : [
+        {
+          id: "cliente-demo-obra",
+          name: "Constructora del Valle",
+          phone: "383 400-0000",
+          location: "San Fernando del Valle",
+          status: "Cotizacion enviada",
+          lastContact: new Date().toISOString(),
+          quotes: 3,
+        },
+        {
+          id: "cliente-demo-hogar",
+          name: "Refaccion hogar norte",
+          phone: "383 401-0000",
+          location: "Valle Viejo",
+          status: "Nuevo",
+          lastContact: new Date().toISOString(),
+          quotes: 1,
+        },
+      ];
+
+  return (
+    <section className="px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6">
+          <p className="section-kicker">Clientes</p>
+          <h2 className="mt-2 text-4xl font-extrabold text-graphite">Base comercial y seguimiento.</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+            Vista preparada para historial, notas internas, vendedor asignado y proxima accion.
+          </p>
+        </div>
+        <div className="premium-card overflow-hidden rounded-lg">
+          <div className="grid gap-0 divide-y divide-zinc-200">
+            {customers.map((customer) => (
+              <article key={customer.id} className="grid gap-4 p-5 lg:grid-cols-[1fr_180px_180px] lg:items-center">
+                <div>
+                  <h3 className="text-xl font-extrabold text-graphite">{customer.name}</h3>
+                  <p className="mt-1 text-sm font-semibold text-zinc-600">
+                    {customer.phone} · {customer.location}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase text-zinc-500">Estado</p>
+                  <p className="mt-1 font-extrabold text-prevedello-blue">{customer.status}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase text-zinc-500">Cotizaciones</p>
+                  <p className="mt-1 font-extrabold text-graphite">{customer.quotes}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InternalCrmBoard({ quotes }: { quotes: QuoteRecord[] }) {
+  return (
+    <section className="px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6">
+          <p className="section-kicker">CRM</p>
+          <h2 className="mt-2 text-4xl font-extrabold text-graphite">Pipeline visual por estado.</h2>
+        </div>
+        <div className="grid gap-4 overflow-x-auto pb-3 lg:grid-cols-4">
+          {openQuoteStatuses.map((status) => {
+            const columnQuotes = quotes.filter((quote) => quote.status === status);
+            return (
+              <article key={status} className="min-w-[260px] rounded-lg border border-prevedello-blue/10 bg-white p-4 shadow-sm">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="font-extrabold text-graphite">{quoteStatusLabels[status]}</h3>
+                  <span className="rounded-full bg-cement px-3 py-1 text-xs font-extrabold text-zinc-600">{columnQuotes.length}</span>
+                </div>
+                <div className="mt-4 space-y-3">
+                  {(columnQuotes.length ? columnQuotes : [{ id: `${status}-empty`, customerName: "Sin leads", customerLocation: "Esperando cotizaciones", customerPhone: "", items: [] } as Partial<QuoteRecord>]).map((quote) => (
+                    <div key={quote.id} className="rounded-lg border border-zinc-200 bg-[#f7f3eb] p-4">
+                      <p className="font-extrabold text-graphite">{quote.customerName}</p>
+                      <p className="mt-1 text-sm text-zinc-600">{quote.customerLocation}</p>
+                      <p className="mt-3 text-xs font-bold uppercase text-zinc-500">
+                        {(quote.items ?? []).length ? `${quote.items?.length} items` : "Sin actividad"}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InternalTasksPanel({ quotes, productsList }: { quotes: QuoteRecord[]; productsList: Product[] }) {
+  const tasks = [
+    ...quotes.slice(0, 4).map((quote) => ({
+      title: `Llamar a ${quote.customerName}`,
+      detail: `${quote.customerPhone} · ${quote.customerLocation}`,
+      type: "Recontactar",
+      due: "Hoy",
+    })),
+    ...productsList
+      .filter((product) => product.availability !== "Disponible")
+      .slice(0, 3)
+      .map((product) => ({
+        title: `Confirmar stock de ${product.name}`,
+        detail: `${product.brand} · ${product.category}`,
+        type: "Stock",
+        due: "24 hs",
+      })),
+    {
+      title: "Cargar fotos reales de productos destacados",
+      detail: "Mejora conversion del marketplace publico",
+      type: "Catalogo",
+      due: "Semana",
+    },
+  ];
+
+  return (
+    <section className="px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6">
+          <p className="section-kicker">Tareas</p>
+          <h2 className="mt-2 text-4xl font-extrabold text-graphite">Agenda comercial del equipo.</h2>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          {tasks.map((task) => (
+            <article key={`${task.title}-${task.due}`} className="premium-card grid gap-4 rounded-lg p-5 sm:grid-cols-[1fr_auto] sm:items-center">
+              <div>
+                <p className="text-xs font-extrabold uppercase text-prevedello-red">{task.type}</p>
+                <h3 className="mt-2 text-xl font-extrabold text-graphite">{task.title}</h3>
+                <p className="mt-1 text-sm text-zinc-600">{task.detail}</p>
+              </div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-cement px-4 py-2 text-sm font-extrabold text-prevedello-blue">
+                <CalendarCheck size={16} />
+                {task.due}
+              </span>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InternalTaxonomyPanel({ productsList, view }: { productsList: Product[]; view: "rubros" | "marcas" }) {
+  const rows =
+    view === "rubros"
+      ? categories.map((category) => ({
+          name: category.name,
+          description: category.description,
+          count: productsList.filter((product) => product.category === category.name).length,
+        }))
+      : brands.map((brand) => ({
+          name: brand,
+          description: "Marca preparada para logo, descripcion y visibilidad.",
+          count: productsList.filter((product) => product.brand === brand).length,
+        }));
+
+  return (
+    <section className="px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6">
+          <p className="section-kicker">{view === "rubros" ? "Rubros" : "Marcas"}</p>
+          <h2 className="mt-2 text-4xl font-extrabold text-graphite">
+            {view === "rubros" ? "Orden visual del catalogo." : "Marcas visibles del marketplace."}
+          </h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {rows.map((row) => (
+            <article key={row.name} className="premium-card rounded-lg p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-xl font-extrabold text-graphite">{row.name}</h3>
+                  <p className="mt-2 text-sm leading-6 text-zinc-600">{row.description}</p>
+                </div>
+                <span className="rounded-full bg-prevedello-blue px-3 py-1 text-sm font-extrabold text-white">{row.count}</span>
+              </div>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase text-emerald-700">Visible</span>
+                <span className="rounded-full bg-cement px-3 py-1 text-xs font-bold uppercase text-zinc-600">Orden editable</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InternalSettingsPanel({ authMode, userEmail }: { authMode: InternalAuthMode; userEmail: string }) {
+  return (
+    <section className="px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6">
+          <p className="section-kicker">Configuracion</p>
+          <h2 className="mt-2 text-4xl font-extrabold text-graphite">Estado de produccion.</h2>
+        </div>
+        <div className="grid gap-5 lg:grid-cols-3">
+          {[
+            { label: "Sesion", value: userEmail, detail: authMode === "demo" ? "Modo demo local" : "Supabase Auth activo" },
+            { label: "Supabase", value: isSupabaseConfigured ? "Configurado" : "Pendiente", detail: "URL y anon key para datos reales" },
+            { label: "Seguridad", value: "RLS requerido", detail: "Aplicar politicas antes de produccion real" },
+          ].map((item) => (
+            <article key={item.label} className="premium-card rounded-lg p-6">
+              <p className="text-sm font-bold uppercase text-zinc-500">{item.label}</p>
+              <p className="mt-2 text-2xl font-extrabold text-graphite">{item.value}</p>
+              <p className="mt-2 text-sm leading-6 text-zinc-600">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AdminCrmPanel({
   quotes,
   statusMessage,
@@ -2091,6 +2477,7 @@ function InternalWorkspacePage({
   userEmail: string;
   onSignOut: () => void;
 }) {
+  const [activeModule, setActiveModule] = useState<InternalModule>("dashboard");
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
   const [catalogStatus, setCatalogStatus] = useState("Catalogo local activo.");
   const [catalogSource, setCatalogSource] = useState<"local" | "supabase">("local");
@@ -2127,45 +2514,89 @@ function InternalWorkspacePage({
     await reloadQuotes();
   };
 
+  const renderActiveModule = () => {
+    if (activeModule === "dashboard") {
+      return <InternalDashboard productsList={productsList} quotes={quotes} onModuleChange={setActiveModule} />;
+    }
+
+    if (activeModule === "productos") {
+      return (
+        <AdminCatalogPanel
+          productsList={productsList}
+          onProductsChange={setProductsList}
+          catalogStatus={catalogStatus}
+          catalogSource={catalogSource}
+          onReloadCatalog={reloadCatalog}
+          onPublishCatalog={publishCatalog}
+        />
+      );
+    }
+
+    if (activeModule === "cotizaciones") {
+      return (
+        <AdminCrmPanel
+          quotes={quotes}
+          statusMessage={crmStatus}
+          onReload={reloadQuotes}
+          onStatusChange={handleQuoteStatusChange}
+        />
+      );
+    }
+
+    if (activeModule === "clientes") return <InternalClientsPanel quotes={quotes} />;
+    if (activeModule === "crm") return <InternalCrmBoard quotes={quotes} />;
+    if (activeModule === "tareas") return <InternalTasksPanel quotes={quotes} productsList={productsList} />;
+    if (activeModule === "rubros") return <InternalTaxonomyPanel productsList={productsList} view="rubros" />;
+    if (activeModule === "marcas") return <InternalTaxonomyPanel productsList={productsList} view="marcas" />;
+
+    return <InternalSettingsPanel authMode={authMode} userEmail={userEmail} />;
+  };
+
   return (
     <div className="min-h-screen bg-[#f7f3eb]">
-      <header className="sticky top-0 z-50 border-b border-prevedello-blue/10 bg-white/92 px-4 py-3 shadow-[0_12px_35px_rgba(9,59,145,0.08)] backdrop-blur-xl sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          <Link to="/" className="shrink-0" aria-label="Volver al sitio publico">
-            <LogoMark compact />
-          </Link>
-          <div className="hidden min-w-0 text-right sm:block">
-            <p className="truncate text-sm font-extrabold text-graphite">{userEmail}</p>
-            <p className="text-xs font-bold uppercase text-zinc-500">
-              {authMode === "demo" ? "CRM interno demo" : "CRM interno"}
-            </p>
+      <header className="sticky top-0 z-50 border-b border-prevedello-blue/10 bg-white/94 px-4 py-3 shadow-[0_12px_35px_rgba(9,59,145,0.08)] backdrop-blur-xl sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3">
+          <div className="flex items-center justify-between gap-4">
+            <Link to="/" className="shrink-0" aria-label="Volver al sitio publico">
+              <LogoMark compact />
+            </Link>
+            <div className="hidden min-w-0 text-right sm:block">
+              <p className="truncate text-sm font-extrabold text-graphite">{userEmail}</p>
+              <p className="text-xs font-bold uppercase text-zinc-500">
+                {authMode === "demo" ? "CRM interno demo" : "CRM interno"}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={onSignOut}
+              className="rounded-full bg-prevedello-blue px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-800"
+            >
+              Salir
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={onSignOut}
-            className="rounded-full bg-prevedello-blue px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-800"
-          >
-            Salir
-          </button>
+          <nav className="flex gap-2 overflow-x-auto pb-1">
+            {internalModules.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveModule(item.id)}
+                className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold transition ${
+                  activeModule === item.id
+                    ? "bg-prevedello-blue text-white shadow-[0_12px_30px_rgba(9,59,145,0.18)]"
+                    : "border border-zinc-200 bg-white text-zinc-600 hover:border-prevedello-red/35 hover:text-prevedello-red"
+                }`}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            ))}
+          </nav>
         </div>
       </header>
-      <RouteHeader title="CRM y catalogo interno" eyebrow="Prevedello App">
-        Gestion de productos, importador CSV y seguimiento comercial con acceso privado.
+      <RouteHeader title="Prevedello CRM" eyebrow="App interna">
+        Dashboard, catalogo, cotizaciones, clientes, tareas y configuracion comercial.
       </RouteHeader>
-      <AdminCatalogPanel
-        productsList={productsList}
-        onProductsChange={setProductsList}
-        catalogStatus={catalogStatus}
-        catalogSource={catalogSource}
-        onReloadCatalog={reloadCatalog}
-        onPublishCatalog={publishCatalog}
-      />
-      <AdminCrmPanel
-        quotes={quotes}
-        statusMessage={crmStatus}
-        onReload={reloadQuotes}
-        onStatusChange={handleQuoteStatusChange}
-      />
+      {renderActiveModule()}
     </div>
   );
 }
