@@ -1,0 +1,18 @@
+{
+  "name": "Prevedello Market",
+  "short_name": "Prevedello",
+  "description": "Ferreteria, materiales, herramientas y cotizacion por WhatsApp en Catamarca.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f3eb",
+  "theme_color": "#093b91",
+  "lang": "es-AR",
+  "icons": [
+    {
+      "src": "/assets/prevedello-pap-3d.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

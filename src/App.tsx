@@ -34,7 +34,7 @@ import {
   type Category,
   type Product,
 } from "./data/catalog";
-import { getWhatsAppUrl } from "./config/business";
+import { businessConfig, getWhatsAppUrl } from "./config/business";
 import { getStoredProducts, parseProductsCsv, resetStoredProducts, saveStoredProducts } from "./lib/catalogStorage";
 import { loadCatalogProducts, publishProductsToSupabase } from "./lib/catalogRepository";
 import {
@@ -119,11 +119,13 @@ function HeaderMarketplace({
   onQueryChange,
   cartCount,
   onCartOpen,
+  showAdmin,
 }: {
   query: string;
   onQueryChange: (value: string) => void;
   cartCount: number;
   onCartOpen: () => void;
+  showAdmin: boolean;
 }) {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-5">
@@ -147,9 +149,11 @@ function HeaderMarketplace({
           <a className="transition hover:text-prevedello-red" href="#calculadoras">
             Calculadoras
           </a>
-          <a className="transition hover:text-prevedello-red" href="#admin">
-            Admin
-          </a>
+          {showAdmin && (
+            <a className="transition hover:text-prevedello-red" href="#admin">
+              Admin
+            </a>
+          )}
         </nav>
         <a
           href={makeWhatsAppHref([], defaultQuoteForm)}
@@ -425,7 +429,82 @@ function PromoBanner() {
   );
 }
 
-function CategoryCard({ category, onSelect }: { category: Category; onSelect: (name: string) => void }) {
+function OperationsDeck() {
+  const metrics = [
+    ["1970", "compromiso comercial"],
+    ["24/7", "pedido listo para responder"],
+    ["8", "rubros operativos"],
+  ];
+
+  const media = [
+    ["/assets/prevedello-todo.mp4", "Salon y mostrador"],
+    ["/assets/prevedello-envios.mp4", "Logistica de entrega"],
+    ["/assets/prevedello-acopio.mp4", "Acopio de obra"],
+  ];
+
+  return (
+    <section className="operations-band px-4 py-20 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+        <div className="relative">
+          <p className="text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">Sistema Prevedello</p>
+          <h2 className="mt-4 max-w-3xl text-5xl font-extrabold leading-[0.92] sm:text-6xl">
+            Del mostrador a la obra, sin perder el hilo del pedido.
+          </h2>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-white/72">
+            La experiencia digital tiene que sentirse como el negocio real: rapida, ordenada,
+            con asesoramiento y preparada para resolver compras grandes o chicas.
+          </p>
+          <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
+            {metrics.map(([value, label]) => (
+              <div key={label} className="border-l-2 border-prevedello-red bg-white/8 px-4 py-4">
+                <p className="text-3xl font-extrabold">{value}</p>
+                <p className="mt-1 text-xs font-bold uppercase tracking-wide text-white/55">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative grid gap-4">
+          <div className="hidden text-xs font-extrabold uppercase tracking-[0.32em] text-white/45 lg:absolute lg:-left-8 lg:top-0 lg:block lg:h-full">
+            <span className="rail-label">obra / hogar / industria</span>
+          </div>
+          {media.map(([src, label], index) => (
+            <div
+              key={src}
+              className={`angled-media overflow-hidden border border-white/14 bg-white/8 shadow-[0_22px_60px_rgba(0,35,95,0.28)] ${
+                index === 1 ? "lg:ml-14" : index === 2 ? "lg:ml-28" : ""
+              }`}
+            >
+              <video
+                src={src}
+                className="h-36 w-full object-cover opacity-90 sm:h-44"
+                muted
+                playsInline
+                autoPlay
+                loop
+                preload="metadata"
+              />
+              <div className="flex items-center justify-between bg-prevedello-blue/88 px-5 py-3">
+                <p className="text-sm font-extrabold">{label}</p>
+                <span className="text-xs font-bold uppercase text-white/50">PaP</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CategoryCard({
+  category,
+  index,
+  onSelect,
+}: {
+  category: Category;
+  index: number;
+  onSelect: (name: string) => void;
+}) {
   const Icon = category.icon;
 
   return (
@@ -435,6 +514,9 @@ function CategoryCard({ category, onSelect }: { category: Category; onSelect: (n
       className="premium-card premium-card-hover group relative min-w-[250px] overflow-hidden rounded-lg p-6 text-left"
     >
       <span className="absolute inset-x-0 top-0 h-1 bg-prevedello-red" />
+      <span className="absolute right-5 top-5 text-5xl font-extrabold leading-none text-prevedello-blue/8">
+        {String(index + 1).padStart(2, "0")}
+      </span>
       <span className={`grid h-12 w-12 place-items-center rounded-lg text-white shadow-[0_14px_30px_rgba(9,59,145,0.16)] ${category.accent}`}>
         <Icon size={21} />
       </span>
@@ -1751,6 +1833,29 @@ function AdminRoutePage() {
   );
 }
 
+function AdminUnavailablePage() {
+  return (
+    <div className="min-h-screen bg-[#f7f3eb]">
+      <RouteHeader title="Admin no disponible" eyebrow="Prevedello Market">
+        El backoffice esta desactivado en produccion por seguridad. Activarlo requiere configurar
+        VITE_ENABLE_ADMIN=true y proteger el acceso con autenticacion real.
+      </RouteHeader>
+      <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
+        <div className="premium-card mx-auto max-w-3xl rounded-lg p-7">
+          <h2 className="text-2xl font-extrabold text-graphite">Sitio publico protegido.</h2>
+          <p className="mt-3 leading-7 text-zinc-600">
+            El catalogo, buscador y cotizacion siguen activos para clientes. El panel interno queda
+            reservado para una instancia con login y permisos.
+          </p>
+          <Link to="/" className="mt-6 inline-flex rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
+            Volver al inicio
+          </Link>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 function MarketplacePage() {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
   const [catalogStatus, setCatalogStatus] = useState("Catalogo local activo.");
@@ -1780,7 +1885,9 @@ function MarketplacePage() {
 
   useEffect(() => {
     void reloadCatalog();
-    void reloadQuotes();
+    if (businessConfig.enableAdmin) {
+      void reloadQuotes();
+    }
   }, []);
 
   const publishCatalog = async () => {
@@ -1858,9 +1965,11 @@ function MarketplacePage() {
         onQueryChange={setQuery}
         cartCount={cartCount}
         onCartOpen={() => setCartOpen(true)}
+        showAdmin={businessConfig.enableAdmin}
       />
       <HeroSection query={query} onQueryChange={setQuery} />
       <PromoBanner />
+      <OperationsDeck />
 
       <main>
         <section id="rubros" className="section-anchor section-band px-4 py-20 sm:px-6 lg:px-8">
@@ -1875,8 +1984,8 @@ function MarketplacePage() {
               </p>
             </div>
             <div className="flex gap-5 overflow-x-auto pb-3 scrollbar-none lg:grid lg:grid-cols-4 lg:overflow-visible">
-              {categories.map((category) => (
-                <CategoryCard key={category.id} category={category} onSelect={handleCategorySelect} />
+              {categories.map((category, index) => (
+                <CategoryCard key={category.id} category={category} index={index} onSelect={handleCategorySelect} />
               ))}
             </div>
           </div>
@@ -1966,11 +2075,11 @@ function MarketplacePage() {
             <div>
               <p className="text-sm font-bold uppercase text-white/65">Siguiente paso</p>
               <h2 className="mt-2 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
-                Prevedello Market ya tiene cotizacion, CSV y admin local para validar operacion.
+                Prevedello Market ya tiene cotizacion, catalogo y base operativa para validar ventas.
               </h2>
               <p className="mt-4 max-w-2xl text-lg leading-8 text-white/72">
-                El proximo salto es conectar Supabase con productos reales, pedidos persistentes,
-                usuarios internos y fotos definitivas por rubro.
+                El proximo salto productivo es cargar fotos y productos reales, conectar pedidos
+                persistentes y sumar acceso interno con autenticacion.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -1987,20 +2096,24 @@ function MarketplacePage() {
           </div>
         </section>
 
-        <AdminCatalogPanel
-          productsList={productsList}
-          onProductsChange={setProductsList}
-          catalogStatus={catalogStatus}
-          catalogSource={catalogSource}
-          onReloadCatalog={reloadCatalog}
-          onPublishCatalog={publishCatalog}
-        />
-        <AdminCrmPanel
-          quotes={quotes}
-          statusMessage={crmStatus}
-          onReload={reloadQuotes}
-          onStatusChange={handleQuoteStatusChange}
-        />
+        {businessConfig.enableAdmin && (
+          <>
+            <AdminCatalogPanel
+              productsList={productsList}
+              onProductsChange={setProductsList}
+              catalogStatus={catalogStatus}
+              catalogSource={catalogSource}
+              onReloadCatalog={reloadCatalog}
+              onPublishCatalog={publishCatalog}
+            />
+            <AdminCrmPanel
+              quotes={quotes}
+              statusMessage={crmStatus}
+              onReload={reloadQuotes}
+              onStatusChange={handleQuoteStatusChange}
+            />
+          </>
+        )}
       </main>
 
       <QuoteCart
@@ -2029,8 +2142,8 @@ export default function App() {
       <Route path="/rubros" element={<CategoriesRoutePage />} />
       <Route path="/rubros/:slug" element={<CategoryRoutePage />} />
       <Route path="/cotizacion" element={<QuoteRoutePage />} />
-      <Route path="/admin" element={<AdminRoutePage />} />
-      <Route path="/admin/*" element={<AdminRoutePage />} />
+      <Route path="/admin" element={businessConfig.enableAdmin ? <AdminRoutePage /> : <AdminUnavailablePage />} />
+      <Route path="/admin/*" element={businessConfig.enableAdmin ? <AdminRoutePage /> : <AdminUnavailablePage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
