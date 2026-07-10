@@ -58,14 +58,14 @@ export const categories: Category[] = [
   },
   {
     id: "ferreteria",
-    name: "Ferreteria",
+    name: "Ferretería",
     description: "Buloneria, fijaciones, seguridad, adhesivos y consumibles.",
     icon: Wrench,
     accent: "bg-prevedello-blue",
   },
   {
     id: "pintureria",
-    name: "Pintureria",
+    name: "Pinturería",
     description: "Pinturas, impermeabilizantes, rodillos y accesorios.",
     icon: PaintBucket,
     accent: "bg-blue-700",
@@ -80,14 +80,14 @@ export const categories: Category[] = [
   {
     id: "pisos",
     name: "Pisos y revestimientos",
-    description: "Ceramicos, porcelanatos, pastinas, pegamentos y zocalos.",
+    description: "Cerámicos, porcelanatos, pastinas, pegamentos y zócalos.",
     icon: Ruler,
     accent: "bg-stone-500",
   },
   {
     id: "bano-cocina",
-    name: "Bano y cocina",
-    description: "Griferias, sanitarios, vanitorys, bachas y accesorios.",
+    name: "Baño y cocina",
+    description: "Griferías, sanitarios, vanitorys, bachas y accesorios.",
     icon: Bath,
     accent: "bg-cyan-700",
   },
@@ -123,9 +123,9 @@ export const products: Product[] = [
   },
   {
     id: "pintura-sherwin",
-    name: "Latex interior lavable",
+    name: "Látex interior lavable",
     brand: "Sherwin-Williams",
-    category: "Pintureria",
+    category: "Pinturería",
     unit: "Balde 20 L",
     availability: "A confirmar",
     description: "Terminacion mate para paredes interiores con buen poder cubritivo.",
@@ -163,13 +163,13 @@ export const products: Product[] = [
   },
   {
     id: "griferia-fv",
-    name: "Griferia monocomando cocina",
+    name: "Grifería monocomando cocina",
     brand: "FV",
-    category: "Bano y cocina",
+    category: "Baño y cocina",
     unit: "Unidad",
     price: 88900,
     availability: "Disponible",
-    description: "Griferia cromada de uso diario con cierre ceramico y diseno sobrio.",
+    description: "Grifería cromada de uso diario con cierre cerámico y diseño sobrio.",
     uses: ["Cocinas", "Departamentos", "Refacciones"],
     related: ["Bacha acero", "Flexible mallado", "Sifon cocina"],
     imageTone: "from-zinc-100 via-sky-100 to-zinc-400",
@@ -177,9 +177,9 @@ export const products: Product[] = [
   },
   {
     id: "membrana-emapi",
-    name: "Membrana liquida transitable",
+    name: "Membrana líquida transitable",
     brand: "Emapi",
-    category: "Pintureria",
+    category: "Pinturería",
     unit: "Balde 20 kg",
     availability: "Disponible",
     description: "Impermeabilizante elastico para terrazas, techos y superficies expuestas.",
@@ -212,8 +212,8 @@ export const calculators: Calculator[] = [
     icon: PaintBucket,
   },
   {
-    id: "ceramicos",
-    title: "Ceramicos",
+    id: "cerámicos",
+    title: "Cerámicos",
     description: "Estima cajas, m2 y desperdicio sugerido.",
     unit: "m2",
     icon: Ruler,
@@ -235,8 +235,8 @@ export const calculators: Calculator[] = [
 ];
 
 export const serviceHighlights = [
-  { label: "Envios a domicilio", detail: "Coordinacion para Catamarca y zonas cercanas.", icon: Truck },
+  { label: "Envíos a domicilio", detail: "Coordinación para Catamarca y zonas cercanas.", icon: Truck },
   { label: "Asesoramiento real", detail: "Te ayudamos a comprar lo justo para tu obra.", icon: ShieldCheck },
   { label: "Empresas y profesionales", detail: "Cotizaciones por volumen, obras y reposicion.", icon: Building2 },
-  { label: "Todo para el hogar", detail: "Materiales, ferreteria, terminaciones y equipamiento.", icon: Home },
+  { label: "Todo para el hogar", detail: "Materiales, ferretería, terminaciones y equipamiento.", icon: Home },
 ];

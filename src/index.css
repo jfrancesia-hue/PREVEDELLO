@@ -1225,3 +1225,231 @@ a {
     font-size: 0.62rem !important;
   }
 }
+
+/* Public polish pass — hero, cards, trust, footer */
+#inicio {
+  min-height: auto;
+}
+
+#inicio .hero-heading {
+  max-width: 820px !important;
+  font-size: clamp(3.05rem, 7vw, 6.85rem) !important;
+  line-height: 0.88 !important;
+  letter-spacing: -0.075em !important;
+  text-wrap: balance;
+}
+
+#inicio .hero-copy > p {
+  max-width: 680px;
+  color: rgba(255,255,255,0.82) !important;
+}
+
+.hero-kicker {
+  border-radius: 999px !important;
+  background: rgba(255,255,255,0.13) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.hero-search-console {
+  background: rgba(255,255,255,0.13) !important;
+  border-color: rgba(255,255,255,0.22) !important;
+  box-shadow: 0 28px 70px rgba(0,0,0,0.24) !important;
+}
+
+.hero-search-console .ds-input {
+  background: rgba(255,255,255,0.96) !important;
+  border-color: transparent !important;
+}
+
+.hero-search-console .ds-input input,
+.hero-search-console .ds-input input::placeholder {
+  color: rgba(7,23,47,0.72) !important;
+}
+
+.metric-tile {
+  background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.075)) !important;
+  border-color: rgba(255,255,255,0.16) !important;
+}
+
+.mobile-hero-photo,
+.hero-visual-card {
+  border-radius: clamp(1.5rem, 3vw, 2.35rem) !important;
+}
+
+#rubros.blueprint-bg,
+#calculadoras.blueprint-bg {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(220,31,38,0.12), transparent 24rem),
+    linear-gradient(180deg, #07172f 0%, #081d3d 52%, #061326 100%) !important;
+}
+
+.rubro-card,
+.product-card,
+.calculator-card,
+.service-tile,
+.heritage-service-card,
+#pedido .ds-card {
+  border-radius: 1.35rem !important;
+  border: 1px solid rgba(255,255,255,0.13) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.095), rgba(255,255,255,0.045)) !important;
+  box-shadow: 0 26px 70px rgba(0,0,0,0.22) !important;
+}
+
+.rubro-card:hover,
+.product-card:hover,
+.service-tile:hover {
+  border-color: rgba(220,31,38,0.34) !important;
+  transform: translateY(-3px);
+}
+
+.rubro-card h3,
+.product-card h3,
+.service-tile h3,
+.heritage-service-card h3 {
+  letter-spacing: -0.02em;
+}
+
+.product-card {
+  padding: 0.9rem !important;
+}
+
+.product-card > button > div:first-child,
+.product-card img {
+  border-radius: 1rem !important;
+}
+
+.product-card .btn-agregar {
+  border-radius: 999px !important;
+}
+
+.catalog-premium-band {
+  background:
+    linear-gradient(180deg, #07172f 0%, #082044 45%, #07172f 100%) !important;
+}
+
+#pedido.premium-dark-band {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(220,31,38,0.15), transparent 26rem),
+    linear-gradient(135deg, #061326 0%, #082044 62%, #07172f 100%) !important;
+}
+
+#pedido .ds-card {
+  min-height: 210px;
+}
+
+#pedido .ds-card p {
+  color: rgba(226,235,255,0.74) !important;
+}
+
+.enterprise-panel {
+  border-radius: 2rem !important;
+  background:
+    radial-gradient(circle at 0% 20%, rgba(220,31,38,0.12), transparent 22rem),
+    linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.045)) !important;
+  box-shadow: 0 35px 90px rgba(0,0,0,0.25) !important;
+}
+
+.pv-footer {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(220,31,38,0.13), transparent 20rem),
+    linear-gradient(180deg, #07172f, #050d1f) !important;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  padding-bottom: 5.5rem !important;
+}
+
+.pv-footer > div:first-child {
+  border-radius: 1.8rem;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.035);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.pv-footer a {
+  color: rgba(226,235,255,0.68);
+}
+
+.pv-footer a:hover {
+  color: #fff;
+}
+
+.mobile-bottom-nav {
+  height: 4rem !important;
+  border-radius: 1.25rem 1.25rem 0 0;
+  background: rgba(255,255,255,0.96) !important;
+  border-color: rgba(9,59,145,0.12) !important;
+  box-shadow: 0 -18px 45px rgba(5,13,31,0.16) !important;
+}
+
+.mobile-bottom-nav .grid {
+  color: rgba(7,23,47,0.68) !important;
+}
+
+.mobile-bottom-nav a,
+.mobile-bottom-nav button {
+  color: rgba(7,23,47,0.68) !important;
+}
+
+.mobile-bottom-nav a:last-child {
+  color: var(--pv-whatsapp) !important;
+}
+
+@media (max-width: 767px) {
+  #inicio .relative.z-10.mx-auto {
+    padding-top: 1.15rem !important;
+    padding-bottom: 5.25rem !important;
+  }
+
+  #inicio .hero-heading {
+    font-size: clamp(3rem, 16vw, 4.55rem) !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.07em !important;
+  }
+
+  #inicio .hero-copy > p {
+    font-size: 1rem !important;
+    line-height: 1.72 !important;
+  }
+
+  .hero-search-console {
+    margin-top: 1.15rem !important;
+  }
+
+  .hero-search-console .ds-input {
+    height: 3.25rem !important;
+  }
+
+  .search-chip {
+    padding: 0.42rem 0.68rem !important;
+  }
+
+  #rubros,
+  #productos,
+  #pedido,
+  #empresas,
+  #calculadoras {
+    padding-top: 4.2rem !important;
+    padding-bottom: 4.2rem !important;
+  }
+
+  #pedido {
+    padding-bottom: 5.5rem !important;
+  }
+
+  #pedido .ds-card {
+    min-height: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.07)) !important;
+  }
+
+  .rubro-card {
+    min-width: 82vw !important;
+  }
+
+  .product-card {
+    border-radius: 1.25rem !important;
+  }
+
+  .pv-footer {
+    padding-bottom: 6.5rem !important;
+  }
+}

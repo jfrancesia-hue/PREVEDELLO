@@ -93,11 +93,11 @@ const makeWhatsAppHref = (items: QuoteItem[], customer: QuoteFormState) => {
     : "- Quiero asesoramiento para armar mi pedido";
 
   const message = [
-    "Hola Prevedello, quiero solicitar una cotizacion:",
+    "Hola Prevedello, quiero solicitar una cotización:",
     productLines,
     "",
     `Nombre: ${customer.name || "A completar"}`,
-    `Telefono: ${customer.phone || "A completar"}`,
+    `Teléfono: ${customer.phone || "A completar"}`,
     `Localidad: ${customer.location || "A completar"}`,
     `Entrega: ${customer.delivery}`,
     `Observaciones: ${customer.notes || "Sin observaciones"}`,
@@ -403,10 +403,10 @@ function HeroSection({
               Comprometidos desde 1970 · Catamarca
             </div>
             <h1 className="hero-heading max-w-4xl font-extrabold text-white">
-              Construyendo un futuro sólido.
+              Todo para tu obra, en un solo lugar.
             </h1>
             <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
-              Materiales, ferretería y hogar con atención personalizada. Ahora también con un mostrador digital para buscar, armar tu pedido y cotizar en minutos.
+              Corralón, ferretería y hogar con atención local desde 1970. Buscá productos, armá tu pedido y pedí cotización por WhatsApp sin vueltas.
             </p>
             <div className="mobile-hero-photo mt-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
               <picture>
@@ -448,14 +448,14 @@ function HeroSection({
                 href="#pedido"
                 className="ds-button-red inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                Armar cotización
+                Cotizar por WhatsApp
                 <ArrowRight size={17} />
               </a>
               <a
                 href="#productos"
                 className="ds-button-outline inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                Ver catálogo
+                Ver productos
                 <ArrowRight size={17} />
               </a>
             </div>
@@ -603,7 +603,7 @@ function OperationsDeck() {
 
   const media = [
     { src: "/assets/prevedello-todo.mp4", label: "Salon y mostrador", position: "55% 32%" },
-    { src: "/assets/prevedello-envios.mp4", label: "Logistica de entrega", position: "50% 50%" },
+    { src: "/assets/prevedello-envios.mp4", label: "Logística de entrega", position: "50% 50%" },
     { src: "/assets/prevedello-acopio.mp4", label: "Acopio de obra", position: "52% 28%" },
   ];
 
@@ -947,7 +947,7 @@ function ProfessionalCTA() {
         <div>
           <p className="text-sm font-bold uppercase tracking-wide text-prevedello-red">Empresas y obras</p>
           <h2 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
-            Materiales, continuidad y asesoramiento especializado para proyectos exigentes.
+            Atención comercial para obras, empresas y profesionales.
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-white/65">
             Para constructoras, profesionales, municipios, comercios y proyectos que necesitan
@@ -959,7 +959,7 @@ function ProfessionalCTA() {
               href="#productos"
               className="inline-flex items-center justify-center rounded-full border border-white/18 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
             >
-              Ver catalogo
+              Ver catálogo
             </a>
           </div>
         </div>
@@ -1027,7 +1027,7 @@ function QuoteCart({
       >
         <div className="flex items-center justify-between border-b border-zinc-200 p-5">
           <div>
-            <p className="text-sm font-bold uppercase text-prevedello-red">Carrito de cotizacion</p>
+            <p className="text-sm font-bold uppercase text-prevedello-red">Carrito de cotización</p>
             <h2 className="text-2xl font-extrabold text-graphite">Tu pedido</h2>
           </div>
           <button
@@ -1043,9 +1043,9 @@ function QuoteCart({
           {items.length === 0 ? (
             <div className="rounded-lg bg-cement p-5 text-center">
               <PackageCheck className="mx-auto text-prevedello-red" size={34} />
-              <p className="mt-3 text-lg font-extrabold text-graphite">Todavia no agregaste productos.</p>
+              <p className="mt-3 text-lg font-extrabold text-graphite">Todavía no agregaste productos.</p>
               <p className="mt-1 text-sm text-zinc-600">
-                Podes enviar una consulta general o sumar productos desde el catalogo.
+                Podés enviar una consulta general o sumar productos desde el catálogo.
               </p>
             </div>
           ) : (
@@ -1103,7 +1103,7 @@ function QuoteCart({
             <input
               value={customer.phone}
               onChange={(event) => onCustomerChange({ ...customer, phone: event.target.value })}
-              placeholder="Telefono"
+              placeholder="Teléfono"
               className="h-12 rounded-lg border border-zinc-200 px-3 font-semibold outline-none focus:border-prevedello-red"
             />
             <input
@@ -1142,7 +1142,7 @@ function QuoteCart({
             className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-[0_16px_30px_rgba(22,163,74,0.22)] transition hover:bg-emerald-700 disabled:cursor-wait disabled:opacity-70"
           >
             <MessageCircle size={18} />
-            {sending ? "Guardando cotizacion..." : "Guardar y enviar por WhatsApp"}
+            {sending ? "Guardando cotización..." : "Guardar y enviar por WhatsApp"}
           </button>
         </div>
       </aside>
@@ -1261,7 +1261,7 @@ type AdminDraft = {
 const emptyAdminDraft: AdminDraft = {
   name: "",
   brand: "",
-  category: "Ferreteria",
+  category: "Ferretería",
   unit: "Unidad",
   price: "",
   availability: "Disponible",
@@ -1373,7 +1373,7 @@ function AdminCatalogPanel({
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
               Importa CSV o da de alta productos manualmente. Queda guardado en localStorage para
-              validar catalogo, fotos, filtros y cotizacion antes de conectar Supabase.
+              validar catálogo, fotos, filtros y cotización antes de conectar Supabase.
             </p>
           </div>
           <div className="premium-card rounded-lg px-6 py-5">
@@ -1563,7 +1563,7 @@ function AdminCatalogPanel({
 const quoteStatusLabels: Record<QuoteStatus, string> = {
   nuevo: "Nuevo",
   contactado: "Contactado",
-  cotizacion_enviada: "Cotizacion enviada",
+  cotizacion_enviada: "Cotización enviada",
   en_negociacion: "En negociacion",
   ganado: "Ganado",
   perdido: "Perdido",
@@ -1573,24 +1573,24 @@ const quoteStatusLabels: Record<QuoteStatus, string> = {
 type InternalModule =
   | "dashboard"
   | "productos"
-  | "cotizaciones"
+  | "cotizaciónes"
   | "clientes"
   | "crm"
   | "tareas"
   | "rubros"
   | "marcas"
-  | "configuracion";
+  | "configuración";
 
 const internalModules: { id: InternalModule; label: string; icon: ReactNode }[] = [
   { id: "dashboard", label: "Dashboard", icon: <BarChart3 size={18} /> },
   { id: "productos", label: "Productos", icon: <Boxes size={18} /> },
-  { id: "cotizaciones", label: "Cotizaciones", icon: <ClipboardList size={18} /> },
+  { id: "cotizaciónes", label: "Cotizaciónes", icon: <ClipboardList size={18} /> },
   { id: "clientes", label: "Clientes", icon: <Users size={18} /> },
   { id: "crm", label: "CRM", icon: <ContactRound size={18} /> },
   { id: "tareas", label: "Tareas", icon: <ListTodo size={18} /> },
   { id: "rubros", label: "Rubros", icon: <Tags size={18} /> },
   { id: "marcas", label: "Marcas", icon: <BadgeCheck size={18} /> },
-  { id: "configuracion", label: "Config", icon: <Settings size={18} /> },
+  { id: "configuración", label: "Config", icon: <Settings size={18} /> },
 ];
 
 const openQuoteStatuses: QuoteStatus[] = ["nuevo", "contactado", "cotizacion_enviada", "en_negociacion", "sin_respuesta"];
@@ -1631,7 +1631,7 @@ function InternalDashboard({
 
   const cards = [
     { label: "Consultas nuevas", value: newQuotes, detail: "Ingresos sin primer contacto", icon: <MessageCircle size={20} /> },
-    { label: "Pendientes", value: pendingQuotes, detail: "Cotizaciones en proceso", icon: <CalendarCheck size={20} /> },
+    { label: "Pendientes", value: pendingQuotes, detail: "Cotizaciónes en proceso", icon: <CalendarCheck size={20} /> },
     { label: "Ganadas", value: wonQuotes, detail: "Ventas marcadas como cierre", icon: <CheckCircle2 size={20} /> },
     { label: "Valor estimado", value: quotedValue ? formatPrice(quotedValue) : "A cotizar", detail: "Solo productos con precio", icon: <BarChart3 size={20} /> },
   ];
@@ -1657,15 +1657,15 @@ function InternalDashboard({
           <article className="premium-card rounded-lg p-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="section-kicker">Operacion comercial</p>
-                <h2 className="mt-2 text-3xl font-extrabold text-graphite">Pipeline de cotizaciones</h2>
+                <p className="section-kicker">Operación comercial</p>
+                <h2 className="mt-2 text-3xl font-extrabold text-graphite">Pipeline de cotizaciónes</h2>
               </div>
               <button
                 type="button"
-                onClick={() => onModuleChange("cotizaciones")}
+                onClick={() => onModuleChange("cotizaciónes")}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-4 py-2 text-sm font-bold text-white"
               >
-                Ver cotizaciones
+                Ver cotizaciónes
                 <ArrowRight size={16} />
               </button>
             </div>
@@ -1735,7 +1735,7 @@ function InternalClientsPanel({ quotes }: { quotes: QuoteRecord[] }) {
           name: "Constructora del Valle",
           phone: "383 400-0000",
           location: "San Fernando del Valle",
-          status: "Cotizacion enviada",
+          status: "Cotización enviada",
           lastContact: new Date().toISOString(),
           quotes: 3,
         },
@@ -1757,7 +1757,7 @@ function InternalClientsPanel({ quotes }: { quotes: QuoteRecord[] }) {
           <p className="section-kicker">Clientes</p>
           <h2 className="mt-2 text-4xl font-extrabold text-graphite">Base comercial y seguimiento.</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-            Vista preparada para historial, notas internas, vendedor asignado y proxima accion.
+            Vista preparada para historial, notas internas, vendedor asignado y próxima accion.
           </p>
         </div>
         <div className="premium-card overflow-hidden rounded-lg">
@@ -1775,7 +1775,7 @@ function InternalClientsPanel({ quotes }: { quotes: QuoteRecord[] }) {
                   <p className="mt-1 font-extrabold text-prevedello-blue">{customer.status}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase text-zinc-500">Cotizaciones</p>
+                  <p className="text-xs font-bold uppercase text-zinc-500">Cotizaciónes</p>
                   <p className="mt-1 font-extrabold text-graphite">{customer.quotes}</p>
                 </div>
               </article>
@@ -1805,7 +1805,7 @@ function InternalCrmBoard({ quotes }: { quotes: QuoteRecord[] }) {
                   <span className="rounded-full bg-cement px-3 py-1 text-xs font-extrabold text-zinc-600">{columnQuotes.length}</span>
                 </div>
                 <div className="mt-4 space-y-3">
-                  {(columnQuotes.length ? columnQuotes : [{ id: `${status}-empty`, customerName: "Sin leads", customerLocation: "Esperando cotizaciones", customerPhone: "", items: [] } as Partial<QuoteRecord>]).map((quote) => (
+                  {(columnQuotes.length ? columnQuotes : [{ id: `${status}-empty`, customerName: "Sin leads", customerLocation: "Esperando cotizaciónes", customerPhone: "", items: [] } as Partial<QuoteRecord>]).map((quote) => (
                     <div key={quote.id} className="rounded-lg border border-zinc-200 bg-[#f7f3eb] p-4">
                       <p className="font-extrabold text-graphite">{quote.customerName}</p>
                       <p className="mt-1 text-sm text-zinc-600">{quote.customerLocation}</p>
@@ -1843,7 +1843,7 @@ function InternalTasksPanel({ quotes, productsList }: { quotes: QuoteRecord[]; p
       })),
     {
       title: "Cargar fotos reales de productos destacados",
-      detail: "Mejora conversion del marketplace publico",
+      detail: "Mejora conversion del marketplace público",
       type: "Catalogo",
       due: "Semana",
     },
@@ -1896,7 +1896,7 @@ function InternalTaxonomyPanel({ productsList, view }: { productsList: Product[]
         <div className="mb-6">
           <p className="section-kicker">{view === "rubros" ? "Rubros" : "Marcas"}</p>
           <h2 className="mt-2 text-4xl font-extrabold text-graphite">
-            {view === "rubros" ? "Orden visual del catalogo." : "Marcas visibles del marketplace."}
+            {view === "rubros" ? "Orden visual del catálogo." : "Marcas visibles del marketplace."}
           </h2>
         </div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -1926,14 +1926,14 @@ function InternalSettingsPanel({ authMode, userEmail }: { authMode: InternalAuth
     <section className="px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6">
-          <p className="section-kicker">Configuracion</p>
-          <h2 className="mt-2 text-4xl font-extrabold text-graphite">Estado de produccion.</h2>
+          <p className="section-kicker">Configuración</p>
+          <h2 className="mt-2 text-4xl font-extrabold text-graphite">Estado de producción.</h2>
         </div>
         <div className="grid gap-5 lg:grid-cols-3">
           {[
             { label: "Sesion", value: userEmail, detail: authMode === "demo" ? "Modo demo local" : "Supabase Auth activo" },
             { label: "Supabase", value: isSupabaseConfigured ? "Configurado" : "Pendiente", detail: "URL y anon key para datos reales" },
-            { label: "Seguridad", value: "RLS requerido", detail: "Aplicar politicas antes de produccion real" },
+            { label: "Seguridad", value: "RLS requerido", detail: "Aplicar politicas antes de producción real" },
           ].map((item) => (
             <article key={item.label} className="premium-card rounded-lg p-6">
               <p className="text-sm font-bold uppercase text-zinc-500">{item.label}</p>
@@ -1972,10 +1972,10 @@ function AdminCrmPanel({
           <div>
             <p className="section-kicker">CRM comercial</p>
             <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">
-              Seguimiento de consultas y cotizaciones.
+              Seguimiento de consultas y cotizaciónes.
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-              Primer tablero operativo: cada pedido enviado por WhatsApp queda como cotizacion para
+              Primer tablero operativo: cada pedido enviado por WhatsApp queda como cotización para
               contacto, negociacion y cierre.
             </p>
           </div>
@@ -2009,7 +2009,7 @@ function AdminCrmPanel({
           {quotes.length === 0 ? (
             <div className="p-8 text-center">
               <ClipboardList className="mx-auto text-prevedello-red" size={38} />
-              <h3 className="mt-3 text-2xl font-extrabold text-graphite">Todavia no hay cotizaciones.</h3>
+              <h3 className="mt-3 text-2xl font-extrabold text-graphite">Todavía no hay cotizaciónes.</h3>
               <p className="mt-2 text-zinc-600">Cuando un cliente guarde y envie su pedido, va a aparecer aca.</p>
             </div>
           ) : (
@@ -2052,7 +2052,7 @@ function AdminCrmPanel({
                     </select>
                     <a
                       href={getWhatsAppUrl(
-                        `Hola ${quote.customerName}, te escribimos de Prevedello por tu cotizacion del ${new Date(
+                        `Hola ${quote.customerName}, te escribimos de Prevedello por tu cotización del ${new Date(
                           quote.createdAt,
                         ).toLocaleDateString("es-AR")}.`,
                       )}
@@ -2107,7 +2107,7 @@ function PublicFooter() {
         <div>
           <h3 className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-white">Horarios</h3>
           <p className="mt-4 text-sm leading-6">
-            Consultas y cotizaciones por WhatsApp. El precio final lo confirma Prevedello.
+            Consultas y cotizaciónes por WhatsApp. El precio final lo confirma Prevedello.
           </p>
         </div>
       </div>
@@ -2237,7 +2237,7 @@ function ProductsRoutePage() {
   return (
     <div className="min-h-screen bg-[#f7f3eb]">
       <RouteHeader title="Catalogo de productos" eyebrow="Productos">
-        Busca por producto, marca o rubro. Esta ruta queda lista para convertirse en catalogo completo.
+        Busca por producto, marca o rubro. Esta ruta queda lista para convertirse en catálogo completo.
       </RouteHeader>
       <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
@@ -2266,7 +2266,7 @@ function ProductRoutePage() {
     return (
       <div className="min-h-screen bg-[#f7f3eb]">
         <RouteHeader title="Producto no encontrado" eyebrow="Productos">
-          Volve al catalogo para buscar otra alternativa.
+          Volvé al catálogo para buscar otra alternativa.
         </RouteHeader>
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <Link to="/productos" className="rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
@@ -2299,7 +2299,7 @@ function ProductRoutePage() {
           <div className="mt-7 flex flex-wrap gap-3">
             <WhatsAppQuoteButton items={[{ product, quantity: 1 }]} customer={defaultQuoteForm} label="Consultar por WhatsApp" />
             <Link to="/productos" className="rounded-full border border-zinc-200 px-5 py-3 text-sm font-bold text-graphite">
-              Volver al catalogo
+              Volvér al catálogo
             </Link>
           </div>
         </div>
@@ -2368,13 +2368,13 @@ function CategoryRoutePage() {
 function QuoteRoutePage() {
   return (
     <div className="min-h-screen bg-[#f7f3eb]">
-      <RouteHeader title="Cotizacion online" eyebrow="Pedido">
+      <RouteHeader title="Cotización online" eyebrow="Pedido">
         El flujo principal sigue integrado en la home. Desde cualquier producto podes armar tu pedido y enviarlo por WhatsApp.
       </RouteHeader>
       <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
         <div className="premium-card mx-auto max-w-7xl rounded-lg p-7">
           <h2 className="text-2xl font-extrabold text-graphite">Paso siguiente</h2>
-          <p className="mt-2 text-zinc-600">Volver a la home para agregar productos al carrito de cotizacion.</p>
+          <p className="mt-2 text-zinc-600">Volvér a la home para agregar productos al carrito de cotización.</p>
           <Link to="/#productos" className="mt-5 inline-flex rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
             Ir a productos
           </Link>
@@ -2457,7 +2457,7 @@ function InternalLoginPage({
       password,
     });
     setSending(false);
-    if (error) setMessage(`No pudimos iniciar sesion: ${error.message}`);
+    if (error) setMessage(`No pudimos iniciar sesión: ${error.message}`);
   };
 
   const sendMagicLink = async () => {
@@ -2491,11 +2491,11 @@ function InternalLoginPage({
           </Link>
           <p className="text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">App interna</p>
           <h1 className="mt-4 max-w-3xl text-5xl font-extrabold leading-[0.95] sm:text-6xl">
-            CRM Prevedello para ventas, catalogo y seguimiento.
+            CRM Prevedello para ventas, catálogo y seguimiento.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-8 text-white/70">
-            Acceso privado para el equipo. El sitio publico queda separado y el backoffice queda
-            listo para operar cotizaciones, catalogo e importacion CSV.
+            Acceso privado para el equipo. El sitio público queda separado y el backoffice queda
+            listo para operar cotizaciónes, catálogo e importación CSV.
           </p>
           {authMode === "demo" && (
             <div className="mt-6 max-w-xl rounded-lg border border-white/15 bg-white/10 p-4 text-sm font-semibold leading-6 text-white/75">
@@ -2552,7 +2552,7 @@ function InternalLoginPage({
           ) : null}
           <p className="mt-5 text-sm leading-6 text-zinc-500">
             {authMode === "demo"
-              ? "Este acceso es solo para demo local. Para produccion, configura Supabase Auth y usuarios internos."
+              ? "Este acceso es solo para demo local. Para producción, configura Supabase Auth y usuarios internos."
               : "Los usuarios se crean y administran desde Supabase Auth. Para restringir emails, usa VITE_CRM_ALLOWED_EMAILS."}
           </p>
         </form>
@@ -2569,7 +2569,7 @@ function InternalAccessDeniedPage({ email }: { email: string }) {
   return (
     <div className="min-h-screen bg-[#f7f3eb]">
       <RouteHeader title="Acceso no autorizado" eyebrow="App interna">
-        Tu usuario inicio sesion, pero no esta incluido en la lista permitida para este CRM.
+        Tu usuario inicio sesión, pero no esta incluido en la lista permitida para este CRM.
       </RouteHeader>
       <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
         <div className="premium-card mx-auto max-w-3xl rounded-lg p-7">
@@ -2651,7 +2651,7 @@ function InternalWorkspacePage({
       );
     }
 
-    if (activeModule === "cotizaciones") {
+    if (activeModule === "cotizaciónes") {
       return (
         <AdminCrmPanel
           quotes={quotes}
@@ -2676,7 +2676,7 @@ function InternalWorkspacePage({
       <header className="sticky top-0 z-50 border-b border-prevedello-blue/10 bg-white/94 px-4 py-3 shadow-[0_12px_35px_rgba(9,59,145,0.08)] backdrop-blur-xl sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-3">
           <div className="flex items-center justify-between gap-4">
-            <Link to="/" className="shrink-0" aria-label="Volver al sitio publico">
+            <Link to="/" className="shrink-0" aria-label="Volvér al sitio público">
               <LogoMark compact />
             </Link>
             <div className="hidden min-w-0 text-right sm:block">
@@ -2713,7 +2713,7 @@ function InternalWorkspacePage({
         </div>
       </header>
       <RouteHeader title="Prevedello CRM" eyebrow="App interna">
-        Dashboard, catalogo, cotizaciones, clientes, tareas y configuracion comercial.
+        Dashboard, catálogo, cotizaciónes, clientes, tareas y configuración comercial.
       </RouteHeader>
       {renderActiveModule()}
     </div>
@@ -2745,7 +2745,7 @@ function InternalAppPage() {
           <div className="inline-flex rounded-lg bg-white px-4 py-3 shadow-[0_18px_55px_rgba(9,59,145,0.22)]">
             <LogoMark />
           </div>
-          <p className="mt-6 text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">Validando sesion</p>
+          <p className="mt-6 text-sm font-extrabold uppercase tracking-[0.24em] text-white/55">Validando sesión</p>
         </div>
       </div>
     );
@@ -2894,10 +2894,10 @@ function MarketplacePage() {
             <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="section-kicker">Rubros principales</p>
-                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Compra por necesidad de obra.</h2>
+                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Encontrá rápido lo que necesitás.</h2>
               </div>
               <p className="max-w-md text-sm leading-6 text-[var(--pv-text-secondary)]">
-                Accesos pensados para que una persona común encuentre rápido lo que necesita y pueda pedir ayuda sin fricción.
+                Rubros claros para comprar por obra, reparación, instalación o equipamiento del hogar.
               </p>
             </div>
             <div className="flex gap-5 overflow-x-auto pb-3 scrollbar-none lg:grid lg:grid-cols-4 lg:overflow-visible">
@@ -2932,10 +2932,10 @@ function MarketplacePage() {
             <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="section-kicker">Catálogo inicial</p>
-                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Productos para cotizar hoy.</h2>
+                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Productos destacados para cotizar.</h2>
               </div>
               <p className="max-w-xl text-sm leading-6 text-[var(--pv-text-secondary)]">
-                Productos iniciales para consultar rápido. La carga real puede crecer por rubro, marca y stock sin cambiar la experiencia.
+                Una selección inicial para pedir precio rápido, consultar disponibilidad y avanzar directo por WhatsApp.
               </p>
             </div>
             <div className="grid gap-7 lg:grid-cols-[300px_1fr]">
@@ -2991,10 +2991,10 @@ function MarketplacePage() {
             <div>
               <p className="text-sm font-bold uppercase text-white/65">Siguiente paso</p>
               <h2 className="mt-2 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
-                Prevedello Market ya tiene cotizacion, catalogo y base operativa para validar ventas.
+                Prevedello Market ya tiene cotización, catálogo y base operativa para validar ventas.
               </h2>
               <p className="mt-4 max-w-2xl text-lg leading-8 text-white/72">
-                El proximo salto productivo es cargar fotos y productos reales, conectar pedidos
+                El próximo salto productivo es cargar fotos y productos reales, conectar pedidos
                 persistentes y operar el CRM interno con usuarios autorizados.
               </p>
             </div>
