@@ -603,12 +603,12 @@ function MarketCommerceHero({
         <div className="ml-real-hero grid gap-4 lg:grid-cols-[1.25fr_0.75fr]">
           <div className="ml-real-banner relative overflow-hidden rounded-[1.45rem] bg-white p-5 shadow-[0_16px_44px_rgba(5,13,31,0.10)] sm:p-7 lg:p-8">
             <div className="relative z-10 max-w-3xl">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-prevedello-red">Prevedello Market · Corralón online</p>
-              <h1 className="ml-real-title mt-2 font-heading font-black uppercase leading-[0.9] tracking-[-0.065em] text-prevedello-blue">
-                Comprá materiales como en una tienda grande.
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-prevedello-red">Prevedello Market · Tienda integral</p>
+              <h1 className="ml-real-title market-readable-title mt-2 font-heading font-black leading-[0.98] tracking-[-0.035em] text-prevedello-blue">
+                Todo para construir, renovar y equipar.
               </h1>
               <p className="mt-4 max-w-2xl text-base font-semibold leading-7 text-graphite/68 sm:text-lg">
-                Catálogo por rubros, productos destacados, filtros, carrito de cotización y cierre por WhatsApp con atención Prevedello. Pensado para comprar rápido sin perder asesoramiento.
+                Una tienda grande de Catamarca con catálogo por rubros, productos destacados, filtros, carrito de cotización y atención humana por WhatsApp.
               </p>
               <div className="mt-5 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                 {quickNeeds.map((need) => (

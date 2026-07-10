@@ -4617,3 +4617,26 @@ body {
 .footer-premium > div > .mt-6 p {
   color: rgba(255,255,255,.82) !important;
 }
+
+/* Market hero readability + stronger Prevedello positioning */
+.market-readable-title,
+.ml-market-shell .market-readable-title {
+  text-transform: none !important;
+  letter-spacing: -0.038em !important;
+  line-height: .98 !important;
+  max-width: 56rem !important;
+  text-wrap: balance;
+}
+
+.market-readable-title::first-letter {
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .market-readable-title,
+  .ml-market-shell .market-readable-title {
+    font-size: clamp(2.15rem, 11vw, 3.35rem) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.045em !important;
+  }
+}
