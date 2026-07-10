@@ -119,7 +119,7 @@ export const products: Product[] = [
     uses: ["Hormigon", "Mamposteria", "Contrapisos"],
     related: ["Cal hidratada", "Arena gruesa", "Hierro nervado"],
     imageTone: "from-zinc-200 via-neutral-100 to-stone-300",
-    imageUrl: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Portland_cement_CEM_I_42%2C5_R_%28bag%29.jpg/960px-Portland_cement_CEM_I_42%2C5_R_%28bag%29.jpg",
   },
   {
     id: "pintura-sherwin",
@@ -131,8 +131,7 @@ export const products: Product[] = [
     description: "Terminacion mate para paredes interiores con buen poder cubritivo.",
     uses: ["Interiores", "Refacciones", "Obras nuevas"],
     related: ["Rodillo lana", "Enduido interior", "Cinta de pintor"],
-    imageTone: "from-blue-200 via-white to-red-100",
-    imageUrl: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=900&q=80",
+    imageTone: "from-blue-200 via-white to-red-100",
   },
   {
     id: "taladro-bosch",
@@ -145,8 +144,7 @@ export const products: Product[] = [
     description: "Equipo robusto para perforacion en mamposteria, madera y metal.",
     uses: ["Instaladores", "Obra", "Taller"],
     related: ["Mechas widia", "Discos de corte", "Extensiones"],
-    imageTone: "from-sky-300 via-blue-700 to-prevedello-blue",
-    imageUrl: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=900&q=80",
+    imageTone: "from-sky-300 via-blue-700 to-prevedello-blue",
   },
   {
     id: "porcelanato-ilva",
@@ -159,7 +157,7 @@ export const products: Product[] = [
     uses: ["Living", "Locales", "Galerias"],
     related: ["Pegamento flexible", "Pastina gris", "Crucetas niveladoras"],
     imageTone: "from-neutral-300 via-stone-200 to-zinc-500",
-    imageUrl: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Railing_shadows_on_ceramic_wall_tiles%2C_Alameda_Afonso_Henriques%2C_Lisbon%2C_Portugal_julesvernex2.jpg/960px-Railing_shadows_on_ceramic_wall_tiles%2C_Alameda_Afonso_Henriques%2C_Lisbon%2C_Portugal_julesvernex2.jpg",
   },
   {
     id: "griferia-fv",
@@ -173,7 +171,7 @@ export const products: Product[] = [
     uses: ["Cocinas", "Departamentos", "Refacciones"],
     related: ["Bacha acero", "Flexible mallado", "Sifon cocina"],
     imageTone: "from-zinc-100 via-sky-100 to-zinc-400",
-    imageUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/And_The_Kitchen_Sink_Too_%28137906641%29.jpeg/960px-And_The_Kitchen_Sink_Too_%28137906641%29.jpeg",
   },
   {
     id: "membrana-emapi",
@@ -186,7 +184,7 @@ export const products: Product[] = [
     uses: ["Techos", "Terrazas", "Medianeras"],
     related: ["Venda geotextil", "Sellador", "Rodillo sintetico"],
     imageTone: "from-red-100 via-white to-rose-300",
-    imageUrl: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Paint_bucket_and_brush.jpg/960px-Paint_bucket_and_brush.jpg",
   },
   {
     id: "hierro-acindar-8",
@@ -199,7 +197,7 @@ export const products: Product[] = [
     uses: ["Estructuras", "Columnas", "Encadenados"],
     related: ["Alambre recocido", "Estribos", "Cemento"],
     imageTone: "from-slate-300 via-zinc-200 to-slate-600",
-    imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Rusty_rebar_nets.jpg/960px-Rusty_rebar_nets.jpg",
   },
   {
     id: "ladrillo-ceramico-18",
@@ -212,7 +210,7 @@ export const products: Product[] = [
     uses: ["Muros", "Ampliaciones", "Obra nueva"],
     related: ["Cemento", "Cal", "Arena"],
     imageTone: "from-orange-200 via-red-100 to-stone-300",
-    imageUrl: "https://images.unsplash.com/photo-1604629761625-2c5a1d7065f0?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/2_hollow_construction_bricks.png/960px-2_hollow_construction_bricks.png",
   },
   {
     id: "durlock-placa-standard",
@@ -225,7 +223,7 @@ export const products: Product[] = [
     uses: ["Cielorraso", "Tabiques", "Revestimientos"],
     related: ["Masilla", "Cinta", "Perfil omega"],
     imageTone: "from-zinc-100 via-white to-zinc-300",
-    imageUrl: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Drywall.jpg",
   },
   {
     id: "termotanque-senorial",
@@ -238,7 +236,7 @@ export const products: Product[] = [
     uses: ["Viviendas", "Locales", "Reposición"],
     related: ["Flexible", "Válvula", "Kit instalación"],
     imageTone: "from-sky-100 via-white to-zinc-300",
-    imageUrl: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=900&q=80",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Water_heater_.jpg/960px-Water_heater_.jpg",
   },
   {
     id: "cable-tpr-25",
@@ -250,8 +248,7 @@ export const products: Product[] = [
     description: "Cable flexible para alimentación, obra, taller y conexiones seguras.",
     uses: ["Electricidad", "Taller", "Obra"],
     related: ["Térmica", "Ficha", "Caño corrugado"],
-    imageTone: "from-emerald-100 via-zinc-100 to-slate-300",
-    imageUrl: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=900&q=80",
+    imageTone: "from-emerald-100 via-zinc-100 to-slate-300",
   },
   {
     id: "puerta-chapa-inyectada",
@@ -263,8 +260,7 @@ export const products: Product[] = [
     description: "Puerta resistente para ingreso, depósitos, viviendas y locales.",
     uses: ["Ingreso", "Depósitos", "Vivienda"],
     related: ["Cerradura", "Premarco", "Burlete"],
-    imageTone: "from-slate-200 via-zinc-200 to-slate-500",
-    imageUrl: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+    imageTone: "from-slate-200 via-zinc-200 to-slate-500",
   },
   {
     id: "set-rodillos-pintura",
@@ -276,8 +272,7 @@ export const products: Product[] = [
     description: "Kit práctico para pintura interior, retoques y trabajos de mantenimiento.",
     uses: ["Interiores", "Mantenimiento", "Refacción"],
     related: ["Látex", "Cinta", "Enduido"],
-    imageTone: "from-blue-100 via-white to-red-100",
-    imageUrl: "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=900&q=80",
+    imageTone: "from-blue-100 via-white to-red-100",
   },
   {
     id: "adhesivo-porcelanato",
@@ -289,8 +284,7 @@ export const products: Product[] = [
     description: "Pegamento flexible para piezas grandes, interiores y exteriores.",
     uses: ["Porcelanato", "Cerámicos", "Exterior"],
     related: ["Pastina", "Niveladores", "Llana"],
-    imageTone: "from-stone-100 via-zinc-100 to-neutral-300",
-    imageUrl: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80",
+    imageTone: "from-stone-100 via-zinc-100 to-neutral-300",
   },
 ];
 

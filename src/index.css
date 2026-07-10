@@ -4640,3 +4640,42 @@ body {
     letter-spacing: -0.045em !important;
   }
 }
+
+/* Product object-photo pass: product cards should feel like real sellable items */
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\],
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\] {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(255,255,255,.98), rgba(238,243,251,.92) 58%, rgba(226,234,246,.9) 100%) !important;
+}
+
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\] img,
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\] img {
+  object-fit: cover !important;
+  object-position: center center !important;
+  filter: saturate(1.02) contrast(1.04) brightness(1.01) !important;
+}
+
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\]::before,
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\]::before {
+  content: "Foto de producto";
+  position: absolute;
+  right: .6rem;
+  bottom: .6rem;
+  z-index: 4;
+  border-radius: 999px;
+  background: rgba(255,255,255,.92);
+  color: #093b91;
+  padding: .28rem .5rem;
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 18px rgba(5,13,31,.12);
+}
+
+@media (max-width: 767px) {
+  .ml-market-shell .market-product-card .relative.aspect-\[4\/3\]::before,
+  .ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\]::before {
+    display: none;
+  }
+}
