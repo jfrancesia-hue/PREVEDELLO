@@ -3544,3 +3544,264 @@ body {
     padding-top: .75rem !important;
   }
 }
+
+/* Hard pivot: ecommerce density like Mercado Libre */
+.ml-market-shell {
+  background: #eef3fb !important;
+}
+
+.ml-real-header,
+.ml-market-shell .ml-real-header {
+  background: var(--pv-blue-base, #093b91) !important;
+}
+
+.ml-real-body,
+.ml-market-shell .ml-real-body {
+  padding-top: .85rem !important;
+  padding-bottom: 1.2rem !important;
+}
+
+.ml-real-banner {
+  min-height: 0 !important;
+  padding: 1.65rem !important;
+}
+
+.ml-real-title,
+.ml-market-heading {
+  font-size: clamp(2.2rem, 5.4vw, 4.8rem) !important;
+  line-height: .92 !important;
+  max-width: 68rem !important;
+}
+
+.ml-real-banner p,
+.ml-real-banner .mt-4 {
+  max-width: 48rem !important;
+}
+
+.ml-real-hero {
+  grid-template-columns: 1fr 320px !important;
+}
+
+.ml-real-side {
+  min-height: 100% !important;
+}
+
+.ml-real-services {
+  margin-top: .75rem !important;
+}
+
+.ml-real-marquee {
+  margin-top: .85rem !important;
+  padding-top: .6rem !important;
+  padding-bottom: .6rem !important;
+}
+
+.ml-catalog-zone {
+  padding-top: 1.25rem !important;
+}
+
+.ml-catalog-zone .mb-5 {
+  margin-bottom: .9rem !important;
+}
+
+.ml-catalog-zone .grid.gap-5.lg\:grid-cols-\[280px_1fr\] {
+  grid-template-columns: 250px 1fr !important;
+  gap: 1rem !important;
+}
+
+.ml-market-shell #productos .grid.items-stretch,
+.ml-catalog-zone .grid.items-stretch {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: .85rem !important;
+}
+
+.ml-market-shell .market-product-card {
+  padding: .75rem !important;
+  border-radius: 1rem !important;
+  min-height: auto !important;
+}
+
+.ml-market-shell .market-product-card .px-1.pb-2.pt-5 {
+  padding-top: .75rem !important;
+}
+
+.ml-market-shell .market-product-card h3 {
+  font-size: .95rem !important;
+  line-height: 1.22 !important;
+  min-height: 2.35rem !important;
+}
+
+.ml-market-shell .market-product-card .min-h-12 {
+  display: none !important;
+}
+
+.ml-market-shell .market-product-card .mt-3.flex.flex-wrap,
+.ml-market-shell .market-product-card [class*="SKU"] {
+  display: none !important;
+}
+
+.ml-market-shell .market-product-card .font-mono {
+  font-size: 1.08rem !important;
+  color: var(--pv-blue-base, #093b91) !important;
+}
+
+.ml-market-shell .market-product-card .availability-badge {
+  font-size: .68rem !important;
+}
+
+.ml-market-shell .market-product-card .grid.grid-cols-\[1fr_auto\] {
+  grid-template-columns: 1fr !important;
+  gap: .5rem !important;
+}
+
+.ml-market-shell .market-product-card a[aria-label*="WhatsApp"] {
+  display: none !important;
+}
+
+.ml-market-shell .market-product-card .btn-agregar {
+  min-height: 2.35rem !important;
+  padding-top: .55rem !important;
+  padding-bottom: .55rem !important;
+}
+
+.ml-market-shell .market-product-card .aspect-\[4\/3\],
+.ml-market-shell .ml-real-shelf-card .aspect-\[4\/3\] {
+  aspect-ratio: 1 / 1 !important;
+}
+
+.ml-market-shell .filter-panel {
+  position: sticky !important;
+  top: 7.5rem !important;
+  align-self: start !important;
+  max-height: calc(100vh - 8.5rem) !important;
+  overflow: auto !important;
+}
+
+.ml-market-shell .filter-panel h3,
+.ml-market-shell .filter-panel p,
+.ml-market-shell .filter-panel label,
+.ml-market-shell .filter-panel span {
+  color: var(--pv-graphite, #07172f) !important;
+}
+
+@media (max-width: 1023px) {
+  .ml-real-hero {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ml-market-shell #productos .grid.items-stretch,
+  .ml-catalog-zone .grid.items-stretch {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .ml-real-header .mx-auto.grid {
+    gap: .55rem !important;
+    padding-top: .65rem !important;
+    padding-bottom: .65rem !important;
+  }
+
+  .ml-real-logo {
+    display: none !important;
+  }
+
+  .ml-real-search .ds-input,
+  .ml-market-searchbox .ds-input {
+    height: 2.85rem !important;
+  }
+
+  .ml-real-nav-chip {
+    padding: .45rem .75rem !important;
+    font-size: .66rem !important;
+  }
+
+  .ml-real-body {
+    padding: .75rem .75rem 1rem !important;
+  }
+
+  .ml-real-banner {
+    padding: 1rem !important;
+    border-radius: 1rem !important;
+  }
+
+  .ml-real-title,
+  .ml-market-heading {
+    font-size: clamp(1.9rem, 9.4vw, 2.85rem) !important;
+    letter-spacing: -0.055em !important;
+  }
+
+  .ml-real-banner p {
+    font-size: .92rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .ml-real-side,
+  .ml-real-services {
+    display: none !important;
+  }
+
+  .ml-real-marquee {
+    margin-top: .65rem !important;
+    border-radius: .9rem !important;
+  }
+
+  .ml-real-track > button,
+  .ml-department-track > button {
+    min-width: 178px !important;
+    padding: .65rem !important;
+  }
+
+  .ml-real-shelf {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: .65rem !important;
+    padding-bottom: .5rem !important;
+  }
+
+  .ml-real-shelf-card {
+    min-width: 9.8rem !important;
+    padding: .65rem !important;
+  }
+
+  .ml-catalog-zone {
+    padding: 1rem .75rem 3rem !important;
+  }
+
+  .ml-catalog-zone h2 {
+    font-size: 1.7rem !important;
+  }
+
+  .ml-catalog-zone .grid.gap-5.lg\:grid-cols-\[280px_1fr\] {
+    display: block !important;
+  }
+
+  .ml-market-shell .filter-panel {
+    display: none !important;
+  }
+
+  .ml-market-shell #productos .grid.items-stretch,
+  .ml-catalog-zone .grid.items-stretch {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: .65rem !important;
+  }
+
+  .ml-market-shell .market-product-card {
+    padding: .62rem !important;
+    border-radius: .9rem !important;
+  }
+
+  .ml-market-shell .market-product-card h3 {
+    font-size: .82rem !important;
+    min-height: 2.05rem !important;
+  }
+
+  .ml-market-shell .market-product-card .font-mono {
+    font-size: .92rem !important;
+  }
+
+  .ml-market-shell .market-product-card .btn-agregar {
+    font-size: .66rem !important;
+  }
+}
