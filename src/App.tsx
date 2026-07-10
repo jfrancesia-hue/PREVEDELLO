@@ -148,7 +148,7 @@ const officialServicePillars = [
   { title: "Entrega a domicilio", detail: "Materiales, ferretería y hogar con logística para Catamarca.", icon: PackageCheck },
 ] as const;
 
-function LogoMark({ compact = false }: { compact?: boolean }) {
+function LogoMark({ compact = false, subtitle = "Market" }: { compact?: boolean; subtitle?: string }) {
   return (
     <div className="flex items-center gap-3">
       <img
@@ -158,7 +158,7 @@ function LogoMark({ compact = false }: { compact?: boolean }) {
       />
       <div className="leading-none">
         <p className="text-lg font-extrabold uppercase text-graphite">Prevedello</p>
-        <p className="text-xs font-semibold uppercase text-zinc-500">Market</p>
+        <p className="text-xs font-semibold uppercase text-zinc-500">{subtitle}</p>
       </div>
     </div>
   );
@@ -169,11 +169,13 @@ function HeaderMarketplace({
   onQueryChange,
   cartCount,
   onCartOpen,
+  mode = "market",
 }: {
   query: string;
   onQueryChange: (value: string) => void;
   cartCount: number;
   onCartOpen: () => void;
+  mode?: "home" | "market";
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
@@ -198,25 +200,33 @@ function HeaderMarketplace({
     return () => window.removeEventListener("scroll", updateHeader);
   }, []);
 
-  const navItems = [
-    ["rubros", "Rubros"],
-    ["productos", "Productos"],
-    ["empresas", "Empresas"],
-    ["calculadoras", "Calculadoras"],
-  ];
+  const navItems =
+    mode === "home"
+      ? [
+          ["rubros", "Rubros", "#rubros"],
+          ["productos", "Marketplace", "/market"],
+          ["empresas", "Empresas", "#empresas"],
+          ["calculadoras", "Calculadoras", "/market#calculadoras"],
+        ]
+      : [
+          ["rubros", "Rubros", "#rubros"],
+          ["productos", "Productos", "#productos"],
+          ["empresas", "Empresas", "#empresas"],
+          ["calculadoras", "Calculadoras", "#calculadoras"],
+        ];
 
   return (
     <header className={`pv-site-header sticky top-0 z-50 px-3 pt-3 sm:px-5 ${isScrolled ? "is-scrolled" : ""}`}>
       <div className="ds-header mx-auto flex h-14 max-w-7xl items-center gap-2 px-2 py-1 lg:h-16 lg:gap-3 lg:px-3">
-        <a href="#inicio" className="shrink-0" aria-label="Ir al inicio">
-          <LogoMark compact />
+        <a href={mode === "home" ? "#inicio" : "/"} className="shrink-0" aria-label="Ir al inicio">
+          <LogoMark compact subtitle={mode === "home" ? "Corralón" : "Market"} />
         </a>
         <div className="hidden min-w-0 flex-1 lg:block lg:max-w-sm xl:max-w-md">
           <SearchBar value={query} onChange={onQueryChange} compact />
         </div>
         <nav className="hidden items-center gap-4 text-sm font-semibold text-white/75 lg:flex xl:gap-6">
-          {navItems.map(([id, label]) => (
-            <a key={id} className={`nav-link ${activeSection === id ? "is-active" : ""}`} href={`#${id}`}>
+          {navItems.map(([id, label, href]) => (
+            <a key={id} className={`nav-link ${activeSection === id ? "is-active" : ""}`} href={href}>
               {label}
             </a>
           ))}
@@ -321,9 +331,11 @@ function WhatsAppQuoteButton({
 function HeroSection({
   query,
   onQueryChange,
+  variant = "market",
 }: {
   query: string;
   onQueryChange: (value: string) => void;
+  variant?: "home" | "market";
 }) {
   const heroRef = useRef<HTMLElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -400,13 +412,15 @@ function HeroSection({
           <div className="hero-copy premium-reveal">
             <div className="hero-kicker mb-5 inline-flex items-center gap-2 rounded-[var(--radius-badge)] border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
               <Sparkles size={16} />
-Marketplace de corralón · Catamarca
+              {variant === "home" ? "Corralón familiar desde 1970 · Catamarca" : "Marketplace de corralón · Catamarca"}
             </div>
             <h1 className="hero-heading max-w-4xl font-extrabold text-white">
-Todo para construir, reparar y equipar en un solo lugar.
+              {variant === "home" ? "Confianza local para construir, reparar y equipar." : "Todo para construir, reparar y equipar en un solo lugar."}
             </h1>
             <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
-Buscá productos, compará rubros, armá tu pedido y mandalo por WhatsApp. La escala de un marketplace, con atención real de corralón Prevedello.
+              {variant === "home"
+                ? "Una empresa de Catamarca con trayectoria, rubros amplios, marcas reconocidas y atención humana para hogares, obras y empresas."
+                : "Buscá productos, compará rubros, armá tu pedido y mandalo por WhatsApp. La escala de un marketplace, con atención real de corralón Prevedello."}
             </p>
             <div className="mobile-hero-photo mt-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
               <picture>
@@ -445,17 +459,17 @@ Buscá productos, compará rubros, armá tu pedido y mandalo por WhatsApp. La es
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
-                href="#pedido"
+                href="/market#productos"
                 className="ds-button-red inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-Armar pedido ahora
+                {variant === "home" ? "Entrar al marketplace" : "Armar pedido ahora"}
                 <ArrowRight size={17} />
               </a>
               <a
-                href="#productos"
+                href="/market#rubros"
                 className="ds-button-outline inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-Ver categorías
+                {variant === "home" ? "Conocer Prevedello" : "Ver categorías"}
                 <ArrowRight size={17} />
               </a>
             </div>
@@ -476,8 +490,8 @@ Ver categorías
               </picture>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,13,31,.28))]" />
               <div className="hero-technical-label absolute bottom-4 left-4 right-4 border-l-2 border-prevedello-red bg-black/38 p-4 backdrop-blur-md">
-                <p className="font-heading text-xl font-bold uppercase text-white">Corralón + marketplace</p>
-                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">Productos, rubros y cotización rápida en una experiencia pensada para vender de todo.</p>
+                <p className="font-heading text-xl font-bold uppercase text-white">{variant === "home" ? "Prevedello Catamarca" : "Corralón + marketplace"}</p>
+                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">{variant === "home" ? "Trayectoria, asesoramiento y entrega para comprar con confianza." : "Productos, rubros y cotización rápida en una experiencia pensada para vender de todo."}</p>
               </div>
             </div>
           </div>
@@ -491,13 +505,15 @@ Ver categorías
         <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div className="flex flex-col justify-between gap-6">
             <div>
-              <p className="text-sm font-bold uppercase text-prevedello-red">Compra guiada</p>
+              <p className="text-sm font-bold uppercase text-prevedello-red">{variant === "home" ? "Respaldo Prevedello" : "Compra guiada"}</p>
               <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">
-                Como marketplace, pero con asesoramiento de mostrador.
+                {variant === "home" ? "La web de inicio vende confianza; el market vende productos." : "Como marketplace, pero con asesoramiento de mostrador."}
               </h2>
             </div>
             <p className="max-w-md text-sm leading-6 text-white/62">
-              Entrás, buscás por producto o rubro, guardás lo que necesitás y enviás una lista clara. Prevedello responde con precio, disponibilidad y entrega.
+              {variant === "home"
+                ? "Una portada más limpia para explicar quiénes son, qué venden y por qué elegirlos. El catálogo grande queda separado para escalar sin ensuciar la home."
+                : "Entrás, buscás por producto o rubro, guardás lo que necesitás y enviás una lista clara. Prevedello responde con precio, disponibilidad y entrega."}
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3 lg:gap-5">
@@ -2855,7 +2871,7 @@ function InternalAppPage() {
   return <InternalWorkspacePage authMode="demo" userEmail={demoEmail} onSignOut={endDemoSession} />;
 }
 
-function MarketplacePage() {
+function MarketPage() {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
   const [catalogStatus, setCatalogStatus] = useState("Catálogo local activo.");
   const [catalogSource, setCatalogSource] = useState<"local" | "supabase">("local");
@@ -3117,10 +3133,94 @@ function MarketplacePage() {
   );
 }
 
+function HomePage() {
+  const [query, setQuery] = useState("");
+
+  return (
+    <div className="home-shell min-h-screen pb-20 font-body text-graphite lg:pb-0">
+      <HeaderMarketplace query={query} onQueryChange={setQuery} cartCount={0} onCartOpen={() => { window.location.href = "/market#productos"; }} mode="home" />
+      <HeroSection query={query} onQueryChange={setQuery} variant="home" />
+
+      <main className="home-clean-main pb-24 lg:pb-0">
+        <section id="rubros" className="home-market-entry premium-reveal px-4 py-12 text-white sm:px-6 lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+            <div className="home-entry-copy rounded-[1.7rem] border border-white/12 bg-white/8 p-6 shadow-[0_24px_80px_rgba(5,13,31,0.28)] lg:p-8">
+              <p className="section-kicker text-prevedello-red">Dos experiencias, un mismo Prevedello</p>
+              <h2 className="mt-3 font-heading text-4xl font-black uppercase leading-tight text-white sm:text-5xl">
+                Inicio para confiar. Marketplace para comprar.
+              </h2>
+              <p className="mt-4 text-base leading-7 text-[var(--pv-text-secondary)]">
+                La portada presenta respaldo, trayectoria y servicio. El catálogo completo vive aparte, preparado para miles de productos, filtros y cotización rápida.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a href="/market" className="ds-button-red inline-flex items-center gap-2 px-6 py-3 text-sm">
+                  Entrar al marketplace
+                  <ArrowRight size={17} />
+                </a>
+                <a href="/cotizacion" className="ds-button-outline inline-flex items-center gap-2 px-6 py-3 text-sm">
+                  Pedir cotización
+                  <ShoppingCart size={17} />
+                </a>
+              </div>
+            </div>
+
+            <div className="home-department-preview grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {categories.slice(0, 8).map((category) => {
+                const Icon = category.icon;
+                return (
+                  <a
+                    key={category.id}
+                    href={`/market#productos`}
+                    className="home-department-tile rounded-[1.15rem] border border-white/10 bg-white/8 p-4 text-white transition hover:-translate-y-1 hover:border-prevedello-red/45 hover:bg-white/12"
+                  >
+                    <span className="grid h-11 w-11 place-items-center rounded-[1rem] bg-white text-prevedello-blue">
+                      <Icon size={20} />
+                    </span>
+                    <h3 className="mt-3 text-sm font-extrabold sm:text-base">{category.name}</h3>
+                    <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/56">{category.description}</p>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <OfficialHeritage />
+        <OperationsDeck />
+        <BrandStrip />
+        <ProfessionalCTA />
+
+        <section id="productos" className="home-final-cta px-4 py-20 text-white sm:px-6 lg:px-8">
+          <div className="blueprint-panel mx-auto grid max-w-7xl gap-6 rounded-[var(--radius-card)] border border-white/14 p-6 lg:grid-cols-[1fr_auto] lg:items-center lg:p-8">
+            <div>
+              <p className="text-sm font-bold uppercase text-white/65">Catálogo completo</p>
+              <h2 className="mt-2 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
+                Para vender miles de productos, el marketplace tiene su propio espacio.
+              </h2>
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-white/72">
+                Buscador, filtros, departamentos, productos, carrito de cotización y WhatsApp en una ruta independiente.
+              </p>
+            </div>
+            <a href="/market" className="ds-button-red inline-flex items-center justify-center gap-2 px-6 py-3 text-sm">
+              Ver marketplace
+              <ArrowRight size={17} />
+            </a>
+          </div>
+        </section>
+
+        <PublicFooter />
+      </main>
+      <MobileBottomNav cartCount={0} onCartOpen={() => { window.location.href = "/market#productos"; }} />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<MarketplacePage />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/market" element={<MarketPage />} />
+      <Route path="/catalogo" element={<MarketPage />} />
       <Route path="/productos" element={<ProductsRoutePage />} />
       <Route path="/productos/:slug" element={<ProductRoutePage />} />
       <Route path="/rubros" element={<CategoriesRoutePage />} />
