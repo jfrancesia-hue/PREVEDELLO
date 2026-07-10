@@ -131,7 +131,8 @@ export const products: Product[] = [
     description: "Terminacion mate para paredes interiores con buen poder cubritivo.",
     uses: ["Interiores", "Refacciones", "Obras nuevas"],
     related: ["Rodillo lana", "Enduido interior", "Cinta de pintor"],
-    imageTone: "from-blue-200 via-white to-red-100",
+    imageTone: "from-blue-200 via-white to-red-100",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/0/06/White_Brush_on_a_paint_bucket.jpg",
   },
   {
     id: "taladro-bosch",
@@ -144,7 +145,8 @@ export const products: Product[] = [
     description: "Equipo robusto para perforacion en mamposteria, madera y metal.",
     uses: ["Instaladores", "Obra", "Taller"],
     related: ["Mechas widia", "Discos de corte", "Extensiones"],
-    imageTone: "from-sky-300 via-blue-700 to-prevedello-blue",
+    imageTone: "from-sky-300 via-blue-700 to-prevedello-blue",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Cordless_electric_%28screw%29_drill.jpg/960px-Cordless_electric_%28screw%29_drill.jpg",
   },
   {
     id: "porcelanato-ilva",
@@ -248,7 +250,8 @@ export const products: Product[] = [
     description: "Cable flexible para alimentación, obra, taller y conexiones seguras.",
     uses: ["Electricidad", "Taller", "Obra"],
     related: ["Térmica", "Ficha", "Caño corrugado"],
-    imageTone: "from-emerald-100 via-zinc-100 to-slate-300",
+    imageTone: "from-emerald-100 via-zinc-100 to-slate-300",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Cable_Reel_R01.jpg/960px-Cable_Reel_R01.jpg",
   },
   {
     id: "puerta-chapa-inyectada",
@@ -260,7 +263,8 @@ export const products: Product[] = [
     description: "Puerta resistente para ingreso, depósitos, viviendas y locales.",
     uses: ["Ingreso", "Depósitos", "Vivienda"],
     related: ["Cerradura", "Premarco", "Burlete"],
-    imageTone: "from-slate-200 via-zinc-200 to-slate-500",
+    imageTone: "from-slate-200 via-zinc-200 to-slate-500",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Exterior_metal_door%2C_Calle_Esmeraldas%2C_Quito.jpg/960px-Exterior_metal_door%2C_Calle_Esmeraldas%2C_Quito.jpg",
   },
   {
     id: "set-rodillos-pintura",
@@ -272,7 +276,8 @@ export const products: Product[] = [
     description: "Kit práctico para pintura interior, retoques y trabajos de mantenimiento.",
     uses: ["Interiores", "Mantenimiento", "Refacción"],
     related: ["Látex", "Cinta", "Enduido"],
-    imageTone: "from-blue-100 via-white to-red-100",
+    imageTone: "from-blue-100 via-white to-red-100",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Tray%2C_brush%2C_roller%2C_paint_%284116925693%29.jpg/960px-Tray%2C_brush%2C_roller%2C_paint_%284116925693%29.jpg",
   },
   {
     id: "adhesivo-porcelanato",
@@ -284,7 +289,8 @@ export const products: Product[] = [
     description: "Pegamento flexible para piezas grandes, interiores y exteriores.",
     uses: ["Porcelanato", "Cerámicos", "Exterior"],
     related: ["Pastina", "Niveladores", "Llana"],
-    imageTone: "from-stone-100 via-zinc-100 to-neutral-300",
+    imageTone: "from-stone-100 via-zinc-100 to-neutral-300",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Durastop_firestop_mortar_bag.jpg/960px-Durastop_firestop_mortar_bag.jpg",
   },
 ];
 
