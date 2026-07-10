@@ -400,13 +400,13 @@ function HeroSection({
           <div className="hero-copy premium-reveal">
             <div className="hero-kicker mb-5 inline-flex items-center gap-2 rounded-[var(--radius-badge)] border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white/86 backdrop-blur-md">
               <Sparkles size={16} />
-              Comprometidos desde 1970 · Catamarca
+Marketplace de corralón · Catamarca
             </div>
             <h1 className="hero-heading max-w-4xl font-extrabold text-white">
-              Cotizá tu obra con respaldo Prevedello.
+Todo para construir, reparar y equipar en un solo lugar.
             </h1>
             <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
-              Materiales, ferretería y hogar con atención local desde 1970. Armá tu pedido, enviá la consulta y recibí asesoramiento real de mostrador.
+Buscá productos, compará rubros, armá tu pedido y mandalo por WhatsApp. La escala de un marketplace, con atención real de corralón Prevedello.
             </p>
             <div className="mobile-hero-photo mt-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
               <picture>
@@ -448,14 +448,14 @@ function HeroSection({
                 href="#pedido"
                 className="ds-button-red inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                Cotizá tu obra
+Armar pedido ahora
                 <ArrowRight size={17} />
               </a>
               <a
                 href="#productos"
                 className="ds-button-outline inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                Explorar catálogo
+Ver categorías
                 <ArrowRight size={17} />
               </a>
             </div>
@@ -476,8 +476,8 @@ function HeroSection({
               </picture>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,13,31,.28))]" />
               <div className="hero-technical-label absolute bottom-4 left-4 right-4 border-l-2 border-prevedello-red bg-black/38 p-4 backdrop-blur-md">
-                <p className="font-heading text-xl font-bold uppercase text-white">Desde 1970 en Catamarca</p>
-                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">La atención de siempre, ahora con una experiencia digital más simple.</p>
+                <p className="font-heading text-xl font-bold uppercase text-white">Corralón + marketplace</p>
+                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">Productos, rubros y cotización rápida en una experiencia pensada para vender de todo.</p>
               </div>
             </div>
           </div>
@@ -491,14 +491,13 @@ function HeroSection({
         <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[0.62fr_1.38fr] lg:items-center">
           <div className="flex flex-col justify-between gap-6">
             <div>
-              <p className="text-sm font-bold uppercase text-prevedello-red">Todo para tu proyecto</p>
+              <p className="text-sm font-bold uppercase text-prevedello-red">Compra guiada</p>
               <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">
-                Un mostrador digital para comprar mejor.
+                Como marketplace, pero con asesoramiento de mostrador.
               </h2>
             </div>
             <p className="max-w-md text-sm leading-6 text-white/62">
-              La experiencia digital no reemplaza el trato de mostrador: lo ordena. Buscás por rubro,
-              sumás productos y enviás una consulta clara para recibir asesoramiento.
+              Entrás, buscás por producto o rubro, guardás lo que necesitás y enviás una lista clara. Prevedello responde con precio, disponibilidad y entrega.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-3 lg:gap-5">
@@ -522,6 +521,89 @@ function HeroSection({
                 <p className="px-4 py-3 text-sm font-bold">{label}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MarketplaceHub({
+  productsList,
+  onAdd,
+  onOpen,
+  onCategorySelect,
+}: {
+  productsList: Product[];
+  onAdd: (product: Product) => void;
+  onOpen: (product: Product) => void;
+  onCategorySelect: (categoryName: string) => void;
+}) {
+  const featured = productsList.slice(0, 4);
+
+  return (
+    <section className="marketplace-hub premium-reveal px-4 py-12 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="marketplace-hub-panel rounded-[1.8rem] border border-white/12 p-4 shadow-[0_30px_90px_rgba(5,13,31,0.38)] sm:p-6 lg:p-7">
+          <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="section-kicker text-prevedello-red">Comprá como en un marketplace</p>
+              <h2 className="mt-2 max-w-3xl font-heading text-3xl font-black uppercase leading-tight text-white sm:text-5xl">
+                Categorías, destacados y pedido rápido.
+              </h2>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-[var(--pv-text-secondary)]">
+              La home deja de ser folleto: ahora guía la compra por necesidad, rubro y producto.
+            </p>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-[0.9fr_1.35fr]">
+            <div className="marketplace-category-grid grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
+              {categories.slice(0, 8).map((category) => {
+                const Icon = category.icon;
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    onClick={() => onCategorySelect(category.name)}
+                    className="marketplace-category-tile group rounded-[1.1rem] border border-white/10 bg-white/8 p-4 text-left transition hover:-translate-y-1 hover:border-prevedello-red/45 hover:bg-white/12"
+                  >
+                    <span className="grid h-11 w-11 place-items-center rounded-[1rem] bg-white text-prevedello-blue shadow-[0_14px_30px_rgba(255,255,255,0.12)]">
+                      <Icon size={20} />
+                    </span>
+                    <h3 className="mt-3 text-sm font-extrabold text-white sm:text-base">{category.name}</h3>
+                    <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/56">{category.description}</p>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="marketplace-featured-panel rounded-[1.35rem] border border-white/10 bg-white/7 p-4">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-prevedello-red">Más buscados</p>
+                  <h3 className="mt-1 text-2xl font-extrabold text-white">Productos para arrancar el pedido</h3>
+                </div>
+                <a href="#productos" className="hidden rounded-full border border-white/14 px-4 py-2 text-xs font-extrabold text-white/78 transition hover:bg-white/10 sm:inline-flex">
+                  Ver todos
+                </a>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {featured.map((product) => (
+                  <article key={product.id} className="marketplace-mini-product rounded-[1rem] border border-white/10 bg-[rgba(5,13,31,0.42)] p-3">
+                    <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
+                      <ProductVisual product={product} />
+                      <p className="mt-3 text-[11px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</p>
+                      <h4 className="mt-1 line-clamp-2 min-h-10 text-sm font-extrabold leading-5 text-white">{product.name}</h4>
+                      <p className="mt-2 font-mono text-base !text-white">{formatPrice(product.price)}</p>
+                    </button>
+                    <button type="button" onClick={() => onAdd(product)} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-prevedello-red px-3 py-2 text-xs font-extrabold text-white shadow-[0_12px_28px_rgba(220,31,38,0.24)]">
+                      <Plus size={14} /> Agregar
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -825,7 +907,7 @@ function ProductCard({
           )}
           <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
             <div>
-              <p className="font-mono text-xl font-medium text-white">{formatPrice(product.price)}</p>
+              <p className="font-mono text-xl font-medium !text-white">{formatPrice(product.price)}</p>
               <p className={`availability-badge mt-1 ${getAvailabilityClass(product.availability)}`}>
                 <span className="dot" />
                 {product.availability}
@@ -1021,7 +1103,7 @@ function QuoteCart({
         aria-label="Cerrar pedido"
       />
       <aside
-        className={`absolute bottom-0 right-0 top-0 flex w-full max-w-xl flex-col bg-white shadow-2xl transition duration-300 sm:rounded-l-lg ${
+        className={`quote-drawer absolute bottom-0 right-0 top-0 flex w-full max-w-xl flex-col bg-white shadow-2xl transition duration-300 sm:rounded-l-lg ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -1163,7 +1245,7 @@ function ProductDetailModal({
 
   return (
     <div className="fixed inset-0 z-[90] grid place-items-end bg-prevedello-blue/35 p-0 sm:place-items-center sm:p-4">
-      <article className="max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-t-lg bg-white p-4 shadow-2xl sm:rounded-lg sm:p-6">
+      <article className="product-detail-modal max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-t-lg bg-white p-4 shadow-2xl sm:rounded-lg sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-4">
           <Breadcrumbs current={product.name} />
           <button
@@ -1359,7 +1441,7 @@ function AdminCatalogPanel({
     resetStoredProducts();
     const seedProducts = getStoredProducts();
     onProductsChange(seedProducts);
-    setMessage("Catalogo restaurado a los productos iniciales.");
+    setMessage("Catálogo restaurado a los productos iniciales.");
   };
 
   return (
@@ -1579,7 +1661,7 @@ type InternalModule =
   | "tareas"
   | "rubros"
   | "marcas"
-  | "configuración";
+  | "configuracion";
 
 const internalModules: { id: InternalModule; label: string; icon: ReactNode }[] = [
   { id: "dashboard", label: "Dashboard", icon: <BarChart3 size={18} /> },
@@ -1590,7 +1672,7 @@ const internalModules: { id: InternalModule; label: string; icon: ReactNode }[] 
   { id: "tareas", label: "Tareas", icon: <ListTodo size={18} /> },
   { id: "rubros", label: "Rubros", icon: <Tags size={18} /> },
   { id: "marcas", label: "Marcas", icon: <BadgeCheck size={18} /> },
-  { id: "configuración", label: "Config", icon: <Settings size={18} /> },
+  { id: "configuracion", label: "Config", icon: <Settings size={18} /> },
 ];
 
 const openQuoteStatuses: QuoteStatus[] = ["nuevo", "contactado", "cotizacion_enviada", "en_negociacion", "sin_respuesta"];
@@ -1843,8 +1925,8 @@ function InternalTasksPanel({ quotes, productsList }: { quotes: QuoteRecord[]; p
       })),
     {
       title: "Cargar fotos reales de productos destacádos",
-      detail: "Mejora conversion del marketplace público",
-      type: "Catalogo",
+      detail: "Mejora conversión del marketplace público",
+      type: "Catálogo",
       due: "Semana",
     },
   ];
@@ -2214,7 +2296,7 @@ function RouteHeader({ title, eyebrow, children }: { title: string; eyebrow: str
 
 function useCatalogProducts() {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
-  const [status, setStatus] = useState("Catalogo local activo.");
+  const [status, setStatus] = useState("Catálogo local activo.");
 
   useEffect(() => {
     void loadCatalogProducts().then((result) => {
@@ -2236,12 +2318,12 @@ function ProductsRoutePage() {
 
   return (
     <div className="min-h-screen bg-[#f7f3eb]">
-      <RouteHeader title="Catalogo de productos" eyebrow="Productos">
+      <RouteHeader title="Catálogo de productos" eyebrow="Productos">
         Busca por producto, marca o rubro. Esta ruta queda lista para convertirse en catálogo completo.
       </RouteHeader>
       <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-        <div className="premium-card mb-7 rounded-lg p-5">
+        <div className="catalog-search-panel premium-card mb-7 rounded-lg p-5">
           <SearchBar value={query} onChange={setQuery} />
           <p className="mt-3 text-sm font-semibold text-zinc-600">{status}</p>
         </div>
@@ -2285,7 +2367,7 @@ function ProductRoutePage() {
       <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[1fr_0.9fr]">
         <ProductVisual product={product} />
-        <div className="premium-card rounded-lg p-7">
+        <div className="product-route-panel premium-card rounded-lg p-7">
           <p className="text-sm font-bold uppercase text-prevedello-red">{product.brand}</p>
           <p className="mt-3 text-4xl font-extrabold text-graphite">{formatPrice(product.price)}</p>
           <p className="mt-2 text-sm font-bold text-emerald-700">{product.availability}</p>
@@ -2372,7 +2454,7 @@ function QuoteRoutePage() {
         El flujo principal sigue integrado en la home. Desde cualquier producto podes armar tu pedido y enviarlo por WhatsApp.
       </RouteHeader>
       <main className="section-band px-4 py-12 sm:px-6 lg:px-8">
-        <div className="premium-card mx-auto max-w-7xl rounded-lg p-7">
+        <div className="quote-route-panel premium-card mx-auto max-w-7xl rounded-lg p-7">
           <h2 className="text-2xl font-extrabold text-graphite">Paso siguiente</h2>
           <p className="mt-2 text-zinc-600">Volvér a la home para agregar productos al carrito de cotización.</p>
           <Link to="/#productos" className="mt-5 inline-flex rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
@@ -2598,7 +2680,7 @@ function InternalWorkspacePage({
 }) {
   const [activeModule, setActiveModule] = useState<InternalModule>("dashboard");
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
-  const [catalogStatus, setCatalogStatus] = useState("Catalogo local activo.");
+  const [catalogStatus, setCatalogStatus] = useState("Catálogo local activo.");
   const [catalogSource, setCatalogSource] = useState<"local" | "supabase">("local");
   const [quotes, setQuotes] = useState<QuoteRecord[]>([]);
   const [crmStatus, setCrmStatus] = useState("CRM local activo.");
@@ -2775,7 +2857,7 @@ function InternalAppPage() {
 
 function MarketplacePage() {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
-  const [catalogStatus, setCatalogStatus] = useState("Catalogo local activo.");
+  const [catalogStatus, setCatalogStatus] = useState("Catálogo local activo.");
   const [catalogSource, setCatalogSource] = useState<"local" | "supabase">("local");
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("Todos");
@@ -2886,20 +2968,21 @@ function MarketplacePage() {
         onCartOpen={() => setCartOpen(true)}
       />
       <HeroSection query={query} onQueryChange={setQuery} />
+      <MarketplaceHub productsList={productsList} onAdd={addToCart} onOpen={setSelectedProduct} onCategorySelect={handleCategorySelect} />
       <PromoBanner />
       <OfficialHeritage />
       <OperationsDeck />
 
       <main className="pb-24 lg:pb-0">
-        <section id="rubros" className="premium-reveal section-anchor blueprint-bg px-4 py-20 text-white sm:px-6 lg:px-8">
+        <section id="rubros" className="premium-reveal section-anchor blueprint-bg px-4 py-14 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="mb-9 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="section-kicker">Rubros principales</p>
-                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Encontrá rápido lo que necesitás.</h2>
+                <p className="section-kicker">Departamentos del corralón</p>
+                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Navegá por categoría como en una tienda grande.</h2>
               </div>
               <p className="max-w-md text-sm leading-6 text-[var(--pv-text-secondary)]">
-                Rubros claros para comprar por obra, reparación, instalación o equipamiento del hogar.
+                Una estructura tipo marketplace para que el cliente encuentre rápido materiales, ferretería, pinturas, herramientas, pisos e instalaciones.
               </p>
             </div>
             <div className="flex gap-5 overflow-x-auto pb-3 scrollbar-none lg:grid lg:grid-cols-4 lg:overflow-visible">
@@ -2913,9 +2996,9 @@ function MarketplacePage() {
         <section id="pedido" className="premium-reveal section-anchor premium-dark-band px-4 py-18 text-white sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-3">
             {[
-              ["1", "Buscá o elegí un rubro", "Pisos, ferretería, pintura, obra gruesa, instalaciones o hogar."],
-              ["2", "Agregá productos al pedido", "No hay checkout: es una cotización rápida con cantidades y notas."],
-              ["3", "Enviá por WhatsApp", "El mensaje sale armado para que Prevedello responda con precio y entrega."],
+              ["1", "Buscá como en un marketplace", "Usá el buscador o entrá por departamentos: obra, ferretería, pintura, herramientas y hogar."],
+              ["2", "Armá tu carrito de cotización", "Sumá productos, cantidades y notas sin perder tiempo ni depender de un formulario largo."],
+              ["3", "Cerrá con atención humana", "El pedido llega por WhatsApp para confirmar precio, stock, entrega y asesoramiento."],
             ].map(([step, title, detail]) => (
               <div key={step} className="ds-card p-6">
                 <span className="grid h-11 w-11 place-items-center rounded-[var(--radius-btn)] bg-prevedello-red text-lg font-extrabold text-white shadow-[0_14px_30px_rgba(220,31,38,0.18)]">
@@ -2930,14 +3013,14 @@ function MarketplacePage() {
 
         <section id="productos" className="catalog-section premium-reveal section-anchor catalog-premium-band px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <Breadcrumbs current="Productos destacádos" />
+            <Breadcrumbs current="Marketplace Prevedello" />
             <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="section-kicker">Catálogo inicial</p>
-                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Productos destacádos para cotizar.</h2>
+                <p className="section-kicker">Catálogo marketplace</p>
+                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Encontrá, agregá y cotizá productos.</h2>
               </div>
               <p className="max-w-xl text-sm leading-6 text-[var(--pv-text-secondary)]">
-                Una selección inicial para pedir precio rápido, consultar disponibilidad y avanzar directo por WhatsApp.
+                Una experiencia más parecida a Mercado Libre: búsqueda, filtros, cards de producto y carrito; pero orientada a cotización de corralón.
               </p>
             </div>
             <div className="grid gap-7 lg:grid-cols-[300px_1fr]">
