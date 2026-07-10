@@ -968,3 +968,103 @@ a {
   --admin-header: #f59e0b;
   background: var(--admin-bg);
 }
+
+/* Menu refinement — current production design, clearer and always visible */
+.pv-site-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 90 !important;
+  padding-top: 0.55rem !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+.pv-site-header.is-scrolled {
+  transform: none !important;
+  pointer-events: auto !important;
+  padding-top: 0.42rem !important;
+}
+
+.pv-site-header .ds-header,
+.pv-site-header.is-scrolled .ds-header {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border: 1px solid rgba(9, 59, 145, 0.14) !important;
+  border-bottom: 3px solid rgba(220, 31, 38, 0.9) !important;
+  color: #07172f !important;
+  backdrop-filter: blur(18px) saturate(1.15) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.15) !important;
+  box-shadow: 0 18px 48px rgba(5, 13, 31, 0.16) !important;
+}
+
+.pv-site-header .ds-header::before {
+  background:
+    linear-gradient(90deg, rgba(220,31,38,0.08), transparent 18%, transparent 82%, rgba(9,59,145,0.08)),
+    linear-gradient(rgba(9,59,145,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(9,59,145,0.03) 1px, transparent 1px) !important;
+  opacity: 1 !important;
+}
+
+.ds-header .text-graphite,
+.ds-header .text-zinc-500 {
+  color: #093b91 !important;
+}
+
+.ds-header .ds-input {
+  background: rgba(9,59,145,0.045) !important;
+  border-color: rgba(9,59,145,0.16) !important;
+  color: #07172f !important;
+}
+
+.ds-header .ds-input input,
+.ds-header .ds-input input::placeholder {
+  color: rgba(7,23,47,0.68) !important;
+}
+
+.nav-link {
+  color: rgba(7, 23, 47, 0.72) !important;
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  color: #093b91 !important;
+}
+
+.nav-link::after {
+  background: var(--pv-red) !important;
+  bottom: -0.36rem !important;
+}
+
+.nav-link-app,
+.pv-site-header a[title="App interna"] {
+  border-color: rgba(9,59,145,0.18) !important;
+  color: #093b91 !important;
+  background: rgba(9,59,145,0.045) !important;
+}
+
+.header-motion-line {
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, rgba(220,31,38,0.82), rgba(9,59,145,0.2), transparent) !important;
+  opacity: 0.85 !important;
+}
+
+@media (min-width: 1024px) {
+  .pv-site-header.is-scrolled {
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .pv-site-header {
+    position: sticky !important;
+    top: 0 !important;
+  }
+
+  .pv-site-header.is-scrolled .mobile-search-row {
+    max-height: 0 !important;
+    margin-top: 0 !important;
+    opacity: 0 !important;
+  }
+}
