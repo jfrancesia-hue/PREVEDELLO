@@ -561,129 +561,142 @@ function MarketCommerceHero({
   onOpen: (product: Product) => void;
   onCategorySelect: (categoryName: string) => void;
 }) {
-  const featured = productsList.slice(0, 6);
-  const heroProducts = productsList.slice(0, 3);
+  const featured = productsList.slice(0, 8);
+  const heroProducts = productsList.slice(0, 4);
 
   return (
-    <section id="inicio" className="preve-market-front relative overflow-hidden text-white">
-      <div className="preve-market-glow" />
-      <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 lg:px-8 lg:pb-14 lg:pt-10">
-        <div className="preve-market-navline mb-5 flex gap-2 overflow-x-auto pb-2 text-xs font-black uppercase tracking-[0.18em] text-white/70 scrollbar-none lg:justify-center">
-          {["Ofertas de obra", "Ferretería", "Pinturas", "Herramientas", "Sanitarios", "Pisos", "Empresas"].map((item) => (
-            <a key={item} href="#productos" className="shrink-0 rounded-full border border-white/12 bg-white/7 px-4 py-2 transition hover:border-prevedello-red/55 hover:bg-white/12">
+    <section id="inicio" className="ml-market-page text-graphite">
+      <div className="ml-market-topbar sticky top-[76px] z-40 border-b border-prevedello-blue/10 bg-white/96 px-4 py-3 shadow-[0_14px_38px_rgba(5,13,31,0.08)] backdrop-blur-xl sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-3 lg:grid-cols-[240px_1fr_auto] lg:items-center">
+          <a href="/" className="hidden items-center gap-2 text-sm font-black uppercase text-prevedello-blue lg:flex">
+            <LogoMark compact subtitle="Market" />
+          </a>
+          <div className="ml-market-searchbox rounded-[1.15rem] border border-prevedello-blue/10 bg-white p-2 shadow-[0_14px_34px_rgba(9,59,145,0.10)]">
+            <SearchBar value={query} onChange={onQueryChange} />
+          </div>
+          <button type="button" onClick={() => document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' })} className="hidden rounded-full bg-prevedello-red px-5 py-3 text-sm font-black uppercase tracking-wide text-white shadow-[0_14px_32px_rgba(220,31,38,0.24)] lg:inline-flex">
+            Ver catálogo
+          </button>
+        </div>
+      </div>
+
+      <div className="ml-market-nav bg-[#eef3fb] px-4 py-3 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto scrollbar-none">
+          {["Ofertas", "Obra gruesa", "Ferretería", "Pinturería", "Herramientas", "Pisos", "Baño y cocina", "Instalaciones", "Empresas"].map((item) => (
+            <a key={item} href="#productos" className="shrink-0 rounded-full border border-prevedello-blue/10 bg-white px-4 py-2 text-xs font-black uppercase tracking-wide text-prevedello-blue transition hover:border-prevedello-red/40 hover:text-prevedello-red">
               {item}
             </a>
           ))}
         </div>
+      </div>
 
-        <div className="preve-market-hero-grid grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-          <div className="preve-market-hero-card rounded-[2rem] border border-white/12 p-5 shadow-[0_34px_100px_rgba(0,0,0,0.42)] sm:p-7 lg:p-9">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-prevedello-red">Prevedello Market</p>
-            <h1 className="preve-market-title mt-3 font-heading font-black uppercase leading-[0.88] tracking-[-0.07em] text-white">
-              Comprá para obra, casa y empresa.
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--pv-text-secondary)] sm:text-lg">
-              Un catálogo grande como marketplace, personalizado para corralón: buscá, filtrá, agregá a cotización y cerrá con atención humana.
-            </p>
-            <div className="preve-market-search mt-6 rounded-[1.35rem] border border-white/14 bg-white p-2 shadow-[0_20px_55px_rgba(0,0,0,0.24)]">
-              <SearchBar value={query} onChange={onQueryChange} />
+      <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+        <div className="ml-market-hero grid gap-4 lg:grid-cols-[1.25fr_0.75fr]">
+          <div className="ml-market-main-banner relative overflow-hidden rounded-[1.8rem] bg-white p-5 shadow-[0_22px_70px_rgba(5,13,31,0.12)] sm:p-7 lg:p-9">
+            <div className="relative z-10 max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-prevedello-red">Prevedello Market</p>
+              <h1 className="ml-market-heading mt-3 font-heading font-black uppercase leading-[0.9] tracking-[-0.07em] text-prevedello-blue">
+                Todo el corralón en modo tienda online.
+              </h1>
+              <p className="mt-4 max-w-xl text-base font-semibold leading-7 text-graphite/70 sm:text-lg">
+                Buscá miles de productos por rubro, armá tu carrito de cotización y cerrá por WhatsApp con atención real.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {quickNeeds.map((need) => (
+                  <button key={need} type="button" onClick={() => onQueryChange(need)} className="rounded-full bg-prevedello-blue px-4 py-2 text-xs font-black uppercase tracking-wide text-white shadow-[0_10px_24px_rgba(9,59,145,0.18)] transition hover:bg-prevedello-red">
+                    {need}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {quickNeeds.map((need) => (
-                <button key={need} type="button" onClick={() => onQueryChange(need)} className="rounded-full border border-white/12 bg-white/8 px-3 py-2 text-xs font-extrabold text-white/78 transition hover:border-prevedello-red/50 hover:bg-white/12">
-                  {need}
+            <div className="ml-market-hero-stack absolute bottom-5 right-5 hidden w-[44%] grid-cols-2 gap-3 lg:grid">
+              {heroProducts.map((product) => (
+                <button key={product.id} type="button" onClick={() => onOpen(product)} className="ml-mini-floating rounded-[1.2rem] border border-prevedello-blue/10 bg-white/92 p-3 text-left shadow-[0_16px_44px_rgba(5,13,31,0.16)] backdrop-blur transition hover:-translate-y-1">
+                  <ProductVisual product={product} />
+                  <p className="mt-2 text-[10px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</p>
+                  <h3 className="line-clamp-2 text-xs font-black leading-4 text-graphite">{product.name}</h3>
                 </button>
               ))}
             </div>
-            <div className="mt-7 grid grid-cols-3 gap-2">
-              {[["+8", "departamentos"], ["24h", "pedido armado"], ["1970", "respaldo"]].map(([value, label]) => (
-                <div key={label} className="rounded-[1rem] border border-white/10 bg-white/8 p-3">
-                  <p className="text-2xl font-black text-white">{value}</p>
-                  <p className="mt-1 text-[10px] font-black uppercase tracking-wide text-white/50">{label}</p>
+          </div>
+
+          <aside className="grid gap-4">
+            <div className="ml-market-side-card rounded-[1.5rem] bg-prevedello-blue p-5 text-white shadow-[0_22px_60px_rgba(9,59,145,0.22)]">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-white/55">Cotización rápida</p>
+              <h2 className="mt-2 text-3xl font-black uppercase leading-none">Tu pedido listo para responder.</h2>
+              <p className="mt-3 text-sm leading-6 text-white/68">Sin checkout complejo: productos + cantidades + WhatsApp.</p>
+              <button type="button" onClick={() => productsList[0] && onAdd(productsList[0])} className="mt-5 rounded-full bg-white px-5 py-3 text-xs font-black uppercase text-prevedello-blue">Probar carrito</button>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {[["+8", "Rubros"], ["1970", "Respaldo"], ["24h", "Pedido"]].map(([value, label]) => (
+                <div key={label} className="rounded-[1.1rem] bg-white p-4 text-center shadow-[0_14px_38px_rgba(5,13,31,0.08)]">
+                  <p className="text-2xl font-black text-prevedello-blue">{value}</p>
+                  <p className="mt-1 text-[10px] font-black uppercase tracking-wide text-graphite/45">{label}</p>
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="grid gap-4">
-            <div className="preve-market-promo rounded-[2rem] border border-white/12 p-5 shadow-[0_34px_100px_rgba(0,0,0,0.35)] sm:p-6">
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-white/55">Campaña destacada</p>
-              <h2 className="mt-2 max-w-lg font-heading text-4xl font-black uppercase leading-none text-white sm:text-5xl">Tu lista de materiales lista para cotizar.</h2>
-              <p className="mt-3 max-w-md text-sm leading-6 text-white/70">Sumá cemento, pintura, herramientas, sanitarios o pisos. El equipo confirma precio, stock y entrega por WhatsApp.</p>
-              <a href="#productos" className="mt-5 inline-flex rounded-full bg-prevedello-red px-5 py-3 text-sm font-black uppercase tracking-wide text-white shadow-[0_18px_42px_rgba(220,31,38,0.26)]">Ver productos</a>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {heroProducts.map((product) => (
-                <button key={product.id} type="button" onClick={() => onOpen(product)} className="preve-market-float-card rounded-[1.3rem] border border-white/12 bg-white/8 p-3 text-left transition hover:-translate-y-1 hover:border-prevedello-red/50">
-                  <ProductVisual product={product} />
-                  <p className="mt-3 text-[10px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</p>
-                  <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-extrabold text-white">{product.name}</h3>
-                </button>
-              ))}
-            </div>
-          </div>
+          </aside>
         </div>
 
-        <div className="preve-market-benefits mt-5 grid gap-3 sm:grid-cols-3">
+        <div className="ml-benefit-strip mt-4 grid gap-3 sm:grid-cols-3">
           {[
-            [Truck, "Entrega y retiro", "Coordiná logística para obra o sucursal."],
-            [ShieldCheck, "Marcas reales", "Materiales, ferretería y hogar con respaldo."],
-            [MessageCircle, "Cierre por WhatsApp", "Cotización rápida con atención humana."],
+            [Truck, "Entrega y retiro", "Coordinación para obra, casa o empresa."],
+            [ShieldCheck, "Marcas y rubros", "Materiales, ferretería, pintura, pisos y más."],
+            [MessageCircle, "WhatsApp", "Cierre humano, rápido y local."],
           ].map(([Icon, title, detail]) => {
             const BenefitIcon = Icon as typeof Truck;
             return (
-              <article key={title as string} className="rounded-[1.15rem] border border-white/10 bg-white/7 p-4">
+              <article key={title as string} className="rounded-[1.15rem] bg-white p-4 shadow-[0_12px_34px_rgba(5,13,31,0.08)]">
                 <BenefitIcon className="text-prevedello-red" size={22} />
-                <h3 className="mt-3 font-heading text-lg font-black uppercase text-white">{title as string}</h3>
-                <p className="mt-1 text-sm leading-6 text-white/58">{detail as string}</p>
+                <h3 className="mt-3 text-sm font-black uppercase text-graphite">{title as string}</h3>
+                <p className="mt-1 text-sm leading-5 text-graphite/56">{detail as string}</p>
               </article>
             );
           })}
         </div>
-      </div>
 
-      <div className="preve-market-marquee overflow-hidden border-y border-white/10 bg-white/[0.03] py-4">
-        <div className="preve-market-marquee-track flex gap-3">
-          {[...categories, ...categories].map((category, index) => {
-            const Icon = category.icon;
-            return (
-              <button key={`${category.id}-${index}`} type="button" onClick={() => onCategorySelect(category.name)} className="preve-market-marquee-item flex min-w-[240px] items-center gap-3 rounded-[1.2rem] border border-white/10 bg-white/8 px-4 py-3 text-left">
-                <span className="grid h-11 w-11 place-items-center rounded-[1rem] bg-white text-prevedello-blue"><Icon size={20} /></span>
-                <span><b className="block text-sm font-black text-white">{category.name}</b><small className="text-xs font-semibold text-white/50">Ver departamento</small></span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mb-5 flex items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-prevedello-red">Góndola principal</p>
-            <h2 className="mt-1 text-3xl font-black uppercase text-white sm:text-4xl">Productos más consultados</h2>
+        <div className="ml-department-marquee mt-5 overflow-hidden rounded-[1.35rem] bg-white py-4 shadow-[0_16px_42px_rgba(5,13,31,0.08)]">
+          <div className="ml-department-track flex gap-3 px-4">
+            {[...categories, ...categories].map((category, index) => {
+              const Icon = category.icon;
+              return (
+                <button key={category.id + '-' + index} type="button" onClick={() => onCategorySelect(category.name)} className="flex min-w-[220px] items-center gap-3 rounded-[1rem] border border-prevedello-blue/10 bg-[#f5f7fb] px-4 py-3 text-left transition hover:border-prevedello-red/35 hover:bg-white">
+                  <span className="grid h-11 w-11 place-items-center rounded-[0.9rem] bg-prevedello-blue text-white"><Icon size={20} /></span>
+                  <span><b className="block text-sm font-black text-graphite">{category.name}</b><small className="text-xs font-bold text-graphite/45">Ver departamento</small></span>
+                </button>
+              );
+            })}
           </div>
-          <a href="#productos" className="hidden rounded-full border border-white/14 px-5 py-3 text-xs font-black uppercase tracking-wide text-white/75 sm:inline-flex">Ver todo</a>
         </div>
-        <div className="preve-market-shelf grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-          {featured.map((product) => (
-            <article key={product.id} className="preve-market-shelf-card rounded-[1.2rem] border border-white/10 bg-white/8 p-3">
-              <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
-                <ProductVisual product={product} />
-                <p className="mt-3 text-[10px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</p>
-                <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-extrabold text-white">{product.name}</h3>
-                <p className="mt-2 font-mono text-base !text-white">{formatPrice(product.price)}</p>
-              </button>
-              <button type="button" onClick={() => onAdd(product)} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-black uppercase text-prevedello-blue">
-                <Plus size={14} /> Agregar
-              </button>
-            </article>
-          ))}
+
+        <div className="mt-7">
+          <div className="mb-4 flex items-end justify-between gap-3">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-prevedello-red">Góndola principal</p>
+              <h2 className="text-3xl font-black uppercase text-graphite sm:text-4xl">Más consultados</h2>
+            </div>
+            <a href="#productos" className="hidden rounded-full border border-prevedello-blue/15 bg-white px-5 py-3 text-xs font-black uppercase tracking-wide text-prevedello-blue sm:inline-flex">Ver catálogo</a>
+          </div>
+          <div className="ml-product-shelf grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
+            {featured.map((product) => (
+              <article key={product.id} className="ml-shelf-card rounded-[1.15rem] bg-white p-3 shadow-[0_14px_36px_rgba(5,13,31,0.09)] transition hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(5,13,31,0.14)]">
+                <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
+                  <ProductVisual product={product} />
+                  <p className="mt-3 text-[10px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</p>
+                  <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-black leading-5 text-graphite">{product.name}</h3>
+                  <p className="mt-2 font-mono text-base font-black text-prevedello-blue">{formatPrice(product.price)}</p>
+                </button>
+                <button type="button" onClick={() => onAdd(product)} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-prevedello-blue px-3 py-2 text-xs font-black uppercase text-white">
+                  <Plus size={14} /> Agregar
+                </button>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
 function MarketplaceHub({
   productsList,
   onAdd,
@@ -3189,7 +3202,7 @@ function MarketPage() {
                 onlyAvailable={onlyAvailable}
                 onOnlyAvailableChange={setOnlyAvailable}
               />
-              <div>
+              <div className="catalog-products-column">
                 {filteredProducts.length > 0 ? (
                   <ProductGrid productsList={filteredProducts} onAdd={addToCart} onOpen={setSelectedProduct} />
                 ) : (
