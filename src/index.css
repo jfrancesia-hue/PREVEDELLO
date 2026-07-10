@@ -417,7 +417,7 @@ a {
   }
 }
 
-/* PREVEDELLO MARKET ï¿½ Design System implementation */
+/* PREVEDELLO MARKET - Design System implementation */
 .blueprint-bg {
   background-color: var(--pv-blue);
   background-image:
@@ -969,7 +969,7 @@ a {
   background: var(--admin-bg);
 }
 
-/* Menu refinement — current production design, clearer and always visible */
+/* Menu refinement - current production design, clearer and always visible */
 .pv-site-header {
   position: sticky !important;
   top: 0 !important;
@@ -1069,7 +1069,7 @@ a {
   }
 }
 
-/* Menu refinement v2 — warmer, cleaner, more institutional */
+/* Menu refinement v2 - warmer, cleaner, more institutional */
 .pv-site-header {
   padding-top: 0.65rem !important;
   padding-left: clamp(0.75rem, 2vw, 1.35rem) !important;
@@ -1226,7 +1226,7 @@ a {
   }
 }
 
-/* Public polish pass — hero, cards, trust, footer */
+/* Public polish pass - hero, cards, trust, footer */
 #inicio {
   min-height: auto;
 }
@@ -1454,7 +1454,7 @@ a {
   }
 }
 
-/* Menu color experiment — translucent graphite */
+/* Menu color experiment - translucent graphite */
 .pv-site-header .ds-header,
 .pv-site-header.is-scrolled .ds-header {
   background:
@@ -1543,7 +1543,7 @@ a {
   opacity: 0.78 !important;
 }
 
-/* Palette trial — Prevedello blue base + graphite depth + red action + cement rest */
+/* Palette trial - Prevedello blue base + graphite depth + red action + cement rest */
 :root {
   --pv-blue-base: #093b91;
   --pv-blue-deep: #062f73;
@@ -1699,7 +1699,7 @@ body {
   }
 }
 
-/* Final wow pass — cinematic hero, stronger heritage, refined motion */
+/* Final wow pass - cinematic hero, stronger heritage, refined motion */
 .hero-cinematic,
 #inicio.blueprint-dense {
   isolation: isolate;
@@ -1945,7 +1945,7 @@ body {
   }
 }
 
-/* Internal CRM/Login redesign — aligned with Prevedello public visual system */
+/* Internal CRM/Login redesign - aligned with Prevedello public visual system */
 .internal-login-page,
 .internal-workspace-page,
 .internal-denied-page {
@@ -2183,7 +2183,7 @@ body {
 }
 
 .internal-workspace-header::after {
-  content: "deslizá";
+  content: "deslizÃ¡";
   position: absolute;
   right: 0.85rem;
   bottom: 0.55rem;
@@ -2889,7 +2889,7 @@ body {
   }
 }
 
-/* Dedicated Prevedello Market — ML-inspired, brand-custom */
+/* Dedicated Prevedello Market - ML-inspired, brand-custom */
 .preve-market-front {
   background:
     radial-gradient(circle at 18% 6%, rgba(220,31,38,0.22), transparent 24rem),
@@ -3803,5 +3803,397 @@ body {
 
   .ml-market-shell .market-product-card .btn-agregar {
     font-size: .66rem !important;
+  }
+}
+
+/* Premium ecommerce polish pass - preserves marketplace architecture */
+.ml-market-shell {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(9, 59, 145, 0.12), transparent 28rem),
+    radial-gradient(circle at 88% 8%, rgba(220, 31, 38, 0.10), transparent 24rem),
+    #eef3fb !important;
+}
+
+.ml-real-header {
+  backdrop-filter: saturate(1.2) blur(14px);
+}
+
+.ml-real-search {
+  position: relative;
+  isolation: isolate;
+}
+
+.ml-real-search::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: 1rem;
+  background: linear-gradient(90deg, rgba(255,255,255,.52), rgba(220,31,38,.42), rgba(255,255,255,.52));
+  opacity: .55;
+  filter: blur(8px);
+}
+
+.ml-trust-strip {
+  box-shadow: 0 10px 28px rgba(5,13,31,.08);
+}
+
+.ml-trust-strip span {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  white-space: nowrap;
+}
+
+.ml-trust-strip span::before {
+  content: "";
+  width: .45rem;
+  height: .45rem;
+  border-radius: 999px;
+  background: #dc1f26;
+  box-shadow: 0 0 0 4px rgba(220,31,38,.11);
+}
+
+.ml-real-banner {
+  border: 1px solid rgba(9,59,145,.08);
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.96), rgba(248,250,255,.92)),
+    radial-gradient(circle at 85% 20%, rgba(9,59,145,.14), transparent 18rem) !important;
+}
+
+.ml-real-banner::before {
+  content: "";
+  position: absolute;
+  right: -4rem;
+  top: -5rem;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 999px;
+  background: repeating-linear-gradient(135deg, rgba(9,59,145,.10) 0 8px, rgba(220,31,38,.10) 8px 12px, transparent 12px 20px);
+  opacity: .65;
+  transform: rotate(-12deg);
+}
+
+.ml-real-banner-orbit {
+  position: absolute;
+  right: 2rem;
+  bottom: -2rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 2.2rem;
+  border: 1px solid rgba(9,59,145,.12);
+  background: linear-gradient(145deg, rgba(9,59,145,.12), rgba(220,31,38,.08));
+  transform: rotate(10deg);
+}
+
+.ml-real-side {
+  position: relative;
+  overflow: hidden;
+}
+
+.ml-real-side::after {
+  content: "";
+  position: absolute;
+  width: 12rem;
+  height: 12rem;
+  right: -5rem;
+  top: -4rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.16);
+}
+
+.ml-real-services article,
+.ml-real-marquee,
+.ml-real-shelf-card,
+.ml-market-shell .market-product-card,
+.ml-catalog-zone .rounded-\[1\.25rem\].bg-white {
+  border: 1px solid rgba(9,59,145,.07) !important;
+}
+
+.ml-real-services article {
+  transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
+}
+
+.ml-real-services article:hover {
+  transform: translateY(-3px);
+  border-color: rgba(220,31,38,.22) !important;
+  box-shadow: 0 18px 42px rgba(5,13,31,.12) !important;
+}
+
+.ml-real-track,
+.ml-department-track {
+  animation: mlSlowMarquee 38s linear infinite;
+  width: max-content;
+}
+
+.ml-real-marquee:hover .ml-real-track,
+.ml-department-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes mlSlowMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.ml-real-shelf-card,
+.ml-market-shell .market-product-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.ml-real-shelf-card::before,
+.ml-market-shell .market-product-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.28) 46%, transparent 56%);
+  transform: translateX(-130%);
+  transition: transform .7s ease;
+}
+
+.ml-real-shelf-card:hover::before,
+.ml-market-shell .market-product-card:hover::before {
+  transform: translateX(130%);
+}
+
+.market-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(9,59,145,.12);
+  background: #eef3fb;
+  padding: .22rem .48rem;
+  color: rgba(7,23,47,.62);
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.market-badge-primary {
+  border-color: rgba(220,31,38,.18);
+  background: rgba(220,31,38,.08);
+  color: #dc1f26;
+}
+
+.ml-market-shell .market-product-card {
+  background: linear-gradient(180deg, #fff, #fbfcff) !important;
+  box-shadow: 0 10px 26px rgba(5,13,31,.075) !important;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease !important;
+}
+
+.ml-market-shell .market-product-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(220,31,38,.22) !important;
+  box-shadow: 0 22px 48px rgba(5,13,31,.14) !important;
+}
+
+.ml-market-shell .market-product-card h3,
+.ml-market-shell .market-product-card p,
+.ml-market-shell .market-product-card span {
+  color: var(--pv-graphite, #07172f);
+}
+
+.ml-market-shell .market-product-card .availability-badge {
+  color: rgba(7,23,47,.62) !important;
+}
+
+.ml-market-shell .market-product-card .btn-agregar {
+  background: linear-gradient(135deg, #093b91, #0b4db9) !important;
+  box-shadow: 0 12px 24px rgba(9,59,145,.18) !important;
+}
+
+.ml-market-shell .market-product-card .btn-agregar:hover {
+  background: linear-gradient(135deg, #dc1f26, #f04444) !important;
+}
+
+.ml-market-shell .market-product-card img,
+.ml-market-shell .ml-real-shelf-card img {
+  filter: saturate(.96) contrast(1.03);
+}
+
+.ml-catalog-zone > div > .mb-5 {
+  position: relative;
+  padding: 1rem;
+  border-radius: 1.1rem;
+  background: rgba(255,255,255,.76);
+  border: 1px solid rgba(9,59,145,.07);
+  box-shadow: 0 12px 34px rgba(5,13,31,.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ml-real-track,
+  .ml-department-track {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .ml-trust-strip {
+    padding-block: .45rem !important;
+  }
+
+  .ml-trust-strip span {
+    font-size: .62rem;
+    padding: .35rem .55rem !important;
+  }
+
+  .ml-real-banner::before,
+  .ml-real-banner-orbit {
+    display: none;
+  }
+
+  .ml-real-track,
+  .ml-department-track {
+    animation: none !important;
+  }
+
+  .market-badge {
+    font-size: .55rem;
+    padding: .18rem .35rem;
+  }
+
+  .ml-catalog-zone > div > .mb-5 {
+    padding: .8rem;
+  }
+}
+
+/* QA premium fixes: production copy, legibility, mobile rails */
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\]::after,
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(5,13,31,0.02) 0%, rgba(5,13,31,0.10) 46%, rgba(5,13,31,0.70) 100%);
+}
+
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\] > .absolute.inset-x-0.bottom-0,
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\] > .absolute.inset-x-0.bottom-0 {
+  z-index: 2;
+  text-shadow: 0 2px 10px rgba(0,0,0,.45);
+}
+
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\] > span,
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\] > span {
+  z-index: 3;
+}
+
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\] img,
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\] img {
+  filter: saturate(.98) contrast(1.05) brightness(.98);
+}
+
+.ml-real-marquee,
+.ml-real-shelf,
+.ml-real-header .overflow-x-auto,
+.ml-trust-strip .overflow-x-auto {
+  scroll-padding-inline: 1rem;
+}
+
+.ml-real-marquee::before,
+.ml-real-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3rem;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.ml-real-marquee {
+  position: relative;
+}
+
+.ml-real-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, #fff, transparent);
+}
+
+.ml-real-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, #fff, transparent);
+}
+
+@media (max-width: 767px) {
+  .ml-real-header .overflow-x-auto,
+  .ml-trust-strip .overflow-x-auto,
+  .ml-real-marquee,
+  .ml-real-shelf {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
+  }
+
+  .ml-real-marquee::before,
+  .ml-real-marquee::after {
+    display: none;
+  }
+
+  .ml-real-track {
+    width: auto !important;
+    transform: none !important;
+  }
+
+  .ml-real-track > button:first-child,
+  .ml-real-shelf-card:first-child,
+  .ml-real-header .overflow-x-auto > *:first-child,
+  .ml-trust-strip .overflow-x-auto > *:first-child {
+    margin-left: .75rem;
+  }
+
+  .ml-real-track > button:last-child,
+  .ml-real-shelf-card:last-child,
+  .ml-real-header .overflow-x-auto > *:last-child,
+  .ml-trust-strip .overflow-x-auto > *:last-child {
+    margin-right: .75rem;
+  }
+
+  .ml-market-shell .market-product-card .relative.aspect-\[4\/3\] > .absolute.inset-x-0.bottom-0 {
+    padding: .65rem !important;
+  }
+
+  .ml-market-shell .market-product-card .relative.aspect-\[4\/3\] > .absolute.inset-x-0.bottom-0 p:first-child {
+    font-size: .84rem !important;
+    line-height: 1rem !important;
+  }
+
+  .ml-market-shell .market-product-card .relative.aspect-\[4\/3\] > .absolute.inset-x-0.bottom-0 p:last-child {
+    display: none;
+  }
+}
+
+/* Final legibility gate: ecommerce cards must not depend on text over product images */
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\] > .absolute.inset-x-0.bottom-0,
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\] > .absolute.inset-x-0.bottom-0 {
+  display: none !important;
+}
+
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\]::after,
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\]::after {
+  background: linear-gradient(180deg, rgba(5,13,31,0.00), rgba(5,13,31,0.08)) !important;
+}
+
+.ml-market-shell .market-product-card .relative.aspect-\[4\/3\],
+.ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\] {
+  background: #f4f7fb !important;
+}
+
+.ml-market-shell .market-product-card h3,
+.ml-market-shell .ml-real-shelf-card h3 {
+  color: #07172f !important;
+}
+
+@media (max-width: 767px) {
+  .ml-market-shell .market-product-card h3 {
+    font-size: .86rem !important;
+    line-height: 1.15rem !important;
+    min-height: 2.3rem !important;
+  }
+
+  .ml-market-shell .market-product-card .px-1.pb-2.pt-5 {
+    padding-top: .58rem !important;
   }
 }

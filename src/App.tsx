@@ -429,7 +429,7 @@ function HeroSection({
                 <source media="(max-width: 767px)" srcSet="/assets/official-portada.png" />
                 <img
                   src="/assets/official-portada.png"
-                  alt="Prevedello — construyendo un futuro sólido"
+                  alt="Prevedello construyendo un futuro sólido"
                   className="aspect-[16/10] w-full object-cover object-center"
                   loading="eager"
                   fetchPriority="high"
@@ -484,7 +484,7 @@ function HeroSection({
                 <img
                   ref={logoRef}
                   src="/assets/official-portada.png"
-                  alt="Prevedello — construyendo un futuro sólido"
+                  alt="Prevedello construyendo un futuro sólido"
                   className="h-full min-h-[480px] w-full object-cover object-center"
                   loading="eager"
                   fetchPriority="high"
@@ -587,18 +587,25 @@ function MarketCommerceHero({
             ))}
           </div>
         </div>
+        <div className="ml-trust-strip border-t border-white/10 bg-white px-4 py-2 text-prevedello-blue sm:px-6 lg:px-8">
+          <div className="mx-auto flex max-w-7xl gap-3 overflow-x-auto text-xs font-black uppercase tracking-wide scrollbar-none lg:justify-center">
+            {["Retiro en sucursal", "Entrega coordinada", "Cotización por WhatsApp", "Atención de mostrador", "Marcas reconocidas"].map((item) => (
+              <span key={item} className="shrink-0 rounded-full bg-[#eef3fb] px-3 py-1.5">{item}</span>
+            ))}
+          </div>
+        </div>
       </header>
 
       <div className="ml-real-body mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
         <div className="ml-real-hero grid gap-4 lg:grid-cols-[1.25fr_0.75fr]">
           <div className="ml-real-banner relative overflow-hidden rounded-[1.45rem] bg-white p-5 shadow-[0_16px_44px_rgba(5,13,31,0.10)] sm:p-7 lg:p-8">
             <div className="relative z-10 max-w-3xl">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-prevedello-red">Prevedello Market</p>
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-prevedello-red">Prevedello Market · Corralón online</p>
               <h1 className="ml-real-title mt-2 font-heading font-black uppercase leading-[0.9] tracking-[-0.065em] text-prevedello-blue">
                 Comprá materiales como en una tienda grande.
               </h1>
               <p className="mt-4 max-w-2xl text-base font-semibold leading-7 text-graphite/68 sm:text-lg">
-                Catálogo por rubros, productos destacados, filtros, carrito de cotización y cierre por WhatsApp con atención Prevedello.
+                Catálogo por rubros, productos destacados, filtros, carrito de cotización y cierre por WhatsApp con atención Prevedello. Pensado para comprar rápido sin perder asesoramiento.
               </p>
               <div className="mt-5 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                 {quickNeeds.map((need) => (
@@ -1015,7 +1022,7 @@ function ProductVisual({ product }: { product: Product }) {
         )}
         <div className="absolute inset-x-0 bottom-0 p-4">
           <p className="text-lg font-extrabold leading-5 text-white drop-shadow">{product.category}</p>
-          <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-white/72">Foto referencial para cotización</p>
+          <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-white/82">Imagen de referencia · asesoramiento Prevedello</p>
         </div>
       </div>
     );
@@ -1054,6 +1061,10 @@ function ProductCard({
             <div>
               <p className="text-xs font-bold uppercase text-prevedello-red">{product.brand}</p>
               <h3 className="mt-1 text-xl font-extrabold leading-6 text-white">{product.name}</h3>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                <span className="market-badge market-badge-primary">Cotizable</span>
+                <span className="market-badge">Mostrador</span>
+              </div>
             </div>
             <span className="shrink-0 rounded-[var(--radius-badge)] border border-white/10 bg-white/8 px-3 py-1 text-xs font-bold text-[var(--pv-text-secondary)]">
               {product.unit}
@@ -1069,6 +1080,7 @@ function ProductCard({
           <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
             <div>
               <p className="font-mono text-xl font-medium">{formatPrice(product.price)}</p>
+              <p className="mt-1 text-[11px] font-black uppercase tracking-wide text-graphite/45">Precio sujeto a confirmación</p>
               <p className={`availability-badge mt-1 ${getAvailabilityClass(product.availability)}`}>
                 <span className="dot" />
                 {product.availability}
@@ -3140,7 +3152,7 @@ function MarketPage() {
                 <h2 className="mt-1 text-3xl font-black uppercase text-graphite sm:text-5xl">Productos para cotizar</h2>
               </div>
               <p className="max-w-xl text-sm font-semibold leading-6 text-graphite/58">
-                {catalogStatus} · Fuente: {catalogSource === "supabase" ? "Supabase" : "local"}
+                Catálogo orientativo para armar pedido y recibir confirmación de precio, stock y entrega por WhatsApp.
               </p>
             </div>
             <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
@@ -3289,3 +3301,4 @@ export default function App() {
     </Routes>
   );
 }
+
