@@ -20,8 +20,11 @@ import {
   FileSpreadsheet,
   LogIn,
   ListTodo,
+  MapPin,
   MessageCircle,
   Minus,
+  Phone,
+  Clock3,
   PackageCheck,
   Plus,
   RotateCcw,
@@ -2378,44 +2381,92 @@ function AdminCrmPanel({
 }
 
 function PublicFooter() {
+  const footerRubros = categories.slice(0, 8);
+  const phones = ["(0383) 443-7361", "(0383) 445-7063"];
+
   return (
-    <footer className="pv-footer premium-reveal px-4 py-12 text-[var(--pv-text-secondary)] sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <LogoMark compact />
-          <p className="mt-4 max-w-xs text-sm leading-6">
-            Corralón, ferretería y hogar. Catamarca desde 1970.
-          </p>
-        </div>
-        <div>
-          <h3 className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-white">Rubros</h3>
-          <div className="mt-4 grid gap-2 text-sm">
-            {categories.slice(0, 6).map((category) => (
-              <a key={category.id} href="#rubros" className="transition hover:text-white">
-                {category.name}
+    <footer className="pv-footer footer-premium premium-reveal px-4 py-14 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="footer-premium-panel grid gap-8 rounded-[1.6rem] border border-white/12 bg-[#061a3d] p-5 shadow-[0_28px_80px_rgba(5,13,31,0.32)] sm:p-7 lg:grid-cols-[1.05fr_0.95fr_1fr_0.95fr] lg:p-8">
+          <div className="footer-brand-card rounded-[1.2rem] bg-white p-5 text-graphite shadow-[0_18px_40px_rgba(0,0,0,0.16)]">
+            <LogoMark compact />
+            <p className="mt-4 text-sm font-semibold leading-6 text-graphite/72">
+              Corralón, ferretería y hogar en Catamarca. Empresa familiar vinculada a la construcción local desde 1970.
+            </p>
+            <div className="mt-5 grid gap-2 text-xs font-black uppercase tracking-wide text-prevedello-blue">
+              <span className="rounded-full bg-[#eef3fb] px-3 py-2">Materiales de construcción</span>
+              <span className="rounded-full bg-[#fff1f1] px-3 py-2 text-prevedello-red">Ferretería · hogar · terminaciones</span>
+            </div>
+          </div>
+
+          <div className="footer-section">
+            <h3 className="footer-title">Rubros del market</h3>
+            <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+              {footerRubros.map((category) => {
+                const Icon = category.icon;
+                return (
+                  <a key={category.id} href="#productos" className="footer-rubro-link group flex items-center gap-3 rounded-[0.85rem] border border-white/10 bg-white/8 px-3 py-2.5 text-sm font-bold text-white transition hover:border-prevedello-red/45 hover:bg-white/12">
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-[0.65rem] bg-white text-prevedello-blue transition group-hover:text-prevedello-red">
+                      <Icon size={16} />
+                    </span>
+                    <span>{category.name}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="footer-section">
+            <h3 className="footer-title">Datos de atención</h3>
+            <div className="mt-4 grid gap-3 text-sm">
+              <a href={makeWhatsAppHref([], defaultQuoteForm)} target="_blank" rel="noreferrer" className="footer-info-card footer-whatsapp-card">
+                <MessageCircle size={18} />
+                <span>
+                  <b>WhatsApp de atención</b>
+                  <small>Enviar consulta o pedido para cotizar</small>
+                </span>
               </a>
-            ))}
+              <div className="footer-info-card">
+                <MapPin size={18} />
+                <span>
+                  <b>Av. Dr. Antonio del Pino 1183</b>
+                  <small>San Fernando del Valle de Catamarca</small>
+                </span>
+              </div>
+              <div className="footer-info-card">
+                <Phone size={18} />
+                <span>
+                  <b>{phones.join(" / ")}</b>
+                  <small>Teléfonos publicados de atención comercial</small>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer-section">
+            <h3 className="footer-title">Horarios y compra</h3>
+            <div className="mt-4 grid gap-3 text-sm">
+              <div className="footer-info-card">
+                <Clock3 size={18} />
+                <span>
+                  <b>Lun. a vie. · 7:30 a 17:30</b>
+                  <small>Sábados · 7:30 a 13:00</small>
+                </span>
+              </div>
+              <div className="rounded-[1rem] border border-prevedello-red/30 bg-prevedello-red/12 p-4 text-sm font-semibold leading-6 text-white">
+                El catálogo es orientativo: precio final, stock, entrega y formas de pago los confirma Prevedello al responder la cotización.
+              </div>
+              <a href="#productos" className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-xs font-black uppercase tracking-wide text-prevedello-blue transition hover:bg-prevedello-red hover:text-white">
+                Ver productos
+              </a>
+            </div>
           </div>
         </div>
-        <div>
-          <h3 className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-white">Contacto</h3>
-          <div className="mt-4 grid gap-2 text-sm">
-            <a href={makeWhatsAppHref([], defaultQuoteForm)} target="_blank" rel="noreferrer" className="transition hover:text-white">
-              WhatsApp de atención
-            </a>
-            <span>Catamarca, Argentina</span>
-            <span>Atención humana local</span>
-          </div>
+
+        <div className="mt-6 flex flex-col gap-2 border-t border-white/12 pt-5 text-xs font-semibold text-white/68 sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2026 Prevedello Market. Plataforma de cotización comercial.</p>
+          <p>Datos públicos de atención sujetos a confirmación por Prevedello.</p>
         </div>
-        <div>
-          <h3 className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-white">Horarios</h3>
-          <p className="mt-4 text-sm leading-6">
-            Consultas y cotizaciones por WhatsApp. El precio final lo confirma Prevedello.
-          </p>
-        </div>
-      </div>
-      <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-5 text-xs text-[var(--pv-text-muted)]">
-        © 2026 Prevedello Market. Plataforma de cotización comercial.
       </div>
     </footer>
   );
