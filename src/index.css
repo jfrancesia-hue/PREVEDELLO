@@ -1542,3 +1542,159 @@ a {
   background: linear-gradient(90deg, transparent, rgba(220,31,38,0.95), rgba(255,255,255,0.20), transparent) !important;
   opacity: 0.78 !important;
 }
+
+/* Palette trial — Prevedello blue base + graphite depth + red action + cement rest */
+:root {
+  --pv-blue-base: #093b91;
+  --pv-blue-deep: #062f73;
+  --pv-graphite: #07172f;
+  --pv-graphite-deep: #050d1f;
+  --pv-cement: #f4f0e8;
+  --pv-cement-2: #e9e1d5;
+}
+
+body {
+  background: var(--pv-graphite-deep) !important;
+}
+
+#inicio.hero-cinematic,
+.hero-cinematic {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(220,31,38,0.18), transparent 20rem),
+    radial-gradient(circle at 82% 16%, rgba(255,255,255,0.13), transparent 28rem),
+    linear-gradient(135deg, var(--pv-blue-base) 0%, var(--pv-blue-deep) 45%, var(--pv-graphite) 100%) !important;
+}
+
+#inicio .hero-visual-card,
+#inicio .mobile-hero-photo {
+  box-shadow: 0 38px 90px rgba(5,13,31,0.36) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+}
+
+.hero-search-console {
+  background: rgba(7,23,47,0.26) !important;
+  border-color: rgba(255,255,255,0.20) !important;
+}
+
+.metric-tile {
+  background: rgba(7,23,47,0.22) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+}
+
+#rubros.blueprint-bg,
+#calculadoras.blueprint-bg,
+.catalog-premium-band,
+#pedido.premium-dark-band {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(220,31,38,0.13), transparent 23rem),
+    radial-gradient(circle at 88% 12%, rgba(9,59,145,0.35), transparent 26rem),
+    linear-gradient(180deg, var(--pv-blue-base) 0%, var(--pv-blue-deep) 38%, var(--pv-graphite) 100%) !important;
+}
+
+.rubro-card,
+.product-card,
+.calculator-card,
+.service-tile,
+.heritage-service-card,
+#pedido .ds-card {
+  background:
+    linear-gradient(180deg, rgba(7,23,47,0.68), rgba(5,13,31,0.54)) !important;
+  border-color: rgba(255,255,255,0.13) !important;
+}
+
+.rubro-card:hover,
+.product-card:hover,
+.service-tile:hover,
+#pedido .ds-card:hover {
+  border-color: rgba(220,31,38,0.38) !important;
+  box-shadow: 0 28px 80px rgba(5,13,31,0.34), 0 0 0 1px rgba(220,31,38,0.08) !important;
+}
+
+#productos.section-anchor {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(9,59,145,0.10), transparent 22rem),
+    linear-gradient(180deg, var(--pv-cement) 0%, #fbfaf7 48%, var(--pv-cement-2) 100%) !important;
+  color: var(--pv-graphite) !important;
+}
+
+#productos .section-kicker,
+#productos h2,
+#productos p {
+  color: var(--pv-graphite) !important;
+}
+
+#productos .section-kicker {
+  color: var(--pv-red) !important;
+}
+
+#productos .filter-panel {
+  background: rgba(7,23,47,0.92) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  box-shadow: 0 24px 70px rgba(5,13,31,0.22) !important;
+}
+
+#productos .product-card {
+  background: linear-gradient(180deg, #0a1d3a, #07172f) !important;
+}
+
+.enterprise-band {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(9,59,145,0.18), transparent 25rem),
+    linear-gradient(180deg, var(--pv-cement) 0%, #f8f5ef 100%) !important;
+  color: var(--pv-graphite) !important;
+}
+
+.enterprise-panel {
+  background:
+    radial-gradient(circle at 0% 18%, rgba(220,31,38,0.10), transparent 20rem),
+    linear-gradient(135deg, rgba(255,255,255,0.92), rgba(244,240,232,0.84)) !important;
+  border-color: rgba(9,59,145,0.12) !important;
+  color: var(--pv-graphite) !important;
+  box-shadow: 0 30px 80px rgba(5,13,31,0.14) !important;
+}
+
+.enterprise-panel h2,
+.enterprise-panel h3 {
+  color: var(--pv-graphite) !important;
+}
+
+.enterprise-panel p {
+  color: rgba(7,23,47,0.68) !important;
+}
+
+.enterprise-panel .service-tile {
+  background: rgba(255,255,255,0.70) !important;
+  border-color: rgba(9,59,145,0.12) !important;
+  box-shadow: 0 20px 50px rgba(5,13,31,0.10) !important;
+}
+
+.enterprise-panel .service-tile p {
+  color: rgba(7,23,47,0.62) !important;
+}
+
+.pv-footer {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(9,59,145,0.24), transparent 22rem),
+    radial-gradient(circle at 85% 12%, rgba(220,31,38,0.13), transparent 20rem),
+    linear-gradient(180deg, var(--pv-graphite), var(--pv-graphite-deep)) !important;
+}
+
+.ds-button-red,
+.btn-agregar,
+.pv-site-header button[aria-label="Abrir pedido"] {
+  background: linear-gradient(135deg, var(--pv-red), #b9181f) !important;
+}
+
+.ds-button-whatsapp {
+  background: linear-gradient(135deg, #25d366, #168f48) !important;
+}
+
+@media (max-width: 767px) {
+  #productos.section-anchor {
+    background: linear-gradient(180deg, var(--pv-cement) 0%, #f9f6f0 100%) !important;
+  }
+
+  .enterprise-panel {
+    border-radius: 1.45rem !important;
+  }
+}
