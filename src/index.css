@@ -2888,3 +2888,398 @@ body {
     z-index: 80 !important;
   }
 }
+
+/* Dedicated Prevedello Market — ML-inspired, brand-custom */
+.preve-market-front {
+  background:
+    radial-gradient(circle at 18% 6%, rgba(220,31,38,0.22), transparent 24rem),
+    radial-gradient(circle at 82% 0%, rgba(9,59,145,0.38), transparent 32rem),
+    linear-gradient(180deg, #05070b 0%, #07172f 52%, #050d1f 100%);
+  isolation: isolate;
+}
+
+.preve-market-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: linear-gradient(180deg, black, transparent 82%);
+  opacity: .45;
+}
+
+.preve-market-hero-card,
+.preve-market-promo {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.045)),
+    radial-gradient(circle at 90% 10%, rgba(220,31,38,0.20), transparent 18rem);
+  backdrop-filter: blur(18px);
+}
+
+.preve-market-hero-card::after,
+.preve-market-promo::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -42% auto;
+  width: 58%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: radial-gradient(circle, rgba(220,31,38,0.16), transparent 62%);
+}
+
+.preve-market-title {
+  font-size: clamp(3.2rem, 9.2vw, 8.8rem);
+  text-wrap: balance;
+  background: linear-gradient(180deg, #ffffff 0%, #b9c8d8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.preve-market-search .ds-input {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.preve-market-promo {
+  min-height: 21rem;
+  background:
+    linear-gradient(135deg, rgba(9,59,145,0.78), rgba(5,13,31,0.92)),
+    url('/assets/official-rubros.png') center/cover;
+}
+
+.preve-market-float-card,
+.preve-market-shelf-card,
+.preve-market-marquee-item,
+.preve-market-benefits article {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 18px 45px rgba(0,0,0,0.20);
+}
+
+.preve-market-marquee-track {
+  width: max-content;
+  animation: preveMarquee 38s linear infinite;
+  will-change: transform;
+}
+
+.preve-market-marquee:hover .preve-market-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes preveMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.preve-market-shelf-card {
+  transition: transform .22s ease, border-color .22s ease, background .22s ease;
+}
+
+.preve-market-shelf-card:hover,
+.preve-market-float-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(220,31,38,0.46);
+  background: rgba(255,255,255,0.11);
+}
+
+.preve-market-shelf-card .product-visual,
+.preve-market-float-card .product-visual,
+.preve-market-shelf-card [class*="aspect-"],
+.preve-market-float-card [class*="aspect-"] {
+  max-height: 9.25rem;
+}
+
+.preve-market-front + main #rubros {
+  padding-top: 4.25rem !important;
+}
+
+@media (max-width: 767px) {
+  .preve-market-front .mx-auto.max-w-7xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .preve-market-navline {
+    justify-content: flex-start !important;
+    margin-top: .3rem;
+  }
+
+  .preve-market-hero-card,
+  .preve-market-promo {
+    border-radius: 1.35rem !important;
+    padding: 1.1rem !important;
+  }
+
+  .preve-market-title {
+    font-size: clamp(2.75rem, 15vw, 4.4rem);
+    letter-spacing: -0.08em;
+  }
+
+  .preve-market-search {
+    margin-top: 1rem !important;
+  }
+
+  .preve-market-promo {
+    min-height: 18rem;
+  }
+
+  .preve-market-shelf {
+    display: flex !important;
+    gap: .85rem;
+    overflow-x: auto;
+    padding-bottom: .65rem;
+    scroll-snap-type: x proximity;
+  }
+
+  .preve-market-shelf-card {
+    min-width: 12.5rem;
+    scroll-snap-align: start;
+  }
+
+  .preve-market-benefits {
+    grid-template-columns: 1fr !important;
+  }
+
+  .preve-market-front {
+    padding-bottom: 2rem;
+  }
+}
+
+/* Market v2 QA fixes */
+.preve-market-front {
+  padding-top: 5.75rem !important;
+}
+
+.preve-market-front + main #productos,
+.preve-market-front + main #rubros,
+.preve-market-front + main #pedido {
+  scroll-margin-top: 8.5rem !important;
+}
+
+.catalog-section .product-card,
+.catalog-section .product-card *,
+.preve-market-front .product-card,
+.preve-market-front .product-card *,
+.preve-market-shelf-card,
+.preve-market-shelf-card *,
+.preve-market-float-card,
+.preve-market-float-card * {
+  color: #ffffff !important;
+}
+
+.catalog-section .product-card p,
+.catalog-section .product-card .min-h-12,
+.catalog-section .product-card [class*="text-white/"],
+.catalog-section .product-card [class*="text-zinc"],
+.preve-market-shelf-card [class*="text-white/"],
+.preve-market-float-card [class*="text-white/"] {
+  color: rgba(246,249,255,0.88) !important;
+}
+
+.catalog-section .product-card .font-mono,
+.preve-market-shelf-card .font-mono {
+  color: #ffffff !important;
+}
+
+.catalog-section .product-card .availability-badge,
+.catalog-section .product-card .availability-badge * {
+  color: #b9ffd2 !important;
+}
+
+@media (max-width: 767px) {
+  .preve-market-front {
+    padding-top: 5.2rem !important;
+    padding-bottom: 5rem !important;
+  }
+
+  .preve-market-title {
+    font-size: clamp(2.35rem, 12vw, 3.5rem) !important;
+    line-height: .94 !important;
+    letter-spacing: -0.065em !important;
+  }
+
+  .preve-market-navline {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    contain: inline-size;
+  }
+
+  .preve-market-hero-grid,
+  .preve-market-benefits,
+  .preve-market-front .grid {
+    max-width: 100% !important;
+  }
+
+  .preve-market-shelf {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+  }
+
+  .preve-market-shelf-card {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .preve-market-marquee {
+    overflow: hidden !important;
+  }
+
+  .preve-market-marquee-item {
+    min-width: 210px !important;
+  }
+
+  .catalog-section,
+  #productos.catalog-section,
+  .catalog-section .grid.gap-7,
+  .catalog-section .grid.items-stretch,
+  .filter-panel {
+    padding-bottom: 16rem !important;
+  }
+
+  .catalog-section .product-card:last-child {
+    margin-bottom: 10rem !important;
+  }
+}
+
+/* Market catalog cards: Mercado Libre-like readable cards */
+.catalog-section .product-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(9,59,145,0.10) !important;
+  color: var(--pv-graphite, #07172f) !important;
+  box-shadow: 0 18px 45px rgba(5,13,31,0.16) !important;
+}
+
+.catalog-section .product-card h3,
+.catalog-section .product-card p,
+.catalog-section .product-card div,
+.catalog-section .product-card span:not(.dot),
+.catalog-section .product-card button:not(.ds-button):not(.btn-agregar),
+.catalog-section .product-card a:not(.ds-button) {
+  color: var(--pv-graphite, #07172f) !important;
+}
+
+.catalog-section .product-card .text-prevedello-red,
+.catalog-section .product-card p.text-prevedello-red {
+  color: var(--pv-red, #dc1f26) !important;
+}
+
+.catalog-section .product-card .min-h-12,
+.catalog-section .product-card [class*="text-white/"],
+.catalog-section .product-card [class*="text-zinc"],
+.catalog-section .product-card .text-\[var\(--pv-text-secondary\)\] {
+  color: rgba(7,23,47,0.68) !important;
+}
+
+.catalog-section .product-card .font-mono {
+  color: var(--pv-graphite, #07172f) !important;
+  font-weight: 900 !important;
+}
+
+.catalog-section .product-card .availability-badge,
+.catalog-section .product-card .availability-badge span:not(.dot) {
+  color: #047857 !important;
+}
+
+.catalog-section .product-card .rounded-\[var\(--radius-badge\)\],
+.catalog-section .product-card [class*="bg-white/8"] {
+  background: rgba(9,59,145,0.06) !important;
+  border-color: rgba(9,59,145,0.10) !important;
+  color: rgba(7,23,47,0.70) !important;
+}
+
+.catalog-section .product-card .btn-agregar,
+.catalog-section .product-card .ds-button {
+  color: #ffffff !important;
+}
+
+@media (max-width: 767px) {
+  .catalog-section,
+  #productos.catalog-section,
+  .catalog-section .grid.gap-7,
+  .catalog-section .grid.items-stretch,
+  .filter-panel {
+    padding-bottom: 5rem !important;
+  }
+}
+
+/* Dedicated product card, no inherited dark blueprint */
+.market-product-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(9,59,145,0.12) !important;
+  border-radius: var(--radius-card, 1.25rem) !important;
+  color: var(--pv-graphite, #07172f) !important;
+  box-shadow: 0 18px 45px rgba(5,13,31,0.16) !important;
+}
+
+.market-product-card * {
+  color: inherit;
+}
+
+.market-product-card h3,
+.market-product-card .font-mono {
+  color: var(--pv-graphite, #07172f) !important;
+}
+
+.market-product-card .font-mono {
+  font-weight: 900 !important;
+}
+
+.market-product-card p,
+.market-product-card span:not(.dot) {
+  color: rgba(7,23,47,0.68) !important;
+}
+
+.market-product-card .text-prevedello-red,
+.market-product-card p.text-prevedello-red {
+  color: var(--pv-red, #dc1f26) !important;
+}
+
+.market-product-card .availability-badge,
+.market-product-card .availability-badge span:not(.dot) {
+  color: #047857 !important;
+}
+
+.market-product-card .btn-agregar,
+.market-product-card .btn-agregar *,
+.market-product-card .ds-button,
+.market-product-card .ds-button * {
+  color: #ffffff !important;
+}
+
+.market-product-card a[aria-label*="WhatsApp"],
+.market-product-card a[aria-label*="WhatsApp"] * {
+  color: var(--pv-whatsapp, #25d366) !important;
+}
+
+/* Absolute final override over legacy #productos product-card rule */
+#productos .market-product-card {
+  background: #ffffff !important;
+  color: var(--pv-graphite, #07172f) !important;
+  border: 1px solid rgba(9,59,145,0.12) !important;
+}
+
+#productos .market-product-card h3,
+#productos .market-product-card .font-mono {
+  color: var(--pv-graphite, #07172f) !important;
+}
+
+#productos .market-product-card p,
+#productos .market-product-card span:not(.dot) {
+  color: rgba(7,23,47,0.70) !important;
+}
+
+#productos .market-product-card .text-prevedello-red,
+#productos .market-product-card p.text-prevedello-red {
+  color: var(--pv-red, #dc1f26) !important;
+}
+
+#productos .market-product-card .btn-agregar,
+#productos .market-product-card .btn-agregar * {
+  color: #fff !important;
+}

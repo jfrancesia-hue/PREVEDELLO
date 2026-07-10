@@ -28,10 +28,12 @@ import {
   Save,
   Search,
   Settings,
+  ShieldCheck,
   ShoppingCart,
   SlidersHorizontal,
   Sparkles,
   Tags,
+  Truck,
   Upload,
   Users,
   X,
@@ -544,6 +546,144 @@ function HeroSection({
   );
 }
 
+function MarketCommerceHero({
+  query,
+  onQueryChange,
+  productsList,
+  onAdd,
+  onOpen,
+  onCategorySelect,
+}: {
+  query: string;
+  onQueryChange: (value: string) => void;
+  productsList: Product[];
+  onAdd: (product: Product) => void;
+  onOpen: (product: Product) => void;
+  onCategorySelect: (categoryName: string) => void;
+}) {
+  const featured = productsList.slice(0, 6);
+  const heroProducts = productsList.slice(0, 3);
+
+  return (
+    <section id="inicio" className="preve-market-front relative overflow-hidden text-white">
+      <div className="preve-market-glow" />
+      <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 lg:px-8 lg:pb-14 lg:pt-10">
+        <div className="preve-market-navline mb-5 flex gap-2 overflow-x-auto pb-2 text-xs font-black uppercase tracking-[0.18em] text-white/70 scrollbar-none lg:justify-center">
+          {["Ofertas de obra", "Ferretería", "Pinturas", "Herramientas", "Sanitarios", "Pisos", "Empresas"].map((item) => (
+            <a key={item} href="#productos" className="shrink-0 rounded-full border border-white/12 bg-white/7 px-4 py-2 transition hover:border-prevedello-red/55 hover:bg-white/12">
+              {item}
+            </a>
+          ))}
+        </div>
+
+        <div className="preve-market-hero-grid grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
+          <div className="preve-market-hero-card rounded-[2rem] border border-white/12 p-5 shadow-[0_34px_100px_rgba(0,0,0,0.42)] sm:p-7 lg:p-9">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-prevedello-red">Prevedello Market</p>
+            <h1 className="preve-market-title mt-3 font-heading font-black uppercase leading-[0.88] tracking-[-0.07em] text-white">
+              Comprá para obra, casa y empresa.
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--pv-text-secondary)] sm:text-lg">
+              Un catálogo grande como marketplace, personalizado para corralón: buscá, filtrá, agregá a cotización y cerrá con atención humana.
+            </p>
+            <div className="preve-market-search mt-6 rounded-[1.35rem] border border-white/14 bg-white p-2 shadow-[0_20px_55px_rgba(0,0,0,0.24)]">
+              <SearchBar value={query} onChange={onQueryChange} />
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {quickNeeds.map((need) => (
+                <button key={need} type="button" onClick={() => onQueryChange(need)} className="rounded-full border border-white/12 bg-white/8 px-3 py-2 text-xs font-extrabold text-white/78 transition hover:border-prevedello-red/50 hover:bg-white/12">
+                  {need}
+                </button>
+              ))}
+            </div>
+            <div className="mt-7 grid grid-cols-3 gap-2">
+              {[["+8", "departamentos"], ["24h", "pedido armado"], ["1970", "respaldo"]].map(([value, label]) => (
+                <div key={label} className="rounded-[1rem] border border-white/10 bg-white/8 p-3">
+                  <p className="text-2xl font-black text-white">{value}</p>
+                  <p className="mt-1 text-[10px] font-black uppercase tracking-wide text-white/50">{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-4">
+            <div className="preve-market-promo rounded-[2rem] border border-white/12 p-5 shadow-[0_34px_100px_rgba(0,0,0,0.35)] sm:p-6">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-white/55">Campaña destacada</p>
+              <h2 className="mt-2 max-w-lg font-heading text-4xl font-black uppercase leading-none text-white sm:text-5xl">Tu lista de materiales lista para cotizar.</h2>
+              <p className="mt-3 max-w-md text-sm leading-6 text-white/70">Sumá cemento, pintura, herramientas, sanitarios o pisos. El equipo confirma precio, stock y entrega por WhatsApp.</p>
+              <a href="#productos" className="mt-5 inline-flex rounded-full bg-prevedello-red px-5 py-3 text-sm font-black uppercase tracking-wide text-white shadow-[0_18px_42px_rgba(220,31,38,0.26)]">Ver productos</a>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {heroProducts.map((product) => (
+                <button key={product.id} type="button" onClick={() => onOpen(product)} className="preve-market-float-card rounded-[1.3rem] border border-white/12 bg-white/8 p-3 text-left transition hover:-translate-y-1 hover:border-prevedello-red/50">
+                  <ProductVisual product={product} />
+                  <p className="mt-3 text-[10px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</p>
+                  <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-extrabold text-white">{product.name}</h3>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="preve-market-benefits mt-5 grid gap-3 sm:grid-cols-3">
+          {[
+            [Truck, "Entrega y retiro", "Coordiná logística para obra o sucursal."],
+            [ShieldCheck, "Marcas reales", "Materiales, ferretería y hogar con respaldo."],
+            [MessageCircle, "Cierre por WhatsApp", "Cotización rápida con atención humana."],
+          ].map(([Icon, title, detail]) => {
+            const BenefitIcon = Icon as typeof Truck;
+            return (
+              <article key={title as string} className="rounded-[1.15rem] border border-white/10 bg-white/7 p-4">
+                <BenefitIcon className="text-prevedello-red" size={22} />
+                <h3 className="mt-3 font-heading text-lg font-black uppercase text-white">{title as string}</h3>
+                <p className="mt-1 text-sm leading-6 text-white/58">{detail as string}</p>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="preve-market-marquee overflow-hidden border-y border-white/10 bg-white/[0.03] py-4">
+        <div className="preve-market-marquee-track flex gap-3">
+          {[...categories, ...categories].map((category, index) => {
+            const Icon = category.icon;
+            return (
+              <button key={`${category.id}-${index}`} type="button" onClick={() => onCategorySelect(category.name)} className="preve-market-marquee-item flex min-w-[240px] items-center gap-3 rounded-[1.2rem] border border-white/10 bg-white/8 px-4 py-3 text-left">
+                <span className="grid h-11 w-11 place-items-center rounded-[1rem] bg-white text-prevedello-blue"><Icon size={20} /></span>
+                <span><b className="block text-sm font-black text-white">{category.name}</b><small className="text-xs font-semibold text-white/50">Ver departamento</small></span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mb-5 flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-prevedello-red">Góndola principal</p>
+            <h2 className="mt-1 text-3xl font-black uppercase text-white sm:text-4xl">Productos más consultados</h2>
+          </div>
+          <a href="#productos" className="hidden rounded-full border border-white/14 px-5 py-3 text-xs font-black uppercase tracking-wide text-white/75 sm:inline-flex">Ver todo</a>
+        </div>
+        <div className="preve-market-shelf grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          {featured.map((product) => (
+            <article key={product.id} className="preve-market-shelf-card rounded-[1.2rem] border border-white/10 bg-white/8 p-3">
+              <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
+                <ProductVisual product={product} />
+                <p className="mt-3 text-[10px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</p>
+                <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-extrabold text-white">{product.name}</h3>
+                <p className="mt-2 font-mono text-base !text-white">{formatPrice(product.price)}</p>
+              </button>
+              <button type="button" onClick={() => onAdd(product)} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-black uppercase text-prevedello-blue">
+                <Plus size={14} /> Agregar
+              </button>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function MarketplaceHub({
   productsList,
   onAdd,
@@ -901,7 +1041,7 @@ function ProductCard({
   onOpen: (product: Product) => void;
 }) {
   return (
-    <article className="product-card blueprint-card flex h-full flex-col p-4">
+    <article className="product-card market-product-card flex h-full flex-col p-4">
       <button type="button" onClick={() => onOpen(product)} className="group block w-full text-left">
         <ProductVisual product={product} />
         <div className="px-1 pb-2 pt-5">
@@ -923,7 +1063,7 @@ function ProductCard({
           )}
           <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
             <div>
-              <p className="font-mono text-xl font-medium !text-white">{formatPrice(product.price)}</p>
+              <p className="font-mono text-xl font-medium">{formatPrice(product.price)}</p>
               <p className={`availability-badge mt-1 ${getAvailabilityClass(product.availability)}`}>
                 <span className="dot" />
                 {product.availability}
@@ -2983,11 +3123,14 @@ function MarketPage() {
         cartCount={cartCount}
         onCartOpen={() => setCartOpen(true)}
       />
-      <HeroSection query={query} onQueryChange={setQuery} />
-      <MarketplaceHub productsList={productsList} onAdd={addToCart} onOpen={setSelectedProduct} onCategorySelect={handleCategorySelect} />
-      <PromoBanner />
-      <OfficialHeritage />
-      <OperationsDeck />
+      <MarketCommerceHero
+        query={query}
+        onQueryChange={setQuery}
+        productsList={productsList}
+        onAdd={addToCart}
+        onOpen={setSelectedProduct}
+        onCategorySelect={handleCategorySelect}
+      />
 
       <main className="pb-24 lg:pb-0">
         <section id="rubros" className="premium-reveal section-anchor blueprint-bg px-4 py-14 text-white sm:px-6 lg:px-8">
@@ -3128,7 +3271,6 @@ function MarketPage() {
         onSendQuote={handleSendQuote}
       />
       <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} onAdd={addToCart} />
-      <MobileBottomNav cartCount={cartCount} onCartOpen={() => setCartOpen(true)} />
     </div>
   );
 }
