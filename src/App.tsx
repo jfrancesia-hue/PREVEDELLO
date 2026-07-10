@@ -841,7 +841,7 @@ function ProductCard({
           className="ds-button btn-agregar inline-flex items-center justify-center gap-2 px-4 py-3 text-sm"
         >
           <Plus size={17} />
-          Agregar
+          Agregár
         </button>
         <a
           href={makeWhatsAppHref([{ product, quantity: 1 }], defaultQuoteForm)}
@@ -1234,7 +1234,7 @@ function ProductDetailModal({
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-800"
               >
                 <Plus size={17} />
-                Agregar al pedido
+                Agregár al pedido
               </button>
               <WhatsAppQuoteButton items={[{ product, quantity: 1 }]} customer={defaultQuoteForm} label="Consultar por WhatsApp" />
             </div>
@@ -1389,7 +1389,7 @@ function AdminCatalogPanel({
                 <Save size={20} />
               </span>
               <div>
-                <h3 className="text-xl font-extrabold text-graphite">Alta rapida</h3>
+                <h3 className="text-xl font-extrabold text-graphite">Alta rápida</h3>
                 <p className="text-sm text-zinc-600">Producto individual para probar el marketplace.</p>
               </div>
             </div>
@@ -1513,13 +1513,13 @@ function AdminCatalogPanel({
               </span>
               <div>
                 <h3 className="text-xl font-extrabold text-graphite">Importador CSV</h3>
-                <p className="text-sm text-zinc-600">Acepta encabezados en espanol o ingles.</p>
+                <p className="text-sm text-zinc-600">Acepta encabezados en español o inglés.</p>
               </div>
             </div>
             <textarea
               value={csvText}
               onChange={(event) => setCsvText(event.target.value)}
-              placeholder={"nombre,marca,categoria,unidad,precio,disponibilidad,descripcion,imagen,sku,stock\nCemento 50kg,Avellaneda,Obra gruesa,Bolsa 50 kg,,Disponible,Cemento portland,,CEM-50,Stock alto"}
+              placeholder={"nombre,marca,categoría,unidad,precio,disponibilidad,descripción,imagen,sku,stock\nCemento 50kg,Avellaneda,Obra gruesa,Bolsa 50 kg,,Disponible,Cemento portland,,CEM-50,Stock alto"}
               className="min-h-44 w-full rounded-lg border border-zinc-200 p-3 font-mono text-sm outline-none focus:border-prevedello-red"
             />
             <div className="mt-4 flex flex-wrap gap-3">
@@ -1549,7 +1549,7 @@ function AdminCatalogPanel({
             <div className="mt-5 rounded-lg bg-cement/50 p-4">
               <p className="text-sm font-extrabold text-graphite">Columnas sugeridas</p>
               <p className="mt-2 text-sm leading-6 text-zinc-600">
-                nombre, marca, categoria, unidad, precio, disponibilidad, descripcion, usos,
+                nombre, marca, categoría, unidad, precio, disponibilidad, descripción, usos,
                 relacionados, imagen, sku, stock
               </p>
             </div>
@@ -1564,7 +1564,7 @@ const quoteStatusLabels: Record<QuoteStatus, string> = {
   nuevo: "Nuevo",
   contactado: "Contactado",
   cotizacion_enviada: "Cotización enviada",
-  en_negociacion: "En negociacion",
+  en_negociacion: "En negociación",
   ganado: "Ganado",
   perdido: "Perdido",
   sin_respuesta: "Sin respuesta",
@@ -1573,7 +1573,7 @@ const quoteStatusLabels: Record<QuoteStatus, string> = {
 type InternalModule =
   | "dashboard"
   | "productos"
-  | "cotizaciónes"
+  | "cotizaciones"
   | "clientes"
   | "crm"
   | "tareas"
@@ -1584,7 +1584,7 @@ type InternalModule =
 const internalModules: { id: InternalModule; label: string; icon: ReactNode }[] = [
   { id: "dashboard", label: "Dashboard", icon: <BarChart3 size={18} /> },
   { id: "productos", label: "Productos", icon: <Boxes size={18} /> },
-  { id: "cotizaciónes", label: "Cotizaciónes", icon: <ClipboardList size={18} /> },
+  { id: "cotizaciones", label: "Cotizaciones", icon: <ClipboardList size={18} /> },
   { id: "clientes", label: "Clientes", icon: <Users size={18} /> },
   { id: "crm", label: "CRM", icon: <ContactRound size={18} /> },
   { id: "tareas", label: "Tareas", icon: <ListTodo size={18} /> },
@@ -1631,7 +1631,7 @@ function InternalDashboard({
 
   const cards = [
     { label: "Consultas nuevas", value: newQuotes, detail: "Ingresos sin primer contacto", icon: <MessageCircle size={20} /> },
-    { label: "Pendientes", value: pendingQuotes, detail: "Cotizaciónes en proceso", icon: <CalendarCheck size={20} /> },
+    { label: "Pendientes", value: pendingQuotes, detail: "Cotizaciones en proceso", icon: <CalendarCheck size={20} /> },
     { label: "Ganadas", value: wonQuotes, detail: "Ventas marcadas como cierre", icon: <CheckCircle2 size={20} /> },
     { label: "Valor estimado", value: quotedValue ? formatPrice(quotedValue) : "A cotizar", detail: "Solo productos con precio", icon: <BarChart3 size={20} /> },
   ];
@@ -1658,14 +1658,14 @@ function InternalDashboard({
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="section-kicker">Operación comercial</p>
-                <h2 className="mt-2 text-3xl font-extrabold text-graphite">Pipeline de cotizaciónes</h2>
+                <h2 className="mt-2 text-3xl font-extrabold text-graphite">Pipeline de cotizaciones</h2>
               </div>
               <button
                 type="button"
-                onClick={() => onModuleChange("cotizaciónes")}
+                onClick={() => onModuleChange("cotizaciones")}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-prevedello-blue px-4 py-2 text-sm font-bold text-white"
               >
-                Ver cotizaciónes
+                Ver cotizaciones
                 <ArrowRight size={16} />
               </button>
             </div>
@@ -1695,7 +1695,7 @@ function InternalDashboard({
               {[
                 { title: "Responder consultas nuevas", detail: `${newQuotes} leads esperan primer contacto`, module: "crm" as InternalModule },
                 { title: "Confirmar stock", detail: `${productsToReview} productos estan a confirmar o bajo pedido`, module: "productos" as InternalModule },
-                { title: "Rubro mas consultado", detail: topCategory, module: "rubros" as InternalModule },
+                { title: "Rubro más consultado", detail: topCategory, module: "rubros" as InternalModule },
               ].map((item) => (
                 <button
                   key={item.title}
@@ -1775,7 +1775,7 @@ function InternalClientsPanel({ quotes }: { quotes: QuoteRecord[] }) {
                   <p className="mt-1 font-extrabold text-prevedello-blue">{customer.status}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase text-zinc-500">Cotizaciónes</p>
+                  <p className="text-xs font-bold uppercase text-zinc-500">Cotizaciones</p>
                   <p className="mt-1 font-extrabold text-graphite">{customer.quotes}</p>
                 </div>
               </article>
@@ -1799,14 +1799,14 @@ function InternalCrmBoard({ quotes }: { quotes: QuoteRecord[] }) {
           {openQuoteStatuses.map((status) => {
             const columnQuotes = quotes.filter((quote) => quote.status === status);
             return (
-              <article key={status} className="min-w-[260px] rounded-lg border border-prevedello-blue/10 bg-white p-4 shadow-sm">
+              <article key={status} className="internal-kanban-column min-w-[260px] rounded-lg border border-prevedello-blue/10 bg-white p-4 shadow-sm">
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="font-extrabold text-graphite">{quoteStatusLabels[status]}</h3>
                   <span className="rounded-full bg-cement px-3 py-1 text-xs font-extrabold text-zinc-600">{columnQuotes.length}</span>
                 </div>
                 <div className="mt-4 space-y-3">
-                  {(columnQuotes.length ? columnQuotes : [{ id: `${status}-empty`, customerName: "Sin leads", customerLocation: "Esperando cotizaciónes", customerPhone: "", items: [] } as Partial<QuoteRecord>]).map((quote) => (
-                    <div key={quote.id} className="rounded-lg border border-zinc-200 bg-[#f7f3eb] p-4">
+                  {(columnQuotes.length ? columnQuotes : [{ id: `${status}-empty`, customerName: "Sin leads", customerLocation: "Esperando cotizaciones", customerPhone: "", items: [] } as Partial<QuoteRecord>]).map((quote) => (
+                    <div key={quote.id} className="internal-kanban-card rounded-lg border border-zinc-200 bg-[#f7f3eb] p-4">
                       <p className="font-extrabold text-graphite">{quote.customerName}</p>
                       <p className="mt-1 text-sm text-zinc-600">{quote.customerLocation}</p>
                       <p className="mt-3 text-xs font-bold uppercase text-zinc-500">
@@ -1842,7 +1842,7 @@ function InternalTasksPanel({ quotes, productsList }: { quotes: QuoteRecord[]; p
         due: "24 hs",
       })),
     {
-      title: "Cargar fotos reales de productos destacados",
+      title: "Cargar fotos reales de productos destacádos",
       detail: "Mejora conversion del marketplace público",
       type: "Catalogo",
       due: "Semana",
@@ -1886,7 +1886,7 @@ function InternalTaxonomyPanel({ productsList, view }: { productsList: Product[]
         }))
       : brands.map((brand) => ({
           name: brand,
-          description: "Marca preparada para logo, descripcion y visibilidad.",
+          description: "Marca preparada para logo, descripción y visibilidad.",
           count: productsList.filter((product) => product.brand === brand).length,
         }));
 
@@ -1933,7 +1933,7 @@ function InternalSettingsPanel({ authMode, userEmail }: { authMode: InternalAuth
           {[
             { label: "Sesion", value: userEmail, detail: authMode === "demo" ? "Modo demo local" : "Supabase Auth activo" },
             { label: "Supabase", value: isSupabaseConfigured ? "Configurado" : "Pendiente", detail: "URL y anon key para datos reales" },
-            { label: "Seguridad", value: "RLS requerido", detail: "Aplicar politicas antes de producción real" },
+            { label: "Seguridad", value: "RLS requerido", detail: "Aplicar políticas antes de producción real" },
           ].map((item) => (
             <article key={item.label} className="premium-card rounded-lg p-6">
               <p className="text-sm font-bold uppercase text-zinc-500">{item.label}</p>
@@ -1972,11 +1972,11 @@ function AdminCrmPanel({
           <div>
             <p className="section-kicker">CRM comercial</p>
             <h2 className="mt-2 text-4xl font-extrabold text-graphite sm:text-5xl">
-              Seguimiento de consultas y cotizaciónes.
+              Seguimiento de consultas y cotizaciones.
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
               Primer tablero operativo: cada pedido enviado por WhatsApp queda como cotización para
-              contacto, negociacion y cierre.
+              contacto, negociación y cierre.
             </p>
           </div>
           <button
@@ -2009,8 +2009,8 @@ function AdminCrmPanel({
           {quotes.length === 0 ? (
             <div className="p-8 text-center">
               <ClipboardList className="mx-auto text-prevedello-red" size={38} />
-              <h3 className="mt-3 text-2xl font-extrabold text-graphite">Todavía no hay cotizaciónes.</h3>
-              <p className="mt-2 text-zinc-600">Cuando un cliente guarde y envie su pedido, va a aparecer aca.</p>
+              <h3 className="mt-3 text-2xl font-extrabold text-graphite">Todavía no hay cotizaciones.</h3>
+              <p className="mt-2 text-zinc-600">Cuando un cliente guarde y envie su pedido, va a aparecer acá.</p>
             </div>
           ) : (
             <div className="divide-y divide-zinc-200">
@@ -2107,7 +2107,7 @@ function PublicFooter() {
         <div>
           <h3 className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-white">Horarios</h3>
           <p className="mt-4 text-sm leading-6">
-            Consultas y cotizaciónes por WhatsApp. El precio final lo confirma Prevedello.
+            Consultas y cotizaciones por WhatsApp. El precio final lo confirma Prevedello.
           </p>
         </div>
       </div>
@@ -2442,7 +2442,7 @@ function InternalLoginPage({
 
     if (authMode === "demo" || !supabase) {
       if (password.trim() !== DEMO_CRM_ACCESS_CODE) {
-        setMessage(`Codigo demo incorrecto. Usa ${DEMO_CRM_ACCESS_CODE}.`);
+        setMessage(`Código demo incorrecto. Usa ${DEMO_CRM_ACCESS_CODE}.`);
         return;
       }
 
@@ -2483,7 +2483,7 @@ function InternalLoginPage({
   };
 
   return (
-    <div className="min-h-screen bg-prevedello-blue text-white">
+    <div className="internal-login-page min-h-screen bg-prevedello-blue text-white">
       <main className="mx-auto grid min-h-screen max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:px-8">
         <section>
           <Link to="/" className="mb-10 inline-block rounded-lg bg-white px-4 py-3">
@@ -2495,17 +2495,17 @@ function InternalLoginPage({
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-8 text-white/70">
             Acceso privado para el equipo. El sitio público queda separado y el backoffice queda
-            listo para operar cotizaciónes, catálogo e importación CSV.
+            listo para operar cotizaciones, catálogo e importación CSV.
           </p>
           {authMode === "demo" && (
             <div className="mt-6 max-w-xl rounded-lg border border-white/15 bg-white/10 p-4 text-sm font-semibold leading-6 text-white/75">
-              Modo demo local activo. Codigo de acceso:{" "}
+              Modo demo local activo. Código de acceso:{" "}
               <span className="font-extrabold text-white">{DEMO_CRM_ACCESS_CODE}</span>
             </div>
           )}
         </section>
 
-        <form onSubmit={signInWithPassword} className="rounded-lg bg-white p-6 text-graphite shadow-[0_30px_90px_rgba(0,35,95,0.25)]">
+        <form onSubmit={signInWithPassword} className="internal-login-card rounded-lg bg-white p-6 text-graphite shadow-[0_30px_90px_rgba(0,35,95,0.25)]">
           <p className="text-sm font-bold uppercase text-prevedello-red">
             {authMode === "demo" ? "Ingreso demo" : "Ingreso seguro"}
           </p>
@@ -2522,7 +2522,7 @@ function InternalLoginPage({
             />
           </label>
           <label className="mt-4 block text-sm font-bold text-zinc-700">
-            {authMode === "demo" ? "Codigo demo" : "Password"}
+            {authMode === "demo" ? "Código demo" : "Password"}
             <input
               value={password}
               onChange={(event) => setPassword(event.target.value)}
@@ -2567,7 +2567,7 @@ function InternalAccessDeniedPage({ email }: { email: string }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f3eb]">
+    <div className="internal-denied-page min-h-screen bg-[#f7f3eb]">
       <RouteHeader title="Acceso no autorizado" eyebrow="App interna">
         Tu usuario inicio sesión, pero no esta incluido en la lista permitida para este CRM.
       </RouteHeader>
@@ -2576,7 +2576,7 @@ function InternalAccessDeniedPage({ email }: { email: string }) {
           <p className="text-sm font-bold uppercase text-prevedello-red">Usuario</p>
           <h2 className="mt-2 text-2xl font-extrabold text-graphite">{email}</h2>
           <p className="mt-3 leading-7 text-zinc-600">
-            Agrega este email en VITE_CRM_ALLOWED_EMAILS o usa una cuenta autorizada.
+            Agregá este email en VITE_CRM_ALLOWED_EMAILS o usa una cuenta autorizada.
           </p>
           <button onClick={() => void signOut()} className="mt-6 rounded-full bg-prevedello-blue px-5 py-3 text-sm font-bold text-white">
             Salir
@@ -2651,7 +2651,7 @@ function InternalWorkspacePage({
       );
     }
 
-    if (activeModule === "cotizaciónes") {
+    if (activeModule === "cotizaciones") {
       return (
         <AdminCrmPanel
           quotes={quotes}
@@ -2672,8 +2672,8 @@ function InternalWorkspacePage({
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f3eb]">
-      <header className="sticky top-0 z-50 border-b border-prevedello-blue/10 bg-white/94 px-4 py-3 shadow-[0_12px_35px_rgba(9,59,145,0.08)] backdrop-blur-xl sm:px-6 lg:px-8">
+    <div className="internal-workspace-page min-h-screen bg-[#f7f3eb]">
+      <header className="internal-workspace-header sticky top-0 z-50 border-b border-prevedello-blue/10 bg-white/94 px-4 py-3 shadow-[0_12px_35px_rgba(9,59,145,0.08)] backdrop-blur-xl sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-3">
           <div className="flex items-center justify-between gap-4">
             <Link to="/" className="shrink-0" aria-label="Volvér al sitio público">
@@ -2693,15 +2693,15 @@ function InternalWorkspacePage({
               Salir
             </button>
           </div>
-          <nav className="flex gap-2 overflow-x-auto pb-1">
+          <nav className="internal-module-nav flex gap-2 overflow-x-auto pb-1">
             {internalModules.map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => setActiveModule(item.id)}
-                className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold transition ${
+                className={`internal-module-tab inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold transition ${
                   activeModule === item.id
-                    ? "bg-prevedello-blue text-white shadow-[0_12px_30px_rgba(9,59,145,0.18)]"
+                    ? "is-active bg-prevedello-blue text-white shadow-[0_12px_30px_rgba(9,59,145,0.18)]"
                     : "border border-zinc-200 bg-white text-zinc-600 hover:border-prevedello-red/35 hover:text-prevedello-red"
                 }`}
               >
@@ -2712,10 +2712,12 @@ function InternalWorkspacePage({
           </nav>
         </div>
       </header>
-      <RouteHeader title="Prevedello CRM" eyebrow="App interna">
-        Dashboard, catálogo, cotizaciónes, clientes, tareas y configuración comercial.
-      </RouteHeader>
-      {renderActiveModule()}
+      <div className="internal-route-hero">
+        <RouteHeader title="Prevedello CRM" eyebrow="App interna">
+          Dashboard, catálogo, cotizaciones, clientes, tareas y configuración comercial.
+        </RouteHeader>
+      </div>
+      <div className="internal-crm-surface">{renderActiveModule()}</div>
     </div>
   );
 }
@@ -2928,11 +2930,11 @@ function MarketplacePage() {
 
         <section id="productos" className="catalog-section premium-reveal section-anchor catalog-premium-band px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <Breadcrumbs current="Productos destacados" />
+            <Breadcrumbs current="Productos destacádos" />
             <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="section-kicker">Catálogo inicial</p>
-                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Productos destacados para cotizar.</h2>
+                <h2 className="mt-2 font-heading text-4xl font-extrabold uppercase text-white sm:text-5xl">Productos destacádos para cotizar.</h2>
               </div>
               <p className="max-w-xl text-sm leading-6 text-[var(--pv-text-secondary)]">
                 Una selección inicial para pedir precio rápido, consultar disponibilidad y avanzar directo por WhatsApp.

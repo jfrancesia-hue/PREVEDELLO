@@ -1944,3 +1944,301 @@ body {
     font-size: 4.75rem !important;
   }
 }
+
+/* Internal CRM/Login redesign — aligned with Prevedello public visual system */
+.internal-login-page,
+.internal-workspace-page,
+.internal-denied-page {
+  --crm-blue: #093b91;
+  --crm-blue-deep: #062f73;
+  --crm-graphite: #07172f;
+  --crm-graphite-deep: #050d1f;
+  --crm-cement: #f4f0e8;
+  --crm-line: rgba(9,59,145,0.12);
+}
+
+.internal-login-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(220,31,38,0.18), transparent 24rem),
+    radial-gradient(circle at 82% 10%, rgba(255,255,255,0.12), transparent 30rem),
+    linear-gradient(135deg, var(--crm-blue) 0%, var(--crm-blue-deep) 38%, var(--crm-graphite) 100%) !important;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.internal-login-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at 32% 28%, black, transparent 70%);
+  pointer-events: none;
+}
+
+.internal-login-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2rem !important;
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(220,31,38,0.08), transparent 15rem),
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,240,232,0.92)) !important;
+  box-shadow: 0 38px 100px rgba(5,13,31,0.35) !important;
+}
+
+.internal-login-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--crm-blue), var(--pv-red), var(--crm-blue));
+}
+
+.internal-login-card input {
+  border-radius: 1rem !important;
+  background: rgba(255,255,255,0.78) !important;
+  border-color: rgba(9,59,145,0.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+}
+
+.internal-login-card input:focus {
+  border-color: rgba(220,31,38,0.45) !important;
+  box-shadow: 0 0 0 3px rgba(220,31,38,0.10) !important;
+}
+
+.internal-workspace-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(9,59,145,0.14), transparent 24rem),
+    linear-gradient(180deg, var(--crm-cement) 0%, #fbfaf7 38%, #e9e1d5 100%) !important;
+}
+
+.internal-workspace-header {
+  background:
+    linear-gradient(180deg, rgba(7,23,47,0.94), rgba(5,13,31,0.88)) !important;
+  border-bottom: 1px solid rgba(220,31,38,0.48) !important;
+  box-shadow: 0 24px 60px rgba(5,13,31,0.22) !important;
+  color: #fff;
+}
+
+.internal-workspace-header .text-graphite,
+.internal-workspace-header .text-zinc-500 {
+  color: #fff !important;
+}
+
+.internal-workspace-header .text-zinc-500 {
+  color: rgba(226,235,255,0.62) !important;
+}
+
+.internal-module-nav {
+  scrollbar-width: none;
+}
+
+.internal-module-nav::-webkit-scrollbar { display: none; }
+
+.internal-module-tab {
+  border-radius: 999px !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255,255,255,0.08) !important;
+  color: rgba(226,235,255,0.72) !important;
+}
+
+.internal-module-tab.is-active {
+  background: linear-gradient(135deg, var(--pv-red), #b9181f) !important;
+  color: #fff !important;
+  border-color: rgba(220,31,38,0.58) !important;
+  box-shadow: 0 16px 36px rgba(220,31,38,0.24) !important;
+}
+
+.internal-route-hero {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(220,31,38,0.16), transparent 22rem),
+    linear-gradient(135deg, var(--crm-blue), var(--crm-graphite)) !important;
+  color: #fff !important;
+}
+
+.internal-route-hero h1,
+.internal-route-hero p,
+.internal-route-hero .text-white,
+.internal-route-hero .text-white\/72 {
+  color: #fff !important;
+}
+
+.internal-crm-surface .premium-card,
+.internal-workspace-page .premium-card,
+.internal-workspace-page .section-band .premium-card,
+.internal-workspace-page article.premium-card {
+  border-radius: 1.35rem !important;
+  border: 1px solid rgba(9,59,145,0.11) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(244,240,232,0.78)) !important;
+  box-shadow: 0 22px 65px rgba(5,13,31,0.10) !important;
+  overflow: hidden;
+}
+
+.internal-workspace-page .premium-card:hover,
+.internal-workspace-page article.premium-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(220,31,38,0.22) !important;
+  box-shadow: 0 30px 80px rgba(5,13,31,0.15) !important;
+}
+
+.internal-workspace-page .premium-card,
+.internal-workspace-page article,
+.internal-workspace-page button,
+.internal-workspace-page a {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease, color 220ms ease;
+}
+
+.internal-workspace-page .section-kicker {
+  color: var(--pv-red) !important;
+  letter-spacing: 0.16em;
+}
+
+.internal-workspace-page input,
+.internal-workspace-page select,
+.internal-workspace-page textarea {
+  border-radius: 1rem !important;
+  border-color: rgba(9,59,145,0.13) !important;
+  background: rgba(255,255,255,0.82) !important;
+}
+
+.internal-workspace-page input:focus,
+.internal-workspace-page select:focus,
+.internal-workspace-page textarea:focus {
+  border-color: rgba(220,31,38,0.42) !important;
+  box-shadow: 0 0 0 3px rgba(220,31,38,0.09) !important;
+}
+
+.internal-workspace-page .bg-prevedello-blue,
+.internal-workspace-page button.bg-prevedello-blue {
+  background: linear-gradient(135deg, var(--crm-blue), var(--crm-blue-deep)) !important;
+}
+
+.internal-workspace-page .bg-prevedello-red,
+.internal-workspace-page button.bg-prevedello-red {
+  background: linear-gradient(135deg, var(--pv-red), #b9181f) !important;
+}
+
+.internal-kanban-column {
+  border-radius: 1.35rem !important;
+  background: rgba(255,255,255,0.70) !important;
+  border: 1px solid rgba(9,59,145,0.11) !important;
+  box-shadow: 0 18px 50px rgba(5,13,31,0.08);
+}
+
+.internal-kanban-card {
+  border-radius: 1.1rem !important;
+  background: linear-gradient(180deg, #fff, var(--crm-cement)) !important;
+  border-color: rgba(9,59,145,0.10) !important;
+}
+
+@media (max-width: 767px) {
+  .internal-login-page main {
+    padding-top: 1.5rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .internal-login-page h1 {
+    font-size: clamp(2.7rem, 12vw, 4rem) !important;
+  }
+
+  .internal-workspace-header {
+    position: sticky !important;
+    top: 0 !important;
+  }
+
+  .internal-route-hero h1 {
+    font-size: clamp(2.5rem, 11vw, 3.7rem) !important;
+  }
+}
+
+/* Internal QA fixes */
+.internal-route-hero .bg-white .text-graphite,
+.internal-route-hero .bg-white .text-zinc-500,
+.internal-route-hero a.bg-white .text-graphite,
+.internal-route-hero a.bg-white .text-zinc-500,
+.internal-route-hero .rounded-lg.bg-white .text-graphite,
+.internal-route-hero .rounded-lg.bg-white .text-zinc-500 {
+  color: #07172f !important;
+}
+
+.internal-route-hero .bg-white .text-zinc-500,
+.internal-route-hero a.bg-white .text-zinc-500,
+.internal-route-hero .rounded-lg.bg-white .text-zinc-500 {
+  color: rgba(9,59,145,0.64) !important;
+}
+
+.internal-module-nav {
+  position: relative;
+  padding-right: 2.25rem;
+  mask-image: linear-gradient(90deg, black calc(100% - 2.8rem), transparent 100%);
+}
+
+.internal-workspace-header::after {
+  content: "deslizá";
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.55rem;
+  display: none;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(226,235,255,0.46);
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .internal-workspace-header::after {
+    display: block;
+  }
+}
+
+/* Internal mobile nav cleanup */
+.internal-module-nav {
+  mask-image: none !important;
+  padding-right: 0 !important;
+  padding-bottom: 0.7rem !important;
+  scroll-snap-type: x proximity;
+}
+
+.internal-module-tab {
+  scroll-snap-align: start;
+}
+
+.internal-workspace-header::after {
+  display: none !important;
+  content: "" !important;
+}
+
+.internal-route-hero .section-band,
+.internal-route-hero > * {
+  padding-top: clamp(1.6rem, 5vw, 3rem) !important;
+}
+
+@media (max-width: 767px) {
+  .internal-workspace-header {
+    padding-bottom: 0.65rem !important;
+  }
+
+  .internal-module-nav {
+    gap: 0.45rem !important;
+  }
+
+  .internal-module-tab {
+    padding: 0.62rem 0.9rem !important;
+    font-size: 0.78rem !important;
+  }
+
+  .internal-crm-surface section {
+    padding-top: 1.4rem !important;
+  }
+}
