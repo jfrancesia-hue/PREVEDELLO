@@ -1068,3 +1068,160 @@ a {
     opacity: 0 !important;
   }
 }
+
+/* Menu refinement v2 — warmer, cleaner, more institutional */
+.pv-site-header {
+  padding-top: 0.65rem !important;
+  padding-left: clamp(0.75rem, 2vw, 1.35rem) !important;
+  padding-right: clamp(0.75rem, 2vw, 1.35rem) !important;
+}
+
+.pv-site-header .ds-header,
+.pv-site-header.is-scrolled .ds-header {
+  height: 4.35rem !important;
+  border-radius: 999px !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.97), rgba(250,247,240,0.93)) !important;
+  border: 1px solid rgba(9,59,145,0.10) !important;
+  border-bottom: 1px solid rgba(220,31,38,0.34) !important;
+  box-shadow: 0 20px 55px rgba(5,13,31,0.13), inset 0 1px 0 rgba(255,255,255,0.86) !important;
+}
+
+.pv-site-header .ds-header::before {
+  background:
+    radial-gradient(circle at 8% 50%, rgba(220,31,38,0.08), transparent 11rem),
+    linear-gradient(90deg, transparent, rgba(9,59,145,0.035), transparent) !important;
+}
+
+.pv-site-header a[aria-label="Ir al inicio"] {
+  min-width: 168px;
+}
+
+.pv-site-header a[aria-label="Ir al inicio"] img {
+  height: 2.15rem !important;
+  width: 2.15rem !important;
+  border: 1px solid rgba(9,59,145,0.12);
+  box-shadow: 0 10px 22px rgba(9,59,145,0.12) !important;
+}
+
+.ds-header .text-graphite {
+  color: #07172f !important;
+  letter-spacing: -0.035em;
+}
+
+.ds-header .text-zinc-500 {
+  color: rgba(9,59,145,0.66) !important;
+  letter-spacing: 0.08em;
+}
+
+.pv-site-header .ds-input {
+  height: 2.75rem !important;
+  border-radius: 999px !important;
+  background: rgba(9,59,145,0.045) !important;
+  border: 1px solid rgba(9,59,145,0.10) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.75) !important;
+}
+
+.pv-site-header .ds-input:focus-within {
+  border-color: rgba(220,31,38,0.42) !important;
+  box-shadow: 0 0 0 3px rgba(220,31,38,0.09), inset 0 1px 0 rgba(255,255,255,0.8) !important;
+}
+
+.pv-site-header .ds-input span {
+  border-radius: 999px !important;
+  background: #07172f !important;
+  color: #fff !important;
+}
+
+.pv-site-header nav {
+  gap: 0.35rem !important;
+}
+
+.nav-link {
+  border-radius: 999px !important;
+  padding: 0.55rem 0.85rem !important;
+  color: rgba(7,23,47,0.68) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em;
+}
+
+.nav-link::after {
+  display: none !important;
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  background: rgba(9,59,145,0.07) !important;
+  color: #07172f !important;
+  transform: translateY(-1px);
+}
+
+.nav-link.is-active {
+  box-shadow: inset 0 0 0 1px rgba(9,59,145,0.10);
+}
+
+.nav-link-app {
+  background: rgba(220,31,38,0.08) !important;
+  border: 1px solid rgba(220,31,38,0.16) !important;
+  color: #b01920 !important;
+}
+
+.nav-link-app:hover {
+  background: rgba(220,31,38,0.13) !important;
+  color: #8d1118 !important;
+}
+
+.pv-site-header .ds-button-whatsapp {
+  height: 2.75rem !important;
+  border-radius: 999px !important;
+  box-shadow: 0 12px 28px rgba(37,211,102,0.18) !important;
+}
+
+.pv-site-header button[aria-label="Abrir pedido"] {
+  height: 2.75rem !important;
+  width: 2.75rem !important;
+  border-radius: 999px !important;
+  background: #07172f !important;
+  box-shadow: 0 14px 30px rgba(7,23,47,0.18) !important;
+}
+
+.pv-site-header a[title="App interna"] {
+  height: 2.75rem !important;
+  width: 2.75rem !important;
+  border-radius: 999px !important;
+  background: rgba(9,59,145,0.07) !important;
+  border-color: rgba(9,59,145,0.12) !important;
+  color: #093b91 !important;
+}
+
+.header-motion-line {
+  max-width: min(1180px, calc(100vw - 2rem)) !important;
+  height: 1px !important;
+  margin-top: 0.45rem !important;
+  opacity: 0.5 !important;
+}
+
+@media (max-width: 1023px) {
+  .pv-site-header .ds-header,
+  .pv-site-header.is-scrolled .ds-header {
+    height: 3.7rem !important;
+    border-radius: 1.35rem !important;
+  }
+
+  .pv-site-header a[aria-label="Ir al inicio"] {
+    min-width: auto;
+  }
+
+  .pv-site-header a[aria-label="Ir al inicio"] img {
+    height: 2rem !important;
+    width: 2rem !important;
+  }
+
+  .pv-site-header .ds-header .text-lg {
+    font-size: 0.98rem !important;
+  }
+
+  .pv-site-header .ds-header .text-xs {
+    font-size: 0.62rem !important;
+  }
+}
