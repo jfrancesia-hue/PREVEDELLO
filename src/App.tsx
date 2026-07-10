@@ -680,8 +680,11 @@ function MarketCommerceHero({
               <article key={product.id} className="ml-real-shelf-card rounded-[1rem] bg-white p-3 shadow-[0_12px_30px_rgba(5,13,31,0.08)] transition hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(5,13,31,0.14)]">
                 <button type="button" onClick={() => onOpen(product)} className="block w-full text-left">
                   <ProductVisual product={product} />
-                  <p className="mt-3 text-[10px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</p>
-                  <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-black leading-5 text-graphite">{product.name}</h3>
+                  <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                    <span className="market-shelf-sector rounded-full bg-prevedello-blue/8 px-2 py-1 text-[9px] font-black uppercase tracking-wide text-prevedello-blue">{product.category}</span>
+                    <span className="rounded-full bg-[#fff1f1] px-2 py-1 text-[9px] font-black uppercase tracking-wide text-prevedello-red">{product.brand}</span>
+                  </div>
+                  <h3 className="mt-2 line-clamp-2 min-h-10 text-sm font-black leading-5 text-graphite">{product.name}</h3>
                   <p className="mt-2 font-mono text-base font-black text-prevedello-blue">{formatPrice(product.price)}</p>
                 </button>
                 <button type="button" onClick={() => onAdd(product)} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-prevedello-blue px-3 py-2 text-xs font-black uppercase text-white">
@@ -962,38 +965,83 @@ function FilterSidebar({
   onCategoryChange,
   onlyAvailable,
   onOnlyAvailableChange,
+  productsList,
 }: {
   activeCategory: string;
   onCategoryChange: (value: string) => void;
   onlyAvailable: boolean;
   onOnlyAvailableChange: (value: boolean) => void;
+  productsList: Product[];
 }) {
+  const totalAvailable = productsList.filter((product) => product.availability === "Disponible").length;
+  const categoryItems = [
+    { name: "Todos", icon: PackageCheck, count: productsList.length, description: "Todo el catálogo" },
+    ...categories.map((category) => ({
+      name: category.name,
+      icon: category.icon,
+      count: productsList.filter((product) => product.category === category.name).length,
+      description: category.description,
+    })),
+  ];
+
   return (
-    <aside className="filter-panel rounded-lg p-5 lg:sticky lg:top-28">
-      <div className="mb-5 flex items-center justify-between">
-        <h3 className="font-extrabold text-white">Filtros</h3>
-        <span className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-prevedello-red">
-          <SlidersHorizontal size={17} />
-        </span>
+    <aside className="filter-panel market-filter-panel rounded-[1.25rem] bg-white p-4 shadow-[0_18px_44px_rgba(5,13,31,0.10)] lg:sticky lg:top-32">
+      <div className="market-filter-head mb-4 rounded-[1rem] bg-prevedello-blue p-4 text-white">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/58">Menú de rubros</p>
+            <h3 className="mt-1 text-xl font-black uppercase leading-none">Catálogo</h3>
+          </div>
+          <span className="grid h-11 w-11 place-items-center rounded-full bg-white text-prevedello-red shadow-[0_14px_28px_rgba(0,0,0,0.18)]">
+            <SlidersHorizontal size={18} />
+          </span>
+        </div>
+        <p className="mt-3 text-xs font-semibold leading-5 text-white/72">Elegí un sector para ver productos concretos y armar la cotización.</p>
       </div>
+
+      <div className="market-filter-stats mb-3 grid grid-cols-2 gap-2">
+        <div className="rounded-[0.85rem] bg-[#eef3fb] p-3">
+          <p className="text-2xl font-black text-prevedello-blue">{productsList.length}</p>
+          <p className="text-[10px] font-black uppercase tracking-wide text-graphite/48">Productos</p>
+        </div>
+        <div className="rounded-[0.85rem] bg-[#fff1f1] p-3">
+          <p className="text-2xl font-black text-prevedello-red">{totalAvailable}</p>
+          <p className="text-[10px] font-black uppercase tracking-wide text-graphite/48">Disponibles</p>
+        </div>
+      </div>
+
       <div className="space-y-2">
-        {["Todos", ...categories.map((category) => category.name)].map((category) => (
-          <button
-            key={category}
-            type="button"
-            onClick={() => onCategoryChange(category)}
-            className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold transition ${
-              activeCategory === category
-                ? "bg-prevedello-blue text-white shadow-[0_12px_28px_rgba(9,59,145,0.18)]"
-                : "bg-white/6 text-[var(--pv-text-secondary)] ring-1 ring-white/10 hover:bg-white/10 hover:text-white"
-            }`}
-          >
-            {category}
-            {activeCategory === category && <Check size={15} />}
-          </button>
-        ))}
+        {categoryItems.map((category) => {
+          const Icon = category.icon;
+          const active = activeCategory === category.name;
+          return (
+            <button
+              key={category.name}
+              type="button"
+              onClick={() => onCategoryChange(category.name)}
+              className={`market-filter-button group flex w-full items-center gap-3 rounded-[0.95rem] px-3 py-3 text-left transition ${
+                active
+                  ? "bg-prevedello-blue text-white shadow-[0_14px_30px_rgba(9,59,145,0.20)]"
+                  : "bg-[#f6f8fc] text-graphite ring-1 ring-prevedello-blue/7 hover:bg-white hover:ring-prevedello-red/22"
+              }`}
+            >
+              <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-[0.8rem] ${active ? "bg-white text-prevedello-red" : "bg-white text-prevedello-blue shadow-[0_8px_18px_rgba(5,13,31,0.08)]"}`}>
+                <Icon size={18} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className={`block truncate text-sm font-black ${active ? "text-white" : "text-graphite"}`}>{category.name}</span>
+                <span className={`block truncate text-[11px] font-bold ${active ? "text-white/62" : "text-graphite/45"}`}>{category.description}</span>
+              </span>
+              <span className={`grid h-7 min-w-7 place-items-center rounded-full px-2 text-xs font-black ${active ? "bg-white text-prevedello-blue" : "bg-prevedello-blue/8 text-prevedello-blue"}`}>
+                {category.count}
+              </span>
+              {active && <Check className="shrink-0" size={15} />}
+            </button>
+          );
+        })}
       </div>
-      <label className="mt-5 flex cursor-pointer items-center gap-3 rounded-lg bg-white/6 p-4 text-sm font-bold text-white/78">
+
+      <label className="mt-4 flex cursor-pointer items-center gap-3 rounded-[0.95rem] border border-prevedello-blue/10 bg-white p-4 text-sm font-black text-graphite shadow-[0_10px_24px_rgba(5,13,31,0.06)]">
         <input
           type="checkbox"
           checked={onlyAvailable}
@@ -1004,7 +1052,7 @@ function FilterSidebar({
       </label>
     </aside>
   );
-}
+} 
 
 function ProductVisual({ product }: { product: Product }) {
   const categoryMeta = categories.find((category) => category.name === product.category);
@@ -3161,6 +3209,7 @@ function MarketPage() {
                 onCategoryChange={setActiveCategory}
                 onlyAvailable={onlyAvailable}
                 onOnlyAvailableChange={setOnlyAvailable}
+                productsList={productsList}
               />
               <div className="catalog-products-column">
                 {filteredProducts.length > 0 ? (

@@ -4197,3 +4197,136 @@ body {
     padding-top: .58rem !important;
   }
 }
+
+/* Market catalog merchandising pass - sidebar + gondola */
+.ml-market-shell .market-filter-panel {
+  background: linear-gradient(180deg, #ffffff, #f8faff) !important;
+  border: 1px solid rgba(9,59,145,.10) !important;
+  color: #07172f !important;
+}
+
+.ml-market-shell .market-filter-panel * {
+  visibility: visible;
+}
+
+.ml-market-shell .market-filter-head {
+  position: relative;
+  overflow: hidden;
+}
+
+.ml-market-shell .market-filter-head::after {
+  content: "";
+  position: absolute;
+  right: -2.5rem;
+  top: -2.5rem;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.13);
+}
+
+.market-filter-button {
+  min-height: 4.25rem;
+}
+
+.market-filter-button:hover {
+  transform: translateX(2px);
+}
+
+.ml-real-shelf-card {
+  border-radius: 1.15rem !important;
+  background: linear-gradient(180deg, #fff, #fbfcff) !important;
+}
+
+.ml-real-shelf-card .relative.aspect-\[4\/3\] {
+  border: 1px solid rgba(9,59,145,.08);
+  box-shadow: inset 0 -20px 45px rgba(9,59,145,.08);
+}
+
+.ml-real-shelf-card .relative.aspect-\[4\/3\] > span {
+  top: .65rem !important;
+  left: .65rem !important;
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  border-radius: .8rem !important;
+}
+
+.market-shelf-sector {
+  max-width: 100%;
+}
+
+.ml-real-shelf-card button:last-child {
+  background: linear-gradient(135deg, #093b91, #0b4db9) !important;
+  box-shadow: 0 10px 24px rgba(9,59,145,.16);
+}
+
+.ml-real-shelf-card:hover button:last-child {
+  background: linear-gradient(135deg, #dc1f26, #f04444) !important;
+}
+
+.ml-market-shell #productos .grid.items-stretch {
+  align-items: stretch;
+}
+
+@media (max-width: 767px) {
+  .ml-market-shell .filter-panel,
+  .ml-market-shell .market-filter-panel {
+    display: block !important;
+    position: static !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin-bottom: 1rem;
+    padding: .75rem !important;
+    border-radius: 1rem !important;
+  }
+
+  .ml-market-shell .market-filter-head {
+    padding: .85rem !important;
+    margin-bottom: .75rem !important;
+  }
+
+  .ml-market-shell .market-filter-head h3 {
+    font-size: 1rem !important;
+  }
+
+  .ml-market-shell .market-filter-head p:last-child {
+    display: none;
+  }
+
+  .ml-market-shell .market-filter-stats {
+    display: none !important;
+  }
+
+  .ml-market-shell .market-filter-panel .space-y-2 {
+    display: flex !important;
+    gap: .55rem !important;
+    overflow-x: auto !important;
+    padding-bottom: .35rem;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 1rem), transparent 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 1rem), transparent 100%);
+  }
+
+  .ml-market-shell .market-filter-button {
+    min-width: 12.5rem;
+    min-height: 3.6rem;
+    padding: .55rem .65rem !important;
+  }
+
+  .ml-market-shell .market-filter-button span:nth-child(2) span:last-child {
+    display: none;
+  }
+
+  .ml-market-shell .market-filter-button > span:first-child {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+  }
+
+  .ml-market-shell .market-filter-panel label {
+    margin-top: .65rem !important;
+    padding: .7rem !important;
+  }
+
+  .ml-real-shelf-card .relative.aspect-\[4\/3\] > span {
+    display: grid !important;
+  }
+}
