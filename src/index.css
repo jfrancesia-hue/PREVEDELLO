@@ -1453,3 +1453,92 @@ a {
     padding-bottom: 6.5rem !important;
   }
 }
+
+/* Menu color experiment — translucent graphite */
+.pv-site-header .ds-header,
+.pv-site-header.is-scrolled .ds-header {
+  background:
+    linear-gradient(180deg, rgba(7,23,47,0.90), rgba(5,13,31,0.82)) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-bottom: 1px solid rgba(220,31,38,0.58) !important;
+  color: #ffffff !important;
+  box-shadow: 0 22px 60px rgba(5,13,31,0.28), inset 0 1px 0 rgba(255,255,255,0.10) !important;
+}
+
+.pv-site-header .ds-header::before {
+  background:
+    radial-gradient(circle at 8% 50%, rgba(220,31,38,0.14), transparent 11rem),
+    linear-gradient(90deg, rgba(255,255,255,0.035), transparent, rgba(255,255,255,0.03)) !important;
+}
+
+.ds-header .text-graphite,
+.ds-header .text-zinc-500 {
+  color: #ffffff !important;
+}
+
+.ds-header .text-zinc-500 {
+  color: rgba(226,235,255,0.64) !important;
+}
+
+.pv-site-header .ds-input {
+  background: rgba(255,255,255,0.10) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08) !important;
+}
+
+.pv-site-header .ds-input input,
+.pv-site-header .ds-input input::placeholder {
+  color: rgba(255,255,255,0.78) !important;
+}
+
+.pv-site-header .ds-input:focus-within {
+  background: rgba(255,255,255,0.14) !important;
+  border-color: rgba(220,31,38,0.48) !important;
+  box-shadow: 0 0 0 3px rgba(220,31,38,0.12), inset 0 1px 0 rgba(255,255,255,0.12) !important;
+}
+
+.pv-site-header .ds-input span {
+  background: rgba(255,255,255,0.92) !important;
+  color: #07172f !important;
+}
+
+.nav-link {
+  color: rgba(226,235,255,0.72) !important;
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  background: rgba(255,255,255,0.10) !important;
+  color: #ffffff !important;
+}
+
+.nav-link.is-active {
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12) !important;
+}
+
+.nav-link-app {
+  background: rgba(220,31,38,0.14) !important;
+  border-color: rgba(220,31,38,0.28) !important;
+  color: #ffffff !important;
+}
+
+.nav-link-app:hover {
+  background: rgba(220,31,38,0.22) !important;
+  color: #ffffff !important;
+}
+
+.pv-site-header a[title="App interna"] {
+  background: rgba(255,255,255,0.10) !important;
+  border-color: rgba(255,255,255,0.14) !important;
+  color: #ffffff !important;
+}
+
+.pv-site-header button[aria-label="Abrir pedido"] {
+  background: var(--pv-red) !important;
+  box-shadow: 0 14px 30px rgba(220,31,38,0.22) !important;
+}
+
+.header-motion-line {
+  background: linear-gradient(90deg, transparent, rgba(220,31,38,0.95), rgba(255,255,255,0.20), transparent) !important;
+  opacity: 0.78 !important;
+}
