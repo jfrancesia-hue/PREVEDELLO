@@ -403,10 +403,10 @@ function HeroSection({
               Comprometidos desde 1970 · Catamarca
             </div>
             <h1 className="hero-heading max-w-4xl font-extrabold text-white">
-              Todo para tu obra, en un solo lugar.
+              Cotizá tu obra con respaldo Prevedello.
             </h1>
             <p className="mt-5 max-w-2xl text-lg font-medium leading-8 text-white/78 sm:text-xl">
-              Corralón, ferretería y hogar con atención local desde 1970. Buscá productos, armá tu pedido y pedí cotización por WhatsApp sin vueltas.
+              Materiales, ferretería y hogar con atención local desde 1970. Armá tu pedido, enviá la consulta y recibí asesoramiento real de mostrador.
             </p>
             <div className="mobile-hero-photo mt-6 overflow-hidden rounded-[var(--radius-modal)] border border-white/16 bg-white/8 shadow-[0_28px_80px_rgba(0,0,0,0.42)] lg:hidden">
               <picture>
@@ -448,14 +448,14 @@ function HeroSection({
                 href="#pedido"
                 className="ds-button-red inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                Cotizar por WhatsApp
+                Cotizá tu obra
                 <ArrowRight size={17} />
               </a>
               <a
                 href="#productos"
                 className="ds-button-outline inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                Ver productos
+                Explorar catálogo
                 <ArrowRight size={17} />
               </a>
             </div>
@@ -476,8 +476,8 @@ function HeroSection({
               </picture>
               <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,13,31,.28))]" />
               <div className="hero-technical-label absolute bottom-4 left-4 right-4 border-l-2 border-prevedello-red bg-black/38 p-4 backdrop-blur-md">
-                <p className="font-heading text-xl font-bold uppercase text-white">Prevedello Market</p>
-                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">La atención de siempre, ahora más simple para cotizar.</p>
+                <p className="font-heading text-xl font-bold uppercase text-white">Desde 1970 en Catamarca</p>
+                <p className="mt-1 text-sm text-[var(--pv-text-secondary)]">La atención de siempre, ahora con una experiencia digital más simple.</p>
               </div>
             </div>
           </div>
@@ -493,7 +493,7 @@ function HeroSection({
             <div>
               <p className="text-sm font-bold uppercase text-prevedello-red">Todo para tu proyecto</p>
               <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">
-                Asesoramiento, productos y entrega con respuesta local.
+                Un mostrador digital para comprar mejor.
               </h2>
             </div>
             <p className="max-w-md text-sm leading-6 text-white/62">
@@ -539,7 +539,7 @@ function PromoBanner() {
           </div>
           <div>
             <p className="text-sm font-bold uppercase tracking-wide text-white/60">Consultas online</p>
-            <h2 className="text-2xl font-extrabold leading-tight">Armá tu lista de materiales y mandala lista para que Prevedello te asesore.</h2>
+            <h2 className="text-2xl font-extrabold leading-tight">Armá tu lista de materiales y enviala lista para recibir asesoramiento Prevedello.</h2>
           </div>
         </div>
         <a
@@ -574,7 +574,7 @@ function OfficialHeritage() {
         <div>
           <p className="section-kicker text-prevedello-red">Quiénes somos</p>
           <h2 className="mt-3 max-w-3xl font-heading text-5xl font-black uppercase leading-[0.95] text-white sm:text-6xl">
-            Orgullosos del servicio que brindamos.
+            Una historia familiar convertida en confianza.
           </h2>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/72">
             Desde la llegada de un joven italiano en 1912 hasta convertirse en referente del sector, la familia Prevedello construyó mucho más que un negocio: una historia de esfuerzo, valores y compromiso con Catamarca.
