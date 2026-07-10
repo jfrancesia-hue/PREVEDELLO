@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { Link, Navigate, Route, Routes, useParams } from "react-router-dom";
+import { Link, Navigate, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -135,16 +135,7 @@ const heroMetrics = [
 
 const quickNeeds = ["Cemento", "Pintura", "Ferretería", "Sanitarios", "Pisos"] as const;
 
-const officialBrandLogos = [
-  { name: "FV", src: "https://static.wixstatic.com/media/a238c4_4d8c1fe4abf44cf4b93b841bf4bc853c~mv2.png/v1/fill/w_151,h_32,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo_fv.png" },
-  { name: "Makita", src: "https://static.wixstatic.com/media/a238c4_ca8465ac97044c22a3fe3718a1a941e6~mv2.png/v1/fill/w_136,h_45,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/logo-makita.png" },
-  { name: "Sika", src: "https://static.wixstatic.com/media/a238c4_c61de20db35f48cca1de94ba3b66226e~mv2.webp/v1/fill/w_104,h_95,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sika_NoClaim_pos_rgb_mobile.webp" },
-  { name: "Ternium", src: "https://static.wixstatic.com/media/a238c4_b5476b3251334ed39e467ab00496a1d1~mv2.png/v1/fill/w_136,h_41,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ternium-logo-png_seeklogo-137631.png" },
-  { name: "Weber", src: "https://static.wixstatic.com/media/a238c4_9b124d9275624a738a146aad4b9ca749~mv2.png/v1/fill/w_165,h_48,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/weber2.png" },
-  { name: "Roca", src: "https://static.wixstatic.com/media/a238c4_ce348338593f4564895f7dc83a507b9a~mv2.png/v1/fill/w_136,h_57,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Roca-negro-png.png" },
-  { name: "Durlock", src: "https://static.wixstatic.com/media/a238c4_2cfb67cd05884a338bd1e6339f4024d8~mv2.png/v1/fill/w_160,h_38,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Durlock%20-negro%20-png.png" },
-  { name: "Cemento Avellaneda", src: "https://static.wixstatic.com/media/a238c4_e4918ce3f2754084abec1fbb6eb78839~mv2.png/v1/fill/w_111,h_109,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/CementoAvellaneda_png.png" },
-] as const;
+const officialBrands = ["FV", "Makita", "Sika", "Ternium", "Weber", "Roca", "Durlock", "Cemento Avellaneda"] as const;
 
 const officialServicePillars = [
   { title: "Servicio de calidad", detail: "Atención comercial cuidada para obra, casa y profesionales.", icon: BadgeCheck },
@@ -172,12 +163,14 @@ function LogoMark({ compact = false, subtitle = "Market" }: { compact?: boolean;
 function HeaderMarketplace({
   query,
   onQueryChange,
+  onSearchSubmit,
   cartCount,
   onCartOpen,
   mode = "market",
 }: {
   query: string;
   onQueryChange: (value: string) => void;
+  onSearchSubmit?: (value: string) => void;
   cartCount: number;
   onCartOpen: () => void;
   mode?: "home" | "market";
@@ -227,7 +220,7 @@ function HeaderMarketplace({
           <LogoMark compact subtitle={mode === "home" ? "Corralón" : "Market"} />
         </a>
         <div className="hidden min-w-0 flex-1 lg:block lg:max-w-sm xl:max-w-md">
-          <SearchBar value={query} onChange={onQueryChange} compact />
+          <SearchBar value={query} onChange={onQueryChange} onSubmit={onSearchSubmit} compact />
         </div>
         <nav className="hidden items-center gap-4 text-sm font-semibold text-white/75 lg:flex xl:gap-6">
           {navItems.map(([id, label, href]) => (
@@ -275,7 +268,7 @@ function HeaderMarketplace({
         </Link>
       </div>
       <div className="mobile-search-row mx-auto mt-2 max-w-7xl lg:hidden">
-        <SearchBar value={query} onChange={onQueryChange} compact />
+        <SearchBar value={query} onChange={onQueryChange} onSubmit={onSearchSubmit} compact />
       </div>
       <div className="header-motion-line mx-auto mt-2 max-w-7xl" />
     </header>
@@ -285,14 +278,21 @@ function HeaderMarketplace({
 function SearchBar({
   value,
   onChange,
+  onSubmit,
   compact = false,
 }: {
   value: string;
   onChange: (value: string) => void;
+  onSubmit?: (value: string) => void;
   compact?: boolean;
 }) {
   return (
-    <label
+    <form
+      role="search"
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSubmit?.(value.trim());
+      }}
       className={`ds-input relative flex min-w-0 items-center gap-2 overflow-hidden px-4 transition ${
         compact ? "h-11" : "h-16"
       }`}
@@ -304,10 +304,14 @@ function SearchBar({
         placeholder="¿Qué necesitás para tu obra?"
         className="min-w-0 flex-1 bg-transparent text-base font-bold text-graphite outline-none placeholder:text-zinc-400 sm:text-lg"
       />
-      <span className="hidden shrink-0 rounded-[var(--radius-badge)] bg-prevedello-red px-3 py-1 text-xs font-bold uppercase text-white sm:inline">
+      <button
+        type="submit"
+        aria-label="Buscar productos"
+        className="hidden shrink-0 rounded-[var(--radius-badge)] bg-prevedello-red px-3 py-1 text-xs font-bold uppercase text-white transition hover:bg-red-700 sm:inline"
+      >
         Buscar
-      </span>
-    </label>
+      </button>
+    </form>
   );
 }
 
@@ -336,10 +340,12 @@ function WhatsAppQuoteButton({
 function HeroSection({
   query,
   onQueryChange,
+  onSearchSubmit,
   variant = "market",
 }: {
   query: string;
   onQueryChange: (value: string) => void;
+  onSearchSubmit?: (value: string) => void;
   variant?: "home" | "market";
 }) {
   const heroRef = useRef<HTMLElement | null>(null);
@@ -448,7 +454,7 @@ function HeroSection({
               ))}
             </div>
             <div className="hero-search-console relative z-30 mt-6 max-w-xl rounded-[var(--radius-card)] border border-white/16 bg-white/10 p-2 backdrop-blur-md">
-              <SearchBar value={query} onChange={onQueryChange} />
+              <SearchBar value={query} onChange={onQueryChange} onSubmit={onSearchSubmit} />
               <div className="mt-3 flex flex-wrap gap-2 px-1 pb-1">
                 {quickNeeds.map((need) => (
                   <button
@@ -575,7 +581,11 @@ function MarketCommerceHero({
             <LogoMark compact subtitle="Market" />
           </a>
           <div className="ml-real-search rounded-[0.9rem] bg-white p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.16)]">
-            <SearchBar value={query} onChange={onQueryChange} />
+            <SearchBar
+              value={query}
+              onChange={onQueryChange}
+              onSubmit={() => document.getElementById("productos")?.scrollIntoView({ behavior: "smooth" })}
+            />
           </div>
           <button type="button" onClick={() => document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' })} className="hidden rounded-full bg-prevedello-red px-5 py-3 text-xs font-black uppercase tracking-wide text-white lg:inline-flex">
             Ver catálogo
@@ -1060,11 +1070,22 @@ function FilterSidebar({
 function ProductVisual({ product }: { product: Product }) {
   const categoryMeta = categories.find((category) => category.name === product.category);
   const CategoryIcon = categoryMeta?.icon;
+  const [imageFailed, setImageFailed] = useState(false);
 
-  if (product.imageUrl) {
+  useEffect(() => {
+    setImageFailed(false);
+  }, [product.imageUrl]);
+
+  if (product.imageUrl && !imageFailed) {
     return (
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-[var(--pv-surface-0)]">
-        <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover brightness-[1.04] saturate-[0.95] transition duration-500 group-hover:scale-[1.03]" loading="lazy" />
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          className="h-full w-full object-cover brightness-[1.04] saturate-[0.95] transition duration-500 group-hover:scale-[1.03]"
+          loading="lazy"
+          onError={() => setImageFailed(true)}
+        />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,13,31,0.02),rgba(5,13,31,0.54))]" />
         {CategoryIcon && (
           <span className="absolute left-4 top-4 grid h-10 w-10 place-items-center rounded-[var(--radius-btn)] border border-white/35 bg-white/90 text-prevedello-red shadow-[0_14px_30px_rgba(0,0,0,0.24)] backdrop-blur-md">
@@ -1195,13 +1216,13 @@ function BrandStrip() {
           </p>
         </div>
         <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none">
-          {officialBrandLogos.map((brand) => (
+          {officialBrands.map((brand) => (
             <div
-              key={brand.name}
+              key={brand}
               className="supplier-chip grid min-w-[180px] place-items-center rounded-lg px-5 py-5 text-center text-sm font-extrabold text-white"
-              title={brand.name}
+              title={brand}
             >
-              <img src={brand.src} alt={brand.name} className="max-h-12 max-w-[140px] object-contain brightness-0 invert" loading="lazy" />
+              <span className="font-heading text-xl font-black uppercase tracking-tight text-white">{brand}</span>
             </div>
           ))}
         </div>
@@ -1310,6 +1331,23 @@ function QuoteCart({
   const [sendStatus, setSendStatus] = useState("");
   const [sending, setSending] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open, onClose]);
+
   const handleSendQuote = async () => {
     setSending(true);
     const message = await onSendQuote();
@@ -1327,6 +1365,10 @@ function QuoteCart({
         aria-label="Cerrar pedido"
       />
       <aside
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!open}
+        aria-labelledby="quote-cart-title"
         className={`quote-drawer absolute bottom-0 right-0 top-0 flex w-full max-w-xl flex-col bg-white shadow-2xl transition duration-300 sm:rounded-l-lg ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
@@ -1334,7 +1376,7 @@ function QuoteCart({
         <div className="flex items-center justify-between border-b border-zinc-200 p-5">
           <div>
             <p className="text-sm font-bold uppercase text-prevedello-red">Carrito de cotización</p>
-            <h2 className="text-2xl font-extrabold text-graphite">Tu pedido</h2>
+            <h2 id="quote-cart-title" className="text-2xl font-extrabold text-graphite">Tu pedido</h2>
           </div>
           <button
             type="button"
@@ -3131,7 +3173,7 @@ function MarketPage() {
   const [productsList, setProductsList] = useState<Product[]>(() => getStoredProducts());
   const [catalogStatus, setCatalogStatus] = useState("Catálogo local activo.");
   const [catalogSource, setCatalogSource] = useState<"local" | "supabase">("local");
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get("q") ?? "");
   const [activeCategory, setActiveCategory] = useState("Todos");
   const [onlyAvailable, setOnlyAvailable] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -3302,11 +3344,16 @@ function MarketPage() {
 
 function HomePage() {
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  const handleSearchSubmit = (value: string) => {
+    const search = value ? `?q=${encodeURIComponent(value)}` : "";
+    navigate(`/market${search}#productos`);
+  };
 
   return (
     <div className="home-shell min-h-screen pb-20 font-body text-graphite lg:pb-0">
-      <HeaderMarketplace query={query} onQueryChange={setQuery} cartCount={0} onCartOpen={() => { window.location.href = "/market#productos"; }} mode="home" />
-      <HeroSection query={query} onQueryChange={setQuery} variant="home" />
+      <HeaderMarketplace query={query} onQueryChange={setQuery} onSearchSubmit={handleSearchSubmit} cartCount={0} onCartOpen={() => { window.location.href = "/market#productos"; }} mode="home" />
+      <HeroSection query={query} onQueryChange={setQuery} onSearchSubmit={handleSearchSubmit} variant="home" />
 
       <main className="home-clean-main pb-24 lg:pb-0">
         <section id="rubros" className="home-market-entry premium-reveal px-4 py-12 text-white sm:px-6 lg:px-8">

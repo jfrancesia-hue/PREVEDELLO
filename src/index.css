@@ -4657,7 +4657,8 @@ body {
 
 .ml-market-shell .market-product-card .relative.aspect-\[4\/3\]::before,
 .ml-market-shell .ml-real-shelf-card .relative.aspect-\[4\/3\]::before {
-  content: "Foto de producto";
+  content: none;
+  display: none;
   position: absolute;
   right: .6rem;
   bottom: .6rem;
